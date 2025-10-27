@@ -3,12 +3,10 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTechnical } from '../composables/useTechnical'
 import { useTheme } from '../composables/useTheme'
-// import { useTechnicalMDX } from '../composables/useTechnicalMDX'
 
 const router = useRouter()
 const { loadAllPosts: loadTechnicalPosts } = useTechnical()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
-// const { getAllPosts: getMDXPosts } = useTechnicalMDX()
 
 // Real-time Lagos time
 const currentTime = ref('')

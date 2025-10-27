@@ -9,9 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mdx-js/rollup": "^3.1.1",
-    "@mdx-js/vue": "^3.1.1",
-    "@types/mdx": "^2.0.13",
     "buffer": "^6.0.3",
     "gray-matter": "^4.0.3",
     "marked": "^16.4.1",

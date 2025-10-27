@@ -119,12 +119,12 @@ onUnmounted(() => {
                     fill="currentColor" />
                 </svg>
                 <span class="transition-colors" 
-                      :class="isDark ? 'text-primary-200 group-hover:text-primary-50' : 'text-primary-800 group-hover:text-primary-900'">
+                      :class="isDark ? 'text-sm md:text-base text-primary-200 group-hover:text-primary-50' : 'text-sm md:text-base text-primary-800 group-hover:text-primary-900'">
                   {{ entry.title }}
                 </span>
               </div>
               
-              <span class="text-sm transition-colors" 
+              <span class="text-sm md:text-base transition-colors" 
                     :class="isDark ? 'text-primary-500 group-hover:text-primary-400' : 'text-primary-500 group-hover:text-primary-600'">
                 {{ entry.dateFormatted }}
               </span>

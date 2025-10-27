@@ -156,7 +156,7 @@ onUnmounted(() => {
                 <!-- Text Right -->
                 <div class="order-2 space-y-3">
                   <div class="flex items-center justify-between">
-                    <div class="text-sm font-medium transition-colors" 
+                    <div class="text-sm md:text-base font-medium transition-colors" 
                          :class="isDark ? 'text-primary-500' : 'text-primary-500'">
                       {{ post.dateFormatted }}
                     </div>
@@ -189,7 +189,7 @@ onUnmounted(() => {
                 <!-- Text Left -->
                 <div class="order-2 lg:order-1 space-y-3">
                   <div class="flex items-center justify-between">
-                    <div class="text-sm font-medium transition-colors" 
+                    <div class="text-sm md:text-base font-medium transition-colors" 
                          :class="isDark ? 'text-primary-500' : 'text-primary-500'">
                       {{ post.dateFormatted }}
                     </div>

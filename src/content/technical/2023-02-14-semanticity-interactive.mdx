@@ -1,0 +1,90 @@
+---
+title: "Understanding Semanticity: Interactive Guide"
+date: "2023-02-14"
+desc: "An interactive exploration of semantic HTML principles with live examples and exercises."
+image: "/assets/images/technical/searchingsemantics.png"
+---
+
+import ColorPicker from '../../components/ColorPicker.vue'
+import LiveCSSEditor from '../../components/LiveCSSEditor.vue'
+import CodeSandbox from '../../components/CodeSandbox.vue'
+
+# Understanding Semanticity: Interactive Guide
+
+Semantic HTML isn't just about using the right tags—it's about creating meaningful, accessible, and maintainable web experiences. Let's explore this through interactive examples.
+
+## What Makes HTML Semantic?
+
+Semantic HTML uses elements that clearly describe their meaning and purpose, both to browsers and developers. Consider these two approaches:
+
+### Non-semantic approach:
+```html
+<div class="header">
+  <div class="nav">
+    <span class="link">Home</span>
+    <span class="link">About</span>
+  </div>
+</div>
+```
+
+### Semantic approach:
+```html
+<header role="banner">
+  <nav aria-label="Main navigation">
+    <a href="/" aria-current="page">Home</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+```
+
+<ColorPicker />
+
+## Interactive CSS Example
+
+Try editing this CSS to see how semantic elements can be styled:
+
+<LiveCSSEditor :initialCSS="`header {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+nav a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #495057;
+}
+
+nav a[aria-current='page'] {
+  font-weight: bold;
+  color: #007bff;
+}`" />
+
+## Benefits of Semantic HTML
+
+1. **Accessibility**: Screen readers understand the content structure
+2. **SEO**: Search engines better understand your content
+3. **Maintainability**: Code is self-documenting
+4. **Styling**: CSS can target meaningful elements
+
+## Try It Yourself
+
+<CodeSandbox :code="`<main>
+  <article>
+    <header>
+      <h1>Article Title</h1>
+      <time datetime='2023-02-14'>February 14, 2023</time>
+    </header>
+    <p>This is semantic content...</p>
+    <footer>
+      <small>By Author Name</small>
+    </footer>
+  </article>
+</main>`" />
+
+## Key Takeaways
+
+- Use semantic elements like `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`
+- Add ARIA attributes when needed
+- Consider the document outline and hierarchy
+- Test with screen readers and accessibility tools

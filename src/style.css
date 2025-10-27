@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-cormorant font-medium;
+  }
+
+  /* Reduce paragraph spacing */
+  p {
+    @apply mb-3;
+  }
+
+  /* Custom link styles */
+  a {
+    color: inherit;
+    transition: text-decoration-thickness 0.5s ease-in-out;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  a.fancy {
+    display: flex;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+    text-decoration: none;
+    padding-left: 4px;
+  }
+
+  a.fancy svg {
+    margin-left: 4px;
+  }
+
+  a.fancy:before {
+    content: "";
+    position: absolute;
+    width: 110%;
+    bottom: 1px;
+    left: -1px;
+    height: 40%;
+    opacity: 0.3;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  /* Theme-aware fancy link background */
+  .dark a.fancy:before {
+    background: theme('colors.primary.400');
+  }
+
+  :not(.dark) a.fancy:before {
+    background: theme('colors.primary.600');
+  }
+
+  a.fancy:hover:before {
+    opacity: 0.5;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-secondary-600 text-white rounded-lg hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 transition-colors;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700;
+  }
+
+  /* Prose styles for markdown content */
+  .prose {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+
+  .prose h1 {
+    @apply text-4xl font-cormorant font-bold mb-6 text-gray-900 dark:text-gray-100;
+  }
+
+  .prose h2 {
+    @apply text-3xl font-cormorant font-bold mb-4 mt-8 text-gray-900 dark:text-gray-100;
+  }
+
+  .prose h3 {
+    @apply text-2xl font-cormorant font-bold mb-3 mt-6 text-gray-900 dark:text-gray-100;
+  }
+
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose strong {
+    @apply font-semibold text-gray-900 dark:text-gray-100;
+  }
+
+  .prose em {
+    @apply italic;
+  }
+
+  .prose a {
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 underline;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-primary-300 pl-4 italic my-6 text-gray-600 dark:text-gray-400;
+  }
+
+  .prose ul {
+    @apply list-disc list-inside mb-4 space-y-2;
+  }
+
+  .prose ol {
+    @apply list-decimal list-inside mb-4 space-y-2;
+  }
+
+  .prose li {
+    @apply leading-relaxed;
+  }
+
+  .prose code {
+    @apply bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono;
+  }
+
+  .prose pre {
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+}

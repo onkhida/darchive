@@ -1,0 +1,21 @@
+---
+title: Understanding Cascade Theory
+date: 2022-5-4
+desc: Praesent urna massa, ullamcorper sed rutrum sit amet, pellentesque in mauris. Pellentesque rutrum sagittis odio.
+coverImage: /assets/images/technical/cascade-theory-cover.jpg
+---
+
+# Great Power
+HTML + CSS, like most people, were the introductory concepts that got me into life on the web. I was coming off a *brief* stint with Python and other data visualisation libraries at the time, and I wanted a way to make my work live and immediately accessible to just about everyone with a browser and an internet connection. I also recall that this was not ridiculously hard to do. The HTML syntax was remarkably easy to get a hang of, and chucking in a few CSS selectors was always more than enough to style whatever it was I had set out to build. 
+
+This post—as you must have reasonably inferred from the title—serves as my comprehensive breakdown of what the CSS Cascade is. You must forgive me if the entry is lengthier my blurb suggests. I initially started writing this at the turn of the year for the [Summer of a Star Girl](https://ng.linkedin.com/company/star-girls-africa) web development program, and so I have had quite a bit of time to jot down everything I could possibly say. In many respects, I have also made it a bit more extensive because the concept is something I wish I had spent more time on when I initially started my learning. I glossed over the segment in the beginning because my mind just looked at it as some unnecessary theory. CSS had already given me great power. It gave me finely bristled brushes and paint, and so it makes sense that I was overzealous when it came to testing my canvas. A large portion of this entry wants to talk about *wielding* *that power responsibly*. I’ve had behemoth CSS files with rules plastered with `!important` all over. I want to talk about avoiding that, how CSS code is interpreted by our browsers, and how we can author style sheets that are not ridiculously hard to read and maintain.
+
+# A Painter Paints
+My younger sister painted a great deal when we were growing up. She had a fantastic eye for colour, and when I would occasionally observe her work, it was easy to notice an incredible level of intentionality regarding how and when she would apply these relevant colours to the canvas. Each hue was its own character, a story element with unique properties guiding how it was meant to combine with the other elements in the painting. She was talented at subconsciously keeping these properties at the back of her mind, subsequently allowing them to inform those decisions on how the shades were meant to coalesce into something beautiful. On my end, I didn’t grow up as a virtuoso, but I’ve been able to draw parallels between the work I do scripting my CSS files and my sister’s brilliant painting techniques.
+
+However large a CSS file is, the bulk of the code boils down to a collection of [rules](https://www.w3schools.com/css/css_syntax.asp) that contain a selector and a declaration block. The rules are like strokes on a canvas: the selector specifying where exactly the stroke be applied and the declaration block describing the technique to be used. These rules, spanning across the length of the CSS file, represent the iterative process of stroking one’s canvas repeatedly until the final painting is completed. Ever so often, these strokes overlap. They **cascade**, and great painters—much like my sister—spend a lot of time thinking up strategies that allow these strokes (or CSS rules) combine harmoniously to create the final output. Luckily, just like a painter has the de facto colour theory to draw from when making these important decisions, the cascade theory also gives us, as web developers, a framework to consider when conceptualising how we want our rules to combine in a logical way.
+
+*[I’ve got a an idea that an animation should appear here showing how the rules transform into something on a web page, but what the specific animation should look like has remained foggy.]*
+
+# Origins
+*[I’ve got a an idea that an animation should appear here showing how the rules transform into something on a web page, but what the specific animation should look like has remained foggy.]*

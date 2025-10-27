@@ -1,0 +1,11 @@
+# This folder contains images for commentary posts
+# 
+# Recommended structure:
+# /assets/images/
+#   ├── posts/           # Images specific to blog posts
+#   ├── covers/          # Album covers, book covers, etc.
+#   ├── screenshots/     # UI screenshots, code examples
+#   └── general/         # General purpose images
+#
+# Usage in markdown:
+# ![Alt text](/assets/images/folder/filename.jpg)

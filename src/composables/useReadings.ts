@@ -33,7 +33,28 @@ export function useReadings() {
     }
 
     const formatDate = (dateStr: string): string => {
-        const date = new Date(dateStr)
+        // Safari-safe date parsing: ensure proper format before creating Date object
+        let normalizedDate = dateStr
+
+        // Convert formats like "2023-2-14" to "2023-02-14" for Safari compatibility
+        if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateStr)) {
+            const parts = dateStr.split('-')
+            if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+                const year = parts[0]
+                const month = parts[1].padStart(2, '0')
+                const day = parts[2].padStart(2, '0')
+                normalizedDate = `${year}-${month}-${day}`
+            }
+        }
+
+        const date = new Date(normalizedDate)
+
+        // Check if date is valid
+        if (isNaN(date.getTime())) {
+            console.warn(`Invalid date format: ${dateStr}, using fallback`)
+            return dateStr // Return original string as fallback
+        }
+
         return date.toLocaleDateString('en-US', {
             month: 'long',
             day: 'numeric',
@@ -144,8 +165,31 @@ Content coming soon...`
             }
         }
 
-        // Sort by date (latest to earliest)
-        loadedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        // Sort by date (latest to earliest) - normalize dates for Safari compatibility
+        loadedPosts.sort((a, b) => {
+            const normalizeDate = (dateStr: string): string => {
+                if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateStr)) {
+                    const parts = dateStr.split('-')
+                    if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+                        const year = parts[0]
+                        const month = parts[1].padStart(2, '0')
+                        const day = parts[2].padStart(2, '0')
+                        return `${year}-${month}-${day}`
+                    }
+                }
+                return dateStr
+            }
+
+            const dateA = new Date(normalizeDate(a.date))
+            const dateB = new Date(normalizeDate(b.date))
+
+            // Handle invalid dates by falling back to string comparison
+            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+                return b.date.localeCompare(a.date)
+            }
+
+            return dateB.getTime() - dateA.getTime()
+        })
 
         posts.value = loadedPosts
         isLoading.value = false

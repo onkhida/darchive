@@ -2,7 +2,7 @@
 title: Understanding Cascade Theory
 date: 2022-5-4
 desc: Praesent urna massa, ullamcorper sed rutrum sit amet, pellentesque in mauris. Pellentesque rutrum sagittis odio.
-coverImage: /assets/images/technical/cascade-theory-cover.jpg
+coverImage: /assets/images/technical/understandingcascadetheory.png
 ---
 
 # Great Power

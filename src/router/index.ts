@@ -6,6 +6,7 @@ import Readings from '../views/Readings.vue'
 import ReadingDetail from '../views/ReadingDetail.vue'
 import Technical from '../views/Technical.vue'
 import TechnicalDetail from '../views/TechnicalDetail.vue'
+import TextEditor from '../views/TextEditor.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -44,6 +45,11 @@ const router = createRouter({
             path: '/technical/:slug',
             name: 'technical-detail',
             component: TechnicalDetail
+        },
+        {
+            path: '/txt',
+            name: 'text-editor',
+            component: TextEditor
         }
     ]
 })

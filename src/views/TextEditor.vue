@@ -87,7 +87,7 @@ onMounted(() => {
   initializeTheme()
   
   // Set page title
-  document.title = 'Text Editor - darchive'
+  document.title = 'Text Editor - onkhida'
   
   updateTime()
   timeInterval = setInterval(updateTime, 1000)

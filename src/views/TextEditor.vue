@@ -14,6 +14,11 @@ const currentTime = ref('')
 // Copy success state
 const copySuccess = ref(false)
 
+// Selected text tracking
+const selectedText = ref('')
+const selectionStart = ref(0)
+const selectionEnd = ref(0)
+
 // Computed word count and character count
 const wordCount = computed(() => {
   if (!textContent.value.trim()) return 0
@@ -26,6 +31,21 @@ const charCount = computed(() => {
 
 const charCountWithoutSpaces = computed(() => {
   return textContent.value.replace(/\s/g, '').length
+})
+
+// Selected word count
+const selectedWordCount = computed(() => {
+  if (!selectedText.value.trim()) return 0
+  return selectedText.value.trim().split(/\s+/).length
+})
+
+// Display format for selection count
+const selectionDisplay = computed(() => {
+  if (selectedWordCount.value === 0) return ''
+  if (selectedWordCount.value === 1) {
+    return `${selectedWordCount.value} word of ${wordCount.value}`
+  }
+  return `${selectedWordCount.value} words of ${wordCount.value}`
 })
 
 // Auto-save to localStorage
@@ -66,6 +86,18 @@ const clearText = () => {
 // Auto-focus textarea
 const focusTextArea = () => {
   textArea.value?.focus()
+}
+
+// Handle text selection
+const handleSelection = () => {
+  if (!textArea.value) return
+  
+  const start = textArea.value.selectionStart
+  const end = textArea.value.selectionEnd
+  
+  selectionStart.value = start
+  selectionEnd.value = end
+  selectedText.value = textContent.value.substring(start, end)
 }
 
 const updateTime = () => {
@@ -179,6 +211,9 @@ const handleTextChange = () => {
               @input="handleTextChange"
               @keyup="handleTextChange"
               @paste="handleTextChange"
+              @select="handleSelection"
+              @mouseup="handleSelection"
+              @keyup.arrow="handleSelection"
               placeholder="Type something."
               class="w-full h-full min-h-[60vh] p-6 border resize-none focus:outline-none focus:ring-2 transition-all duration-200 font-mono leading-relaxed"
               style="font-size: 15px;"
@@ -195,7 +230,8 @@ const handleTextChange = () => {
         <div class="container mx-auto max-w-4xl px-4 md:px-8 py-4">
           <div class="flex justify-between items-center text-sm">
             <div class="flex space-x-6" :class="isDark ? 'text-primary-400' : 'text-primary-600'">
-              <span>{{ wordCount }} words</span>
+              <span v-if="selectionDisplay">{{ selectionDisplay }}</span>
+              <span v-else>{{ wordCount }} words</span>
               <span>{{ charCount }} characters</span>
               <span class="hidden sm:inline">{{ charCountWithoutSpaces }} without spaces</span>
             </div>
@@ -211,6 +247,44 @@ const handleTextChange = () => {
 </template>
 
 <style scoped>
+/* Bold text visibility improvements for dark theme */
+.dark strong,
+.dark b,
+.dark .font-bold {
+  color: rgb(248 250 252); /* slate-50 for better contrast */
+  font-weight: 700;
+}
+
+/* Light theme bold text */
+strong,
+b,
+.font-bold {
+  color: rgb(15 23 42); /* slate-900 for better contrast */
+  font-weight: 700;
+}
+
+/* Custom text selection colors that match the theme */
+textarea::selection {
+  background-color: rgb(148 163 184 / 0.3); /* slate-400 with opacity for light theme */
+  color: inherit;
+}
+
+.dark textarea::selection {
+  background-color: rgb(71 85 105 / 0.4); /* slate-600 with opacity for dark theme */
+  color: inherit;
+}
+
+/* Firefox selection styling */
+textarea::-moz-selection {
+  background-color: rgb(148 163 184 / 0.3);
+  color: inherit;
+}
+
+.dark textarea::-moz-selection {
+  background-color: rgb(71 85 105 / 0.4);
+  color: inherit;
+}
+
 /* Custom range slider styling */
 input[type="range"] {
   background: transparent;

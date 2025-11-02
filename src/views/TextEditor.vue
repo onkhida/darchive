@@ -155,7 +155,7 @@ const handleTextChange = () => {
               class="text-sm transition-colors hover:underline" 
               :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'"
             >
-              ← full site
+              ← main site
             </router-link>
             
             <!-- Theme toggle -->
@@ -247,44 +247,6 @@ const handleTextChange = () => {
 </template>
 
 <style scoped>
-/* Bold text visibility improvements for dark theme */
-.dark strong,
-.dark b,
-.dark .font-bold {
-  color: rgb(248 250 252); /* slate-50 for better contrast */
-  font-weight: 700;
-}
-
-/* Light theme bold text */
-strong,
-b,
-.font-bold {
-  color: rgb(15 23 42); /* slate-900 for better contrast */
-  font-weight: 700;
-}
-
-/* Custom text selection colors that match the theme */
-textarea::selection {
-  background-color: rgb(148 163 184 / 0.3); /* slate-400 with opacity for light theme */
-  color: inherit;
-}
-
-.dark textarea::selection {
-  background-color: rgb(71 85 105 / 0.4); /* slate-600 with opacity for dark theme */
-  color: inherit;
-}
-
-/* Firefox selection styling */
-textarea::-moz-selection {
-  background-color: rgb(148 163 184 / 0.3);
-  color: inherit;
-}
-
-.dark textarea::-moz-selection {
-  background-color: rgb(71 85 105 / 0.4);
-  color: inherit;
-}
-
 /* Custom range slider styling */
 input[type="range"] {
   background: transparent;

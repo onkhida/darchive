@@ -7,6 +7,27 @@ const { isDark, toggleTheme, initializeTheme } = useTheme()
 // Real-time Lagos time
 const currentTime = ref('')
 
+// Hover preview state for name-follow image
+const showPreview = ref(false)
+const previewX = ref(0)
+const previewY = ref(0)
+// Use the same public asset used elsewhere
+const previewSrc = '/assets/images/me.jpg'
+
+const updatePreviewPos = (e: MouseEvent) => {
+  const offset = 16
+  previewX.value = e.clientX + offset
+  previewY.value = e.clientY + offset
+}
+
+const onNameEnter = (e: MouseEvent) => {
+  updatePreviewPos(e)
+  showPreview.value = true
+}
+const onNameLeave = () => {
+  showPreview.value = false
+}
+
 const updateTime = () => {
   const now = new Date()
   const lagosTime = new Intl.DateTimeFormat('en-GB', {
@@ -69,15 +90,22 @@ onUnmounted(() => {
       <main class="container mx-auto px-4 md:px-8 py-10 max-w-3xl">
         <!-- About Section -->
         <section id="about" class="mb-16">
+
           <h1 class="text-6xl font-cormorant font-normal mb-8" :class="isDark ? 'text-primary-50' : 'text-primary-900'">about.</h1>
-          
+
           <div class="space-y-3 leading-relaxed" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
             <div>
               <p class="text-sm mb-1" :class="isDark ? 'text-primary-500' : 'text-primary-500'">
                 Pronunciation — /ˈetə/
               </p>
               <p>
-                My name is Daniel Eta.
+                My name is 
+                <span class="underline cursor-pointer" 
+                      @mouseenter="onNameEnter" 
+                      @mouseleave="onNameLeave" 
+                      @mousemove="updatePreviewPos">
+                  Daniel Eta.
+                </span>
               </p>
             </div>
             
@@ -117,6 +145,15 @@ onUnmounted(() => {
           </div>
         </section>
       </main>
+
+      <!-- Hover-follow preview image (detached from flow) -->
+      <img
+        v-show="showPreview"
+        :src="previewSrc"
+        :style="{ left: previewX + 'px', top: previewY + 'px', height: '100px', width: 'auto' }"
+        class="fixed pointer-events-none shadow-lg z-50 transition-opacity duration-150"
+        :class="showPreview ? 'opacity-100' : 'opacity-0'"
+        alt="preview" />
 
       <!-- Footer - aligned with content -->
       <footer class="container mx-auto max-w-3xl px-4 md:px-8 pb-12 pt-8 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">

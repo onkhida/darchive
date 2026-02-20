@@ -20,7 +20,8 @@ export interface ReadingPost {
 // List of all markdown files in the readings folder
 const markdownFiles = [
     '2022-05-04 swing-time.md',
-    '2023-12-04 notes-from-the-end-of-everything.md'
+    '2023-12-04 notes-from-the-end-of-everything.md',
+    '2026-01-31 lives-of-great-men.md'
 ]
 
 const posts = ref<ReadingPost[]>([])

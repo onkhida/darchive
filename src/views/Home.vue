@@ -104,8 +104,7 @@ onUnmounted(() => {
                       @mouseenter="onNameEnter" 
                       @mouseleave="onNameLeave" 
                       @mousemove="updatePreviewPos">
-                  Daniel Eta.
-                </span>
+                  Daniel Eta</span>.
               </p>
             </div>
             

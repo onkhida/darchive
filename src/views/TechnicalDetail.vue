@@ -394,7 +394,7 @@ onUnmounted(() => {
                 LAGOS, NG — {{ currentTime }}
               </div>
               <div>
-                @etadn
+                <a href="https://www.reddit.com/user/onkhida/" target="_blank" rel="noopener" class="transition-colors" :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'">u/onkhida</a>
               </div>
             </div>
           </div>

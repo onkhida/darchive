@@ -222,7 +222,7 @@ Content coming soon...`
 
         // Convert footnote references [^1], [^2], etc. to clickable superscript numbers
         // Use theme-appropriate colors instead of blue
-        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">$1</sup>')
+        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')
 
         // Style images to take full width of container with auto height
         html = html.replace(/<img([^>]*?)>/g, '<img$1 class="w-full h-auto my-6">')

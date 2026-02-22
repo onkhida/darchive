@@ -213,7 +213,7 @@ Content coming soon...`
         let html = marked.parse(content) as string
 
         // Convert footnote references to clickable superscript numbers
-        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">$1</sup>')
+        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')
 
         // Style images to take full width with sharp corners
         html = html.replace(/<img([^>]*?)>/g, '<img$1 class="w-full h-auto my-6">')

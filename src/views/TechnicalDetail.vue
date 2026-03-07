@@ -293,7 +293,7 @@ onUnmounted(() => {
             <article v-else>
               <!-- Post Header -->
               <header class="mb-8">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-cormorant font-normal mb-4" 
+                <h1 class="text-5xl md:text-6xl font-cormorant font-normal mb-4 leading-[1.55]" 
                     :class="isDark ? 'text-primary-50' : 'text-primary-900'">
                   {{ post.title }}
                 </h1>
@@ -363,7 +363,7 @@ onUnmounted(() => {
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-8 lg:col-start-2">
               <div id="mobile-footnotes" class="border-t pt-8 mt-12" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
-                <h3 class="text-lg font-medium mb-6"
+                <h3 class="text-2xl font-medium mb-6"
                     :class="isDark ? 'text-primary-200' : 'text-primary-800'">
                   Footnotes
                 </h3>

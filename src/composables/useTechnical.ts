@@ -20,8 +20,7 @@ export interface TechnicalPost {
 // List of all markdown files in the technical folder
 const markdownFiles = [
     '2022-05-04-understanding-cascade-theory.md',
-    '2023-02-14-semanticity.md',
-    '2023-02-14-semanticity-interactive.md'
+    '2026-03-12-the-great-divide.md',
 ]
 
 const posts = ref<TechnicalPost[]>([])

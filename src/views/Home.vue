@@ -12,7 +12,7 @@ const showPreview = ref(false)
 const previewX = ref(0)
 const previewY = ref(0)
 // Use the same public asset used elsewhere
-const previewSrc = '/assets/images/me.jpg'
+const previewSrc = '/assets/images/me.png'
 
 const updatePreviewPos = (e: MouseEvent) => {
   const offset = 16
@@ -107,30 +107,15 @@ onUnmounted(() => {
                   Daniel Eta</span>.
               </p>
             </div>
-            
-            <p>
-              I am in love with the web, and its unique ability to weave together an intricate host of diverse 
-              communities, people and resources. It's why I build on it — as this global network has provided me 
-              with a space to satisfy my incessant desire to create solutions just by being close to the innovative 
-              people and technologies that are rife in this age.
+
+            <p>This site—and the content in it—doubles as my personal archive and also as a documentation of my progression through the years. Much of the content that you will find here is related to technology (and software in general), but a healthy chunk of what I post here has roots in different (sometimes even diverging) fields.
             </p>
-            
-            <p>
-              My days are often spent on my computer, working on software projects that always seem to appear 
-              rather sporadically. Most of that is harmless fun but there is a fair bit of it that I take rather seriously.
+            <p>I suppose my goal with a lot of what I do seems to tend towards some sort of consilience. The wanderlust within has always transmuted beyond the physical; I can't always control where my mind and its pursuits will take me. 
             </p>
-            
-            <p>
-              If you're interested, you can also find a cluster of my varied thoughts 
-              <a href="#" class="underline">here</a>. Though if you're looking for 
-              more technical concepts, there is also an <a href="#" class="underline">archive</a> I'm building of me talking about the technologies that 
-              got me excited.
+            <p>I try to spin <a href="http://onkhida.me/technical" class="underline">narratives around technology</a>, <a href="http://onkhida.me/consumables" class="underline">the entities I consume</a>, and <a href="http://onkhida.me/commentary" class="underline">the thoughts that stay with me</a> as I continue existing. In the same vein, I also spend time logging my <a href="http://notebooks.onkhida.me/" class="underline">process of learning</a> and what is commonly the output of this learning process—in an <a href="http://papers.onkhida.me/" class="underline">academic</a> or <a href="http://demos.onkhida.me/" class="underline">practical</a> sense.
             </p>
-            
-            <p>
-              As for my digital footprint, you can listen to me rant about technical opinions on Twitter, or track what I 
-              am building on GitHub, or take a closer look at my professional profile thus far on LinkedIn.
-            </p>
+            <p>The best way to reach is me is (by far) through my <a href="mailto:daniel.eta@outlook.com" class="underline">email</a>. I love reading/writing to/from people, and it is my most active channel of communication. Though I do have accounts on <a href="https://www.reddit.com/user/onkhida/" class="underline">Reddit</a>, <a href="https://www.linkedin.com/in/daniel-eta/" class="underline">LinkedIn</a> and <a href="https://x.com/onkhida" class="underline">x.com</a> to allow me to share some of my work and provide me with some sort of digital footprint. 
+            </p>            
             
             <div class="mt-8">
               <a href="#" class="fancy text-sm" :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'">

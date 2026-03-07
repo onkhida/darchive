@@ -1,8 +1,8 @@
 ---
-title: Notes from the End of Everything
-author: Robert Pantano
-year: 2020
-date: 2023-12-04
+title: Africa Must Be Modern — A Manifesto
+author: Olúfẹ́mi Táíwò
+year: 2014
+date: 2026-03-07
 desc: Starting over, again and again.
 authorImage: /assets/images/readings/author-img/robert-pantano.png
 ---

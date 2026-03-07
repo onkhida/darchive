@@ -255,7 +255,7 @@ onUnmounted(() => {
       <!-- Mobile footnotes (appear as section after main content) -->
       <section v-if="post && post.footnotes && post.footnotes.length > 0" class="xl:hidden container mx-auto px-4 md:px-8 pb-12 max-w-3xl">
         <div id="mobile-footnotes" class="border-t pt-8" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
-          <h3 class="text-lg font-medium mb-6"
+          <h3 class="text-3xl font-medium mb-6"
               :class="isDark ? 'text-primary-200' : 'text-primary-800'">
             Footnotes
           </h3>

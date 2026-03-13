@@ -5,60 +5,145 @@ desc: Exploring the semantic web and how meaningful markup creates more accessib
 coverImage: /assets/images/technical/the-great-divide.jpg
 ---
 
-# The Base We Build Upon
-
-When I was a child, the most grounding aspects of reality came within the binary. The capacity for nuance came (like for most people) later on, but initially, I was interested in seeing whether something could be, for example, hot or cold, right or wrong, hard or soft, bitter or sweet, or interesting or boring. My satisfaction with a word depended on whether it had an opposite, and trying to understand "why" yields itself to a very simple explanation: it is foundational. 
+# Solid Foundations
+When I was a child, the most grounding aspects of reality came within the binary. A capacity for nuance came (like for most people) later on, but initially, I was interested in seeing whether something could be, for example, hot or cold, right or wrong, hard or soft, bitter or sweet, or interesting or boring. My satisfaction with a word depended on whether it had an opposite, and trying to understand "why" yields itself to a very simple explanation: it is foundational. 
 
 As intelligent beings, although our abilities to tolerate and operate withing the grey is innate, it only actualises after going through a gestation period. And even then, these binary logic systems remain—sometimes dormantly—in the lowest level of our programming, to be reignited whenever we need them [^1].
 
-If the binary can provide a solid enough architectural base for children to build on top of, it makes sense to start the quest for artificial intelligence at its doorstep. Following this line of thinking, there has been many an algorithm over the years that has attempted to equip machines with the ability to duly make these categorical decisions. The most enduring of these is Frank Rosenblatt's perceptron, the foundational layer with which modern AI and neural networks builds upon.
-
-And so I want to, with this entry, provide a systematic breakdown of how Rosenblatt's original algorithm works, as the foundational piece of engineering that it is. We'll go through each iterative step, explaining finally (with examples) how this all culminates to form a basic computational system capable of making binary conclusions when confronted with a series of relevant data points (vectors). 
-
+If the binary can provide a solid enough architectural base for children to build on top of, it makes sense to start the quest for artificial intelligence at its doorstep. Following this line of thinking, there has been many an algorithm over the years that has attempted to equip machines with the ability to duly make these categorical decisions. The most enduring of these is Frank Rosenblatt's *"Mark I Perceptron"*, and this foundational layer with which modern AI and neural networks now builds upon has formed the basis for this post. I've dedicated much of my efforts with this entry towards providing a systematic breakdown of how Rosenblatt's original algorithm works as the foundational piece of engineering that it is. I'll go through each iterative step, explaining finally (in a heavily analogical manner) how this all culminates to form a basic computational system capable of making binary conclusions when confronted with a series of relevant data points (vectors). 
 # On Vectors
-The last word in my introductory section is "vectors", in parentheses. I've been deliberate in putting this mathematical concept in our atmosphere very early on because apart from its use in underpinning the core mechanism with which the perceptron is built upon, thinking of our inputs as vectors is both useful and intuitive. For coming to any decision, even a simple (binary) one, is usually contingent on a multitude of different factors. Every morning, before my commute across town from Ojota to TBS (Tafawa Balewa Square), whether or not I wait for the BRT buses to arrive depends on:
-* How much money is in my Cowry card 
-* how quickly I can top up my balance if I don't have enough in it
+The last word in my introductory section is "vectors", in parentheses. I've been deliberate in putting this mathematical concept in our atmosphere very early on because apart from its use in underpinning the core mechanism with which the perceptron is built upon, thinking of our inputs as vectors is both useful and intuitive. For coming to any decision, even a simple (binary) one, is usually contingent on a multitude of different factors. 
+
+Every morning, before my commute across town from Ojota to TBS (Tafawa Balewa Square), whether or not I wait for the BRT buses to arrive depends on:
+* How much money is in my Cowry Card.
+* How quickly I can top up my balance if I don't have enough in it.
 * How important comfort is for me at the moment, as BRT buses are generally more comfortable than the equivalent journey with several stops across Danfos. 
 * Whether or not I am late for the start of the day.
-* Whether or not I can already hear a Danfo conductor belting a favourable route I could take. 
+* Whether or not I can already hear a Danfo conductor belting an alternatively favourable route I could take. 
 * What my patience levels are
 * How tired I am.
 * And so many other variables that sometimes reveal themselves in the moment.
 
-Because all of these "inputs" are fresh and unique to a certain decision instance that I make each morning, it helps to think of them as related entities that (eventually) coalesce into one big thing, a _vector_.
+Because all of these "inputs" are freshly (and uniquely) tied to a certain decision instance that I make each morning, it helps to think of them as related entities that (eventually) coalesce into one big thing, a _vector_. And after considering all these variables, my brain—in milliseconds—comes to a decision before I've even begun my descent along the overhead bridge. 
 
-And after considering all these variables, my brain—in milliseconds—comes to a decision before I've even begun my descent along the overhead bridge. Of course, some of these variables (even though I may not know it or be able to grade them quantitatively) matter more to me, helping me to handle situations where there are some conflicting signals. Technically speaking, due to their varying degrees of importance, they all have their respective, intuitive weights in my head, and finding what each of these variables "weigh" remains the core goal of a perceptron algorithm. You'll often see existing literature referring to this process as "finding the weight vector", which also makes sense because if we find the corresponding weights for all the variables, the new list of respective weights can serve as its own vector as well!
+Of course, some of these variables (even though I may not know it or be able to grade them quantitatively) matter more to me, helping me to handle situations where there are some conflicting signals. Technically speaking, due to their varying degrees of importance, they all have their respective, intuitive *weights* in my head, and finding what each of these variables "weigh" remains the core goal of a perceptron algorithm. You'll often see existing literature referring to this process as "finding the weight vector", which also makes sense because if we find the corresponding weights for all the variables, the new list of respective weights can serve as its own vector as well!
+
+> Show of all the inputs entering a neuron with the different weights to yield an output will be ideal.
 
 Another pedagogical advantage, I feel, of having the perceptron's process spin around vectors is that it allows us to conceptualise things graphically. If every decision instance is a vector of relevant variables, then we can plot and represent this specific "point" on a graph, or more correctly, in the vector space [^2]. And if we can plot every single decision instance recursively on this plane, it can allow us to identify some patterns. More acutely, we can reframe this problem as a task to see if we can linearly separate our collection of points. And if we can indeed slice through our collection of points, then _this great divide_ can now act as the decision boundary that will allow us to computationally make these binary decisions. In the future, when we come across a new situation (or decision instance) and are presented with its corresponding vector list of input data, identifying what side of the decision boundary the vector point falls on will allow us to come to a binary conclusion. 
 
 Finding the weight vector, finding the corresponding weights for our variables, identifying the decision boundary, and linearly separating our points are all—as you will soon see—many ways of saying the same thing. I try to think (and get you to think) about this process from a graphical point of view because it really helps make the concept stick, at least from my experience.
+# Aligning the Compass
+The next set of tools that existing vector mathematics allows us to build upon is that of the "dot product". In extremely simple terms, a dot product takes two vectors of equal length, say $\vec{a} = (x, y)$ and $\vec{b} = (x, y)$, and returns a scalar. This "scalar" provided by the dot product gives us a very useful indicator of how much the two vectors of comparison point in the same direction. The full geometric formula is given below:
+$$\vec{a}\cdot\vec{b}=|\vec{a}||\vec{b}|\cos(\theta)$$
+(where $|\vec{a}|$ and $|\vec{b}|$ are the magnitudes of vectors $\vec{a}$ and $\vec{b}$ respectively, and the angle, $\theta$, refers to the angle between these two vectors.)
 
-[You Need A Brief Section on the Dot Product before what is next. 'Tis paramount. "Reading The Compass" seems like a fitting name]
+>You'll build some cool animation to show an interactive relationship between two vectors that people can pove around. Will show the value of the angles, the magnitudes of said vectors, and then the the dot product
 
-# Zooming In to Zoom Out
-I want to "zoom in" to my initial example about deciding on a BRT bus or not and imagine, in a remarkably simple and hypothetical world, that my decision was only dependent on 2 factors: the amount of money (in NGN) in my Cowry Card and the amount of time (in minutes) it would take me to top up my card. As a side quest, I briefly thought about gathering this "data" manually [^3], en route to work each day, but my words came together much faster than the experimental, month-long inquest for data did. As a result, I've pulled these figures arbitrarily from my head to fit into the example's context.
+Depending on how you played around with the interactive graph, you may have discovered that the dot product of vectors orthogonal to each other is zero. This is for obvious reasons: if $\cos(90^\circ)$—or its radian equivalent, $\cos\left(\frac{\pi}{2}\right)$—yields zero, then the whole expression will also yield zero! 
 
-[Table Component Here]
+More pertinently, though, the other thing to notice is that when the angle between both vectors _**is acute**_ (less than $90^\circ$), the resulting dot product gives us a positive number. On the contrary, if this angle between vectors _**is not acute**_ (greater than $90^\circ$), then this derived dot product is negative. You can sit with this detail for a moment because it is important. If we use the weight vector as the cardinal compass that it is, then the sign $(+ve/-ve)$ of a dot product of a data point with respect to a weight vector can easily tell us what half of the landscape a point belongs to. If a point projection (due to its positive dot product) lands in the "northern half" of our "compass", then it belongs to one category; if another projection (due to its negative dot product) lands in the "southern half" of our compass, then it belongs to the other category. 
 
-If you are interested in seeing all the numbers, you can click the "expand" button on the table above. There are 31 decision instances for every day (and morning commute) in March [^4]. Something you would notice is that apart from the two figures for the amount of money in my card and how long it would take to top it off, there is another column of interest: the decision column, storing values of 1 or -1. 1 means I took the bus, and -1 means I did not. The reason why I'm using ±1 to indicate if I took the bus will feel odd right now, but the math we'll see in a moment will help in clearing our uncertainties. 
+> What I am thinking of doing is to have a diagram here where the weight vector is fixed. The user can now add "vectors" or points and depending on where the vector is, the component should show "southern half" or "northern half".
 
-For now, though, let's try and "plot" each instance point on the graph below.
+Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating both categories into each of its halves.
 
-[Insert Graph Plot Component Below]
+> The closing diagram should show a singular vector, the weight vector, on a graph. It should be movable, and then as it moves, the region should change + also show a shift/reorientation of sections across.
+## Without $\theta$
+There exists, also, a way to carry out this computation without even knowing the value of $\theta$, the angle between the two vectors. If the vectors are written in their basic component form à la $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$  and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$, then we can find their dot product $\vec{a}\cdot\vec{b}$ by simply using the distributive property, that is, expanding the bracket.
+$$
+\begin{gather}
+\vec{a}\cdot\vec{b}=(a_1\mathbf{i} + a_2\mathbf{j})\cdot(b_1\mathbf{i} + b_2\mathbf{j}) \\
+=a_1\mathbf{i}b_1\mathbf{i}+a_1\mathbf{i}b_2\mathbf{j}+a_2\mathbf{j}b_1\mathbf{i}+a_2\mathbf{j}b_2\mathbf{j} \\
+=a_1b_1(\mathbf{i}\cdot\mathbf{i})+a_1b_2(\mathbf{i}\cdot\mathbf{j})+a_2b_1(\mathbf{j}\cdot\mathbf{i})+a_2b_2(\mathbf{j}\cdot\mathbf{j}) \\
+=a_1b_1 + a_2b_2
+\end{gather}
+$$
+If you're wondering what happened to the $\mathbf{i}$s and $\mathbf{j}$s on line $(3)$, you must recall what we established earlier about vectors and orthogonality. Since $\mathbf{i}$ and $\mathbf{j}$ are forever perpendicular, $\mathbf{i}\cdot\mathbf{j}=0$, "taking out" the second and third terms. Conversely, $\mathbf{i}\cdot\mathbf{i}$ and $\mathbf{j}\cdot\mathbf{j}$ evaluate to $1$, preserving the first and last terms.
 
-With your human eye, you might be able to spot a pattern on the generated graph. We can already see a slight "rift" between our two categories of interest, and finding a linear divisor along this graph is definitely doable. To see how the Perceptron goes about finding our decision boundary in practice, we'll need start by initialising a weight vector, $$w = \begin{pmatrix} x \\ y \end{pmatrix}$$.
+So, because our cross terms vanish, we are left with an incredibly simple equation to find the dot product between our vectors $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$ and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$:
+$$\vec{a}\cdot\vec{b}=a_1b_1 + a_2b_2$$
+Keep in mind that although the equation derived assumes that our vectors, $\mathbf{i}$ and $\mathbf{j}$, are of two dimensions, the formula still scales to vectors of higher dimensions. Indeed, it is on this premise that the perceptron builds its central formula. 
 
-[Insert Weight Vector + Illustration of the Orthogonal Line]
+In the perceptron's case, the "weighted sum", $z$, of a vector point is provided by:
+$$z=\sum(w_i \cdot x_i)+b$$
+We'll go over what each individual equation term means, but at a granular level, the formula is going through every component in vector $w$, identifying its respective component in the vector $x$, and then finding the product of the two corresponding components. It then sums through all the products and adds a bias, $b$ at the end. The equation's expanded form should make it clear that the weighted sum formula is simply finding the dot product between two vectors: $w$ (the weight vector) and $x$ (a data point).
+$$z=w_1x_1+w_2x_2+w_3x_3+\cdots+w_nx_n+b$$
+If you're like me, you might experience some initial uneasiness with how the *b* sticks out as a sore thumb in this sea of $w$s (weights) and $x$s (datapoints). But this is a solvable issue. Since the bias term, $b$, is also just a weight that needs to be learned, it can be rewritten as $w_0x_0$, where $x_0$ is always 1. And if the value of $x_0$ is constantly $1$, then we can even simply refer to the bias term as $w_0$. I'll be using both—$w_0$ and $b$—interchangeably in the paragraphs that follow. Alternatively, because the bias term can be represented as $w_0x_0$, we could simply rewrite the equation of the weighted sum as such:
+$$z=w_0x_0+w_1x_1+w_2x_2+\cdots+w_nx_n$$
+The reason we even have a bias term in first place is because it gives our weight vector an offset so that it does not always start at the origin. Whilst the weight vector can reorient and point in different directions by adjusting the values of its components, a bias term allows us to move the orthogonal decision boundary it generates "up" or "down" the weight vector. In the component below, you can try and play around with different values of $w_0$, $w_1$, and $w_2$. I'd recommend that you specifically view a weight vector (and thus its decision boundary) with and without a value for $w_0$ (that is, without a bias term) to fully grasp what the bias does for us.
 
-As explained in the prior section, the orthogonal, dashed line (which I've also added to the graph) works well as our decision boundary, or divisor. Currently, it's obviously wrong; the 
+> Component to play with a weight vector here, to let the user see how the vector may change with different w0, w1, w2 values.
 
+Regardless of whatever representation of the weighted sum, $z$, that you use (with $w_0x_0$ or $b$ as the bias term), the sign $(+ve/-ve)$ of the result of this sum, $z$, can now finally tell us to which half that a data point, $x$, belongs to according to the weight vector's current orientation. The job of the perceptron from this step would then be to then check if this classification coincides with that of the training data, re-orienting if that is not the case.
 
-- Must its weight also reflect the 
+> I think that, at the end, it would be really cool for me to have another animation component that sequentially shows the incremental process of the weighted sum formula. 
+# Zooming in to Zoom Out
+I want to "zoom in" to my initial example about deciding on a BRT bus or not and imagine, in a remarkably simple and hypothetical world, that my decision was only dependent on 2 factors:
+1. The amount of money (in NGN) in my Cowry Card.
+2. The amount of time (in minutes) I *think* it would take for me to stand in line and board the bus.
 
-In geometry, every vector defines a line perpendicular to it.
+As a side quest, I briefly thought about gathering this "data" manually [^3], en route to work each day, but my words came together much faster than the experimental, month-long inquest for data did. As a result, I've pulled these figures arbitrarily from my head to fit into the example's context.
+
+> Table component with data points here
+
+If you are interested in seeing all the numbers, you can click the "expand" button on the table above. There are 31 decision instances for every day (and morning commute) in March [^4]. Something you would notice is that apart from the two columns detailing *the amount of money in my card* and *how long it would take to board a bus*, there is another column of interest: the <u>decision column</u>, storing values of $1$ or $-1$. $1$ means I took the bus, and $-1$ means I did not. In the previous section, we talked about how the sign of the dot product is a really good indication of what half of the graph that a vector is in. You can think of these decision categories (of $±1$) as indications of what side of the decision boundary that each point is meant to fall on once training is complete. These values, in fact, are also used as checkers throughout training process to see if the current weight vector is doing a good job of classifying a point.
+## Normalisation
+Before plotting the data points, it is good practice to "normalise" our data. As though the money (in NGN) within my Cowry Card is often in the thousands, the waiting time (in minutes) to board a bus is actually in the tens. This difference in scale/magnitude can be slightly problematic because it may make it difficult for us to *create a weight vector that is duly representative of the structure within the data*. If we leave the values along the money axis in thousands and the values along the minutes axis in tens, then the representative vectors for each data point will have a minutes component in the tens and a money component in the thousands. This will also be true for the learned weight vector, and having the derived weight for "money" in thousands and the weight for "waiting time" in tens simply because of their magnitudes may stop us from intuitively identifying the "strength" or "importance" of these features. By keeping them on equal footing, viz. normalising them, we are able to enforce some sort of standardisation, generating (in the process) a weight vector that astutely ensures comparability across features and shows the pattern within the data independent of arbitrary measuremental quirks. There are also other advantages to this—like improving the time it takes the perceptron to converge on a solution—that we will talk about towards the end of this section.
+
+I've gone about "normalising" this data by using the very intuitive [min-max normalisation](https://www.codecademy.com/article/min-max-zscorenormalization) technique. For each data point, I've simply found the difference between said point and the minimum point in the dataset, and then divided that number by the range of the dataset.
+$$x_n=\frac{x-min(X)}{max(X)-min(X)}$$
+The result is a standardised value (which I've rounded to 3 decimal places) that distinctly shows the relative strength (on a scale of 0 to 1) of a vector dimension, without the unit bias.
+
+> Graph Plot Component with data below.
+
+## Checks and Balances
+Now that we have mapped our normalised data points across the graph, to see how the perceptron goes about finding our decision boundary in practice, we'll need to start by initialising a random weight vector, $\vec{w} = (1, 1)$.
+
+> Insert Weight Vector + Illustration of the Orthogonal Line
+
+As I explained in the section prior, the line orthogonal to this weight vector—which presents as a dashed line in the graphical illustration above—works as our decision boundary between the two categories. We can see with our naked eye that the perceptron's first boundary does a poor job of classifying the two categories: all of my "decision instances" end up in its "northern half" with none in the "southern half". Ideally, we'd want one category to stay exclusively on one side, with the other category exclusively in the opposite "northern half". 
+
+To figure out how to orient its compass, the perceptron recursively goes through every point in our dataset, **checks*** to see if (based on its current orientation) the point is classified correctly, and adjusts its weight vector (and subsequently its decision boundary) if the point falls on the wrong side of the divisor. But how does it *know*, if a point has been misclassified? It's actually pretty simple. A point has been misclassified if,
+$$y (\vec{w}\cdot\vec{x})\leq0$$
+The $y$ in this case refers to the label given to a point before the commencement of this training process. You would recall, from my decision column a few paragraphs ago, that I decided to label an instance with $+1$ if I took the bus and $-1$ if I didn't. The reason that the product of this label, $y$, and the dot product of the weight and input vector, $(\vec{w}\cdot\vec{x})$, is a good way to check if a point has been classified correctly is because it is only when $y (\vec{w}\cdot\vec{x})$ is positive that the point has been classified correctly. If we have a point labelled to the $-1$ category, then it is only when its dot product is negative—showing that it falls on the southern half as defined initially by its label—that the result of  $y (\vec{w}\cdot\vec{x})$ is a positive number. Similarly, if we have a point labelled to the $1$ category, then it is only when its dot product is positive—showing that it falls on the northern half as specified initially by its label—that the result of $y (\vec{w}\cdot\vec{x})$ is a positive number. 
+
+> My feeling as of right now is that this paragraph above needs an animation. Thinking of maybe a weight vector that moves around, with a vector/vector point showing -1 and the dot product also interactively changing. Then the checker equation classifying as needed.
+
+If, indeed, a point has been misclassified, the de facto update rule for the perceptron is as follows.
+$$w_n=w_o+yx$$
+Here, the new weight, $w_n$, is found by adding $yx$ to the old weight, $w_o$.
+(Still need to explain why this works?)
+
+This process of checking each point and updating the boundary (if necessary) will iteratively happen until the perceptron converges on a solution. And it *will* converge on a solution, just as long as the points are linearly separable.
+## Pulling it Together
+Hopefully, with a shared understanding of the steps behind the perceptron's learning process, we can pull this knowledge together to take a closer look at how the perceptron will solve my earlier bus problem, finding—through the iterations—how much each factor "weighs" in my decision process by finding a hyperplane to linearly separate the data points.
+
+Whenever you're ready, you can press the play button on the simulation below. You can pause and adjust the speed at which the perceptron does its checks and traverses through each iteration, but really, what you should also be looking at is the generated *Training Log*. As it converges on a solution, the *Training Log* will provide an iterative explanation of every step it takes and how it keeps applying the algorithm.
+
+> The biggest component to solve all the data points.
+
+(Explanation of what the newfound weight vector is, and then a new preclude to talk about how this can help us make a decision)
+
+>Decision component that will help me make a decison depending on the two categories
+# Winter Was Coming
+At the end of the "Checks and Balances" section, I promised that the perceptron "*will* converge on a solution, just as long as the points are linearly separable." My confidence in the perceptron's ability to always find a hyperplane does not emanate from anywhere within me; there is an elucidatory, elegant convergence theorem written 60-odd-years-ago by academics much more accomplished than I currently am. I do not intend on descending into this convergence theory in this post, but what I've only thought to highlight is that the conditional that the convergence theory rests on—"...as long as the points are linearly separable"—turned out to be a limitation large enough to usher in the first AI winter in the 19xxs. The world has always been more complex than linear classifications of yes/no, and this initial model I've just presented found it difficult to scale to more complex applications. And it didn't even have to be complex. This initial Perceptron model could not solve an XOR problem
+<>
+
+that I've left out in this post to 
+
+(On the cold winter, and its shortcomings)
+- The iterations are not exactly effective. The time complexity must be through the roof.
+- If there are multiple ways to separate the data, then the line we find might not be the right line
+- It won't always learn/converge on a solution
+
+(My confidence in the perceptron's ability to always find a hyperplane has no bearing in me)
+# For Good Measure
+Best literature I've read about this and then anil ananthaswamy
+
+Code in place
 
 [^1]: When in survival mode, organisms often compress their clouds of complexity into dichotomous decisions: eat/don't eat, fight/flight, etc.
 [^2]: More variables to consider means more dimensions. Instead of a 2D plane (x-axis vs y-axis), we'll need many more axes for each variable, even though we can't visualise any dimensions higher than 3D.
 [^3]: (Describe what the manual process will look like in this footnote a la logging data each morning)
-[^4]: I'm not on-site every on weekends, so in reality, this number is much smaller. But it is a hypothetical number, and 31 seems like a nice figure to go with.
+[^4]: I'm not on-site every on weekends, so in reality, this number is much smaller. But it is a hypothetical, and 31 seems like a nice figure to go with.

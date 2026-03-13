@@ -209,7 +209,32 @@ Content coming soon...`
     }
 
     const renderMarkdown = (content: string): string => {
+        // Protect LaTeX math (display and inline) so marked doesn't mangle it.
+        const mathPlaceholders: Record<string, string> = {}
+        let mathCounter = 0
+
+        // Replace display math $$...$$ first
+        content = content.replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
+            const key = `MATH_BLOCK_${mathCounter++}`
+            mathPlaceholders[key] = `$$${expr}$$`
+            return `<span data-math-key="${key}"></span>`
+        })
+
+        // Replace inline math $...$ (avoid matching already replaced $$ blocks)
+        // This regex is conservative: it avoids matching across newlines.
+        content = content.replace(/(^|[^\\$])\$([^\n\$]+?)\$/g, (_m, prefix, expr) => {
+            const key = `MATH_INLINE_${mathCounter++}`
+            mathPlaceholders[key] = `$${expr}$`
+            return prefix + `<span data-math-key="${key}"></span>`
+        })
+
         let html = marked.parse(content) as string
+
+        // Restore math placeholders into the generated HTML exactly as originally written
+        Object.keys(mathPlaceholders).forEach((key) => {
+            const placeholder = `<span data-math-key="${key}"></span>`
+            html = html.split(placeholder).join(mathPlaceholders[key])
+        })
 
         // Convert footnote references to clickable superscript numbers
         html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')

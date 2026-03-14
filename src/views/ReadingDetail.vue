@@ -210,7 +210,7 @@ onUnmounted(() => {
             </div>
             
             <p v-if="post.desc" class="text-lg leading-relaxed mb-6" 
-               :class="isDark ? 'text-primary-300' : 'text-primary-600'">
+               :class="isDark ? 'text-base text-primary-300' : 'text-base text-primary-600'">
               {{ post.desc }}
             </p>
             
@@ -223,7 +223,7 @@ onUnmounted(() => {
           <hr class="mb-8 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
 
           <!-- Reading Content -->
-          <div class="prose prose-lg max-w-none leading-relaxed" :class="isDark ? 'prose-invert text-primary-300' : 'text-primary-700'">
+          <div class="prose prose-lg max-w-none leading-relaxed" :class="isDark ? 'text-base prose-invert text-primary-300' : 'text-base text-primary-700'">
             <div v-html="renderMarkdown(post.content)" @click="handleFootnoteClick"></div>
           </div>
         </article>

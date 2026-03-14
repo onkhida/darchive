@@ -217,7 +217,7 @@ onUnmounted(() => {
                 <div v-html="renderMarkdown(post.content || '')" 
                      @click="handleFootnoteClick"
                      class="leading-relaxed" 
-                     :class="isDark ? 'text-primary-300' : 'text-primary-700'">
+                     :class="isDark ? 'text-sm md:text-base text-primary-300' : 'text-sm md:text-base text-primary-700'">
                 </div>
               </div>
             </article>

@@ -12,7 +12,7 @@ const { isDark, toggleTheme, initializeTheme } = useTheme()
 const currentTime = ref('')
 
 const goToPost = (slug: string) => {
-  router.push(`/commentary/${slug}`)
+  router.push(`/c/${slug}`)
 }
 
 const updateTime = () => {
@@ -81,11 +81,7 @@ onUnmounted(() => {
           <h1 class="text-6xl font-cormorant font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">commentary.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-            I am frequently punctuated with fragmented thoughts and ramblings spanning across several primary 
-            commentary topics. In a sense, this collection is very much like a curated public journal. Let me start by making
-            clear that there is really no obligation on your part to consume this content any further than you already have as
-            most of these are things I scribble away for me. Please remember, my thoughts are public so that others can peer
-            and, occasionally, provide me with insights to be better, but they are first for me at this point.
+            My days are often punctuated with fragmented thoughts and feelings that span across interdisciplinary topics. As I challenge these notions and try to make sense of the wonder that is existence, I have made my commentary page a public log of emotions that stay with me on this journey. I write about anything really, and whilst many of these entries may vary in intensity and brevity, I have thought it fitting to let this segment of my site tell a little bit more about my me, psyche and, the realities that I have lived up until this point.
           </p>
         </section>
 
@@ -103,7 +99,7 @@ onUnmounted(() => {
           <div v-else class="space-y-3">
             <div v-for="entry in posts" :key="entry.date" 
                  @click="goToPost(entry.slug)"
-                 class="flex items-center justify-between group cursor-pointer py-2 px-3 rounded-lg transition-colors"
+                 class="flex items-center justify-between group cursor-pointer py-2 px-3 rounded-sm transition-colors"
                  :class="isDark ? 'hover:bg-primary-900' : 'hover:bg-primary-100'">
               
               <div class="flex items-center space-x-4">

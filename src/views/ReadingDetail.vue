@@ -19,6 +19,8 @@ const isLoading = ref(true)
 // Footnotes panel
 const activeFootnote = ref<number | null>(null)
 const expandedFootnote = ref<number | null>(null)
+// Keep track of the last reference anchor id that was clicked in the content (e.g. 'fnref-3-2')
+const lastRefAnchorId = ref<string | null>(null)
 
 const updateTime = () => {
   const now = new Date()
@@ -72,14 +74,30 @@ const highlightFootnote = (footnoteId: number) => {
 }
 
 const handleFootnoteClick = (event: Event) => {
-  const target = event.target as HTMLElement
-  if (target.classList.contains('footnote-ref')) {
-    const footnoteId = parseInt(target.dataset.footnote || '0')
+  const node = event.target as Node
+  // find the nearest element with the footnote-ref class (handles clicks on text nodes or wrapper elements)
+  let el: Element | null = null
+  try {
+    if ((node as Element).closest) {
+      el = (node as Element).closest('.footnote-ref')
+    } else if (node && (node as any).parentElement) {
+      el = (node as any).parentElement.closest('.footnote-ref')
+    }
+  } catch (e) {
+    el = null
+  }
+
+  if (el && el instanceof HTMLElement) {
+    const footnoteId = parseInt(el.dataset.footnote || '0')
     if (footnoteId) {
+      // store the exact reference anchor id so we can return here from mobile footnotes
+      lastRefAnchorId.value = el.id || null
       highlightFootnote(footnoteId)
     }
   }
 }
+
+// Removed: Programmatically scroll back to the last clicked reference (mobile fallback)
 
 const loadPost = async () => {
   const slug = route.params.slug as string
@@ -253,26 +271,31 @@ onUnmounted(() => {
       </aside>
 
       <!-- Mobile footnotes (appear as section after main content) -->
-      <section v-if="post && post.footnotes && post.footnotes.length > 0" class="xl:hidden container mx-auto px-4 md:px-8 pb-12 max-w-3xl">
-        <div id="mobile-footnotes" class="border-t pt-8" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
-          <h3 class="text-3xl font-medium mb-6"
-              :class="isDark ? 'text-primary-200' : 'text-primary-800'">
-            Footnotes
-          </h3>
-          
-          <div class="space-y-4">
-            <p v-for="footnote in post.footnotes" :key="footnote.id" 
-               class="text-sm leading-relaxed transition-colors duration-200"
-               :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-              <span class="font-medium"
-                    :class="isDark ? 'text-primary-200' : 'text-primary-600'">
-                {{ footnote.id }}:
-              </span>
-              {{ footnote.content }}
-            </p>
+      <div v-if="post && post.footnotes && post.footnotes.length > 0" class="lg:hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-8 lg:col-start-2">
+            <div id="mobile-footnotes" class="border-t pt-8 mt-12" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
+              <h3 class="text-3xl font-medium mb-6"
+                  :class="isDark ? 'text-primary-200' : 'text-primary-800'">
+                Footnotes
+              </h3>
+              
+              <div class="space-y-4">
+                <p v-for="footnote in post.footnotes" :key="footnote.id" 
+                   class="text-sm leading-relaxed transition-colors duration-200"
+                   :class="isDark ? 'text-primary-300' : 'text-primary-700'">
+                  <span class="font-medium"
+                        :class="isDark ? 'text-primary-200' : 'text-primary-600'">
+                    {{ footnote.id }}:
+                  </span>
+                  <span :id="`footnote-${footnote.id}`" v-html="footnote.content"></span>
+                  <!-- back-to-ref removed -->
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <!-- Footer -->
       <footer class="container mx-auto max-w-3xl px-4 md:px-8 pb-12 pt-8 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
@@ -294,18 +317,29 @@ onUnmounted(() => {
 /* Footnote styling that inherits text color from theme */
 :deep(.footnote-ref) {
   color: inherit;
+  text-decoration: none !important;
 }
 
-/* Link styling that inherits text color instead of being greyed */
-:deep(a) {
+/* Ensure bold text follows the current theme — inherit color from the prose container so dark mode remains light and light mode remains dark */
+.prose :deep(strong),
+.prose :deep(b) {
   color: inherit !important;
-  text-decoration-line: underline;
-  text-underline-offset: 2px;
-  transition: all 0.2s ease;
+  font-weight: 600 !important;
 }
 
-:deep(a:hover) {
-  text-decoration-line: none;
+/* Indent lists inside prose for better reading */
+.prose :deep(ul),
+.prose :deep(ol) {
+  padding-left: 1.25rem !important; /* 20px */
+  margin-left: .5rem !important;
+  list-style-position: outside !important;
+}
+
+.prose :deep(ul ul),
+.prose :deep(ol ol),
+.prose :deep(ul ol),
+.prose :deep(ol ul) {
+  padding-left: 1rem !important; /* nested indent */
 }
 
 /* Dark theme footnotes - slightly lighter */
@@ -324,5 +358,26 @@ onUnmounted(() => {
 
 :not(.dark) :deep(.footnote-ref:hover) {
   opacity: 0.6;
+}
+
+/* Mobile footnotes spacing */
+#mobile-footnotes {
+  padding: 1.5rem;
+  /* outline: 1px solid red; */
+}
+
+#mobile-footnotes .space-y-4 p {
+  padding: 0.5rem 0 !important;
+}
+
+/* Desktop aside footnotes — add internal padding so each item breathes */
+aside .space-y-2 > div {
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Ensure footnote content spans wrap nicely */
+#mobile-footnotes span[id^="footnote-"] {
+  display: block;
+  margin-top: 0.25rem;
 }
 </style>

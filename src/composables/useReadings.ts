@@ -205,11 +205,16 @@ Content coming soon...`
         return posts.value.find(post => post.slug === slug) || null
     }
 
+    const refCounts: { [key: string]: number } = {}
+
     const renderMarkdown = (content: string): string => {
         let html = marked.parse(content) as string
 
         // Convert footnote references [^1], [^2], etc. to clickable superscript numbers
-        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')
+        html = html.replace(/\[\^(\d+)\]/g, (_m, id) => {
+            const count = (refCounts[id] = (refCounts[id] || 0) + 1)
+            return `<sup><a href="#footnote-${id}" id="fnref-${id}-${count}" class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="${id}" data-footnote-ref="${count}">[${id}]</a></sup>`
+        })
 
         // Style images to take full width of container with auto height
         html = html.replace(/<img([^>]*?)>/g, '<img$1 class="w-full h-auto my-6">')

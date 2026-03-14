@@ -69,6 +69,72 @@ const handleFootnoteClick = (event: Event) => {
   }
 }
 
+// Tooltip for desktop hover preview of footnotes
+import { ref as vueRef } from 'vue'
+const footnoteTooltip = vueRef<HTMLElement | null>(null)
+
+const showFootnoteTooltip = (ev: MouseEvent) => {
+  const target = ev.target as HTMLElement
+  if (!target || !target.classList.contains('footnote-ref')) return
+  if (window.innerWidth < 1024) return // don't show on small screens
+  const id = target.dataset.footnote
+  if (!id) return
+  const foot = post.value?.footnotes?.find(f => String(f.id) === id)
+  if (!foot) return
+
+  // remove existing tooltip if any
+  hideFootnoteTooltip()
+
+  const el = document.createElement('div')
+  el.className = 'footnote-tooltip max-w-xs p-3 rounded shadow-lg text-sm'
+  el.style.position = 'fixed'
+  el.style.zIndex = '9999'
+  el.style.background = getComputedStyle(document.body).getPropertyValue('--tooltip-bg') || (isDark.value ? 'rgba(17,24,39,0.95)' : 'rgba(255,255,255,0.98)')
+  el.style.color = isDark.value ? '#e5e7eb' : '#111827'
+  el.innerHTML = foot.content
+
+  document.body.appendChild(el)
+  footnoteTooltip.value = el
+
+  // position near mouse
+  const left = Math.min(window.innerWidth - el.offsetWidth - 12, ev.clientX + 12)
+  const top = Math.min(window.innerHeight - el.offsetHeight - 12, ev.clientY + 12)
+  el.style.left = `${left}px`
+  el.style.top = `${top}px`
+}
+
+const moveFootnoteTooltip = (ev: MouseEvent) => {
+  if (!footnoteTooltip.value) return
+  const el = footnoteTooltip.value
+  const left = Math.min(window.innerWidth - el.offsetWidth - 12, ev.clientX + 12)
+  const top = Math.min(window.innerHeight - el.offsetHeight - 12, ev.clientY + 12)
+  el.style.left = `${left}px`
+  el.style.top = `${top}px`
+}
+
+const hideFootnoteTooltip = () => {
+  if (footnoteTooltip.value) {
+    footnoteTooltip.value.remove()
+    footnoteTooltip.value = null
+  }
+}
+
+const setupFootnoteHover = () => {
+  // Attach delegated listeners to the interactive container
+  if (!interactiveContainer.value) return
+
+  interactiveContainer.value.addEventListener('mouseover', showFootnoteTooltip as EventListener)
+  interactiveContainer.value.addEventListener('mousemove', moveFootnoteTooltip as EventListener)
+  interactiveContainer.value.addEventListener('mouseout', (ev: Event) => {
+    const mouseEv = ev as MouseEvent
+    const to = mouseEv.relatedTarget as HTMLElement | null
+    // If moving into tooltip, keep it (rare). Otherwise hide.
+    if (to && footnoteTooltip.value && footnoteTooltip.value.contains(to)) return
+    hideFootnoteTooltip()
+  })
+}
+
+// Ensure we setup hover after mounting content
 const mountInteractiveComponents = async () => {
   // This is now handled by the enhanced markdown processing in useTechnical
   // which automatically detects and renders components using the registry
@@ -76,6 +142,9 @@ const mountInteractiveComponents = async () => {
   
   // Add copy buttons to code blocks after content is rendered
   addCopyButtonsToCodeBlocks()
+
+  // Setup footnote hover tooltip behavior
+  setupFootnoteHover()
 }
 
 const addCopyButtonsToCodeBlocks = () => {
@@ -338,7 +407,7 @@ onUnmounted(() => {
                     <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M8.5 0C8.81296 0 9.06667 0.253706 9.06667 0.566667V2.83333C9.06667 3.14629 8.81296 3.4 8.5 3.4C8.18704 3.4 7.93333 3.14629 7.93333 2.83333V0.566667C7.93333 0.253706 8.18704 0 8.5 0ZM2.48959 2.48959C2.71089 2.2683 3.06968 2.2683 3.29098 2.48959L4.89376 4.09236C5.11505 4.31366 5.11505 4.67246 4.89376 4.89376C4.67246 5.11505 4.31366 5.11505 4.09236 4.89376L2.48959 3.29098C2.2683 3.06968 2.2683 2.71089 2.48959 2.48959ZM0.566667 7.93333C0.253706 7.93333 0 8.18704 0 8.5C0 8.81296 0.253706 9.06667 0.566667 9.06667H2.83333C3.14629 9.06667 3.4 8.81296 3.4 8.5C3.4 8.18704 3.14629 7.93333 2.83333 7.93333H0.566667ZM2.48959 14.5104C2.2683 14.2891 2.2683 13.9304 2.48959 13.709L4.09236 12.1063C4.31366 11.8849 4.67246 11.8849 4.89376 12.1063C5.11505 12.3275 5.11505 12.6863 4.89376 12.9076L3.29098 14.5104C3.06968 14.7317 2.71089 14.7317 2.48959 14.5104ZM14.1667 7.93333C13.8538 7.93333 13.6 8.18704 13.6 8.5C13.6 8.81296 13.8538 9.06667 14.1667 9.06667H16.4333C16.7462 9.06667 17 8.81296 17 8.5C17 8.18704 16.7462 7.93333 16.4333 7.93333H14.1667ZM12.1063 4.89376C11.8849 4.67246 11.8849 4.31366 12.1063 4.09236L13.709 2.48959C13.9304 2.2683 14.2891 2.2683 14.5104 2.48959C14.7317 2.71089 14.7317 3.06968 14.5104 3.29098L12.9076 4.89376C12.6863 5.11505 12.3275 5.11505 12.1063 4.89376ZM9.06667 14.1667C9.06667 13.8538 8.81296 13.6 8.5 13.6C8.18704 13.6 7.93333 13.8538 7.93333 14.1667V16.4333C7.93333 16.7462 8.18704 17 8.5 17C8.81296 17 9.06667 16.7462 9.06667 16.4333V14.1667ZM12.1063 12.1063C12.3275 11.8849 12.6863 11.8849 12.9076 12.1063L14.5104 13.709C14.7317 13.9304 14.7317 14.2891 14.5104 14.5104C14.2891 14.7317 13.9304 14.7317 13.709 14.5104L12.1063 12.9076C11.8849 12.6863 11.8849 12.3275 12.1063 12.1063ZM6.23333 8.5C6.23333 7.24815 7.24815 6.23333 8.5 6.23333C9.75185 6.23333 10.7667 7.24815 10.7667 8.5C10.7667 9.75185 9.75185 10.7667 8.5 10.7667C7.24815 10.7667 6.23333 9.75185 6.23333 8.5ZM8.5 5.1C6.62224 5.1 5.1 6.62224 5.1 8.5C5.1 10.3778 6.62224 11.9 8.5 11.9C10.3778 11.9 11.9 10.3778 11.9 8.5C11.9 6.62224 10.3778 5.1 8.5 5.1Z"
                       fill="currentColor" />
-                  </svg>
+                </svg>
                 </button>
               </div>
               
@@ -376,7 +445,8 @@ onUnmounted(() => {
                           :class="isDark ? 'text-primary-200' : 'text-primary-600'">
                       {{ footnote.id }}:
                     </span>
-                    <span v-html="footnote.content"></span>
+                    <span :id="`footnote-${footnote.id}`" v-html="footnote.content"></span>
+                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 text-xs opacity-60" aria-label="Back to reference">↩</a>
                   </p>
                 </div>
               </div>
@@ -409,9 +479,43 @@ onUnmounted(() => {
 /* Footnote styling that inherits text color from theme */
 :deep(.footnote-ref) {
   color: inherit;
+  text-decoration: none !important; /* Prevent underline on footnote anchors */
 }
 
-/* Link styling that inherits text color instead of being greyed */
+/* Tooltip for footnote previews appended to body */
+:deep(.footnote-tooltip) {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  max-width: 22rem;
+  line-height: 1.4;
+}
+
+/* Ensure bold text is clearly visible in light mode */
+.prose :deep(strong),
+.prose :deep(b) {
+  color: rgb(17 24 39) !important; /* text-gray-900 */
+  font-weight: 600 !important;
+}
+
+/* Indent lists inside prose for better reading */
+.prose :deep(ul),
+.prose :deep(ol) {
+  padding-left: 1.5rem !important; /* 24px */
+  margin-left: 1rem !important;
+  list-style-position: outside !important;
+  list-style-type: disc !important;
+}
+
+.prose :deep(ul ul),
+.prose :deep(ol ol),
+.prose :deep(ul ol),
+.prose :deep(ol ul) {
+  padding-left: 1.25rem !important; /* nested indent */
+}
+
+/* Link styling that inherits text color instead of being grey */
 :deep(a) {
   color: inherit !important;
   text-decoration-line: underline;
@@ -598,6 +702,22 @@ aside nav a:hover {
   color: rgb(55 65 81) !important; /* text-gray-700 */
 }
 
+/* Ensure lists inside prose are indented (stronger specificity) */
+:deep(.prose) :deep(ul),
+:deep(.prose) :deep(ol) {
+  padding-left: 1.5rem !important; /* 24px */
+  margin-left: 0 !important;
+  list-style-position: outside !important;
+  list-style-type: disc !important;
+}
+
+:deep(.prose) :deep(ul ul),
+:deep(.prose) :deep(ol ol),
+:deep(.prose) :deep(ul ol),
+:deep(.prose) :deep(ol ul) {
+  padding-left: 1.25rem !important; /* nested indent */
+}
+
 .prose :deep(h1),
 .prose :deep(h2),
 .prose :deep(h3),
@@ -721,5 +841,22 @@ aside nav a:hover {
   border-radius: 0 !important;
   font-size: 0.875rem !important;
   line-height: 1.7 !important;
+}
+
+/* Tooltip styling for footnote previews */
+.footnote-tooltip {
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.footnote-ref {
+  position: relative;
+  cursor: pointer;
+}
+
+.footnote-ref:hover .footnote-tooltip {
+  opacity: 1;
 }
 </style>

@@ -14,23 +14,27 @@ export interface CommentaryPost {
     footnotes?: { id: number; content: string }[]
 }
 
-// List of all markdown files in the commentary folder
+// List of all markdown files I want to use in the commentary folder
 const markdownFiles = [
-    '2022-05-04-mahogany-pieces.md',
-    '2023-02-14-centre-forward-play.md',
-    '2023-02-15-mind-body-discrepancy.md',
-    '2023-02-16-whats-inside.md',
-    '2023-02-17-hot-wheels.md',
-    '2023-02-17-one-too-many-zebras.md',
-    '2023-03-07-the-promise-to-be-better.md',
-    '2023-03-08-media-queries.md',
-    '2023-03-08-on-belief.md',
-    '2023-05-04-nineteen.md',
-    '2023-05-08-beating-the-press.md',
-    '2023-09-11-sense-of-agency.md',
-    '2023-09-22-across-space-time.md',
-    '2023-11-17-centre-stage.md',
-    '2023-12-04-regarding-stacks.md'
+    '2022-05-04 mahogany-pieces.md',
+    '2023-02-14 centre-forward-play.md',
+    '2023-02-15 mind-body-discrepancy.md',
+    '2023-02-16 whats-inside.md',
+    '2023-02-17 hot-wheels.md',
+    '2023-02-17 one-too-many-zebras.md',
+    '2023-03-07 the-promise-to-be-better.md',
+    '2023-03-08 media-queries.md',
+    '2023-03-08 on-belief.md',
+    '2023-05-04 nineteen.md',
+    '2023-05-08 beating-the-press.md',
+    '2023-09-11 sense-of-agency.md',
+    '2023-09-22 across-space-time.md',
+    '2023-11-17 centre-stage.md',
+    '2023-12-04 regarding-stacks.md',
+    '2024-02-11 everything-has-its-wonders.md',
+    '2024-05-04 twenty.md',
+    '2024-05-07 flow-state.md',
+    '2025-05-04 twenty-one.md',
 ]
 
 const posts = ref<CommentaryPost[]>([])
@@ -39,8 +43,14 @@ const isLoading = ref(false)
 export function useCommentary() {
 
     const generateSlug = (fileName: string): string => {
-        // Remove the date prefix and .md extension, then create slug
-        return fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '').toLowerCase()
+        // Filenames are like "2025-05-04 twenty-one.md" — split on first space and use the remainder as slug
+        const nameNoExt = fileName.replace(/\.md$/, '')
+        const firstSpace = nameNoExt.indexOf(' ')
+        if (firstSpace === -1) {
+            return nameNoExt.toLowerCase()
+        }
+        const slugPart = nameNoExt.slice(firstSpace + 1).trim()
+        return slugPart.toLowerCase().replace(/\s+/g, '-')
     }
 
     const formatDate = (dateStr: string): string => {
@@ -90,13 +100,13 @@ export function useCommentary() {
         } catch (error) {
             console.warn(`Could not load ${fileName}:`, error)
             // Return a fallback for files we don't have content for yet
-            return `---
-title: ${fileName.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-date: ${fileName.substring(0, 10)}
-desc: Coming soon...
----
-
-Content coming soon...`
+            // Extract title from filename after the first space and prettify it
+            const nameNoExt = fileName.replace(/\.md$/, '')
+            const firstSpace = nameNoExt.indexOf(' ')
+            let rawTitle = firstSpace === -1 ? nameNoExt : nameNoExt.slice(firstSpace + 1)
+            // Replace dashes with spaces and capitalize words
+            const title = rawTitle.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+            return `---\ntitle: ${title}\ndate: ${fileName.substring(0, 10)}\ndesc: Coming soon...\n---\n\nContent coming soon...`
         }
     }
 
@@ -222,7 +232,11 @@ Content coming soon...`
 
         // Convert footnote references [^1], [^2], etc. to clickable superscript numbers
         // Use theme-appropriate colors instead of blue
-        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')
+        const refCounts: Record<string, number> = {}
+        html = html.replace(/\[\^(\d+)\]/g, (_m, id) => {
+            const count = (refCounts[id] = (refCounts[id] || 0) + 1)
+            return `<sup><a href="#footnote-${id}" id="fnref-${id}-${count}" class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="${id}" data-footnote-ref="${count}">[${id}]</a></sup>`
+        })
 
         // Style images to take full width of container with auto height
         html = html.replace(/<img([^>]*?)>/g, '<img$1 class="w-full h-auto my-6">')

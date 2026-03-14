@@ -257,7 +257,8 @@ onUnmounted(() => {
                   <div v-if="expandedFootnote === footnote.id" 
                        class="pl-4 pb-3 pr-2 leading-relaxed text-xs animate-in slide-in-from-top-2 duration-200"
                        :class="isDark ? 'text-primary-400' : 'text-primary-700'">
-                    {{ footnote.content }}
+                    <span :id="`footnote-${footnote.id}`">{{ footnote.content }}</span>
+                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 text-xs opacity-60" aria-label="Back to reference">↩</a>
                   </div>
                 </div>
               </div>
@@ -283,7 +284,8 @@ onUnmounted(() => {
                           :class="isDark ? 'text-primary-200' : 'text-primary-600'">
                       {{ footnote.id }}:
                     </span>
-                    {{ footnote.content }}
+                    <span :id="`footnote-${footnote.id}`" v-html="footnote.content"></span>
+                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 text-xs opacity-60" aria-label="Back to reference">↩</a>
                   </p>
                 </div>
               </div>
@@ -316,18 +318,29 @@ onUnmounted(() => {
 /* Footnote styling that inherits text color from theme */
 :deep(.footnote-ref) {
   color: inherit;
+  text-decoration: none !important;
 }
 
-/* Link styling that inherits text color instead of being greyed */
-:deep(a) {
+/* Ensure bold text is clearly visible in light mode */
+.prose :deep(strong),
+.prose :deep(b) {
   color: inherit !important;
-  text-decoration-line: underline;
-  text-underline-offset: 2px;
-  transition: all 0.2s ease;
+  font-weight: 600 !important;
 }
 
-:deep(a:hover) {
-  text-decoration-line: none;
+/* Indent lists inside prose for better reading */
+.prose :deep(ul),
+.prose :deep(ol) {
+  padding-left: 1.25rem !important; /* 20px */
+  margin-left: .5rem !important;
+  list-style-position: outside !important;
+}
+
+.prose :deep(ul ul),
+.prose :deep(ol ol),
+.prose :deep(ul ol),
+.prose :deep(ol ul) {
+  padding-left: 1rem !important; /* nested indent */
 }
 
 /* Dark theme footnotes - slightly lighter */

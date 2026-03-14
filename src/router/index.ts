@@ -26,6 +26,12 @@ const router = createRouter({
             name: 'commentary-detail',
             component: CommentaryDetail
         },
+        // Short alias for commentary detail pages
+        {
+            path: '/c/:slug',
+            name: 'commentary-detail-short',
+            component: CommentaryDetail
+        },
         {
             path: '/readings',
             name: 'readings',

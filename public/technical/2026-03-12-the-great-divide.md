@@ -126,7 +126,7 @@ Whenever you're ready, you can press the play button on the simulation below. Yo
 (Explanation of what the newfound weight vector is, and then a new preclude to talk about how this can help us make a decision)
 
 >Decision component that will help me make a decison depending on the two categories
-# Winter Was Coming
+## Winter Was Coming
 At the end of the "Checks and Balances" section, I promised that the perceptron "*will* converge on a solution, just as long as the points are linearly separable." My confidence in the perceptron's ability to always find a hyperplane does not emanate from anywhere within me; there is an elucidatory, elegant convergence theorem written 60-odd-years-ago by academics much more accomplished than I currently am. I do not intend on descending into this convergence theory in this post, but what I've only thought to highlight is that the conditional that the convergence theory rests on—"...as long as the points are linearly separable"—turned out to be a limitation large enough to usher in the first AI winter in the 19xxs. The world has always been more complex than linear classifications of yes/no, and this initial model I've just presented found it difficult to scale to more complex applications. And it didn't even have to be complex. This initial Perceptron model could not solve an XOR problem
 <>
 

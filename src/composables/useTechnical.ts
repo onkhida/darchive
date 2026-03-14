@@ -236,8 +236,12 @@ Content coming soon...`
             html = html.split(placeholder).join(mathPlaceholders[key])
         })
 
-        // Convert footnote references to clickable superscript numbers
-        html = html.replace(/\[\^(\d+)\]/g, '<sup class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="$1">[$1]</sup>')
+        // Convert footnote references to anchors with stable ids and occurrence counts
+        const refCounts: Record<string, number> = {}
+        html = html.replace(/\[\^(\d+)\]/g, (_m, id) => {
+            const count = (refCounts[id] = (refCounts[id] || 0) + 1)
+            return `<sup><a href="#footnote-${id}" id="fnref-${id}-${count}" class="footnote-ref cursor-pointer transition-colors hover:opacity-80" data-footnote="${id}" data-footnote-ref="${count}">[${id}]</a></sup>`
+        })
 
         // Style images to take full width with sharp corners
         html = html.replace(/<img([^>]*?)>/g, '<img$1 class="w-full h-auto my-6">')
@@ -256,7 +260,7 @@ Content coming soon...`
 
     const parseInteractiveComponents = (html: string): string => {
         // Convert custom component tags to Vue component placeholders
-        html = html.replace(/<([a-z][a-z0-9]*(?:-[a-z0-9]*)*)((?:\s+[^>]*)?)\s*\/?>/gi, (match, tagName, attrs) => {
+        html = html.replace(/<([a-z][a-z0-9]*(?:-[a-z0-9]*)*)((?:\s+[^>]*)?)\s*\/?>>/gi, (match, tagName, attrs) => {
             const lowerTagName = tagName.toLowerCase()
 
             // Only process if it's a valid component in our registry

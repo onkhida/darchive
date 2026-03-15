@@ -102,9 +102,7 @@ onUnmounted(() => {
           <h1 class="text-6xl font-cormorant font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">technical.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-            Dive deep into the mechanics of code, design patterns, and the technical craft behind meaningful digital experiences. 
-            These explorations cover everything from semantic web principles to modern development practices, 
-            often with interactive examples to illustrate key concepts.
+            Here's a log of technical concepts that I've tried to break down in simple ways. A lot of the code written might be heavily opinionated—as the patterns, ideas and solutions are derived from cases and scenarios that I have personally encountered. Nevertheless, I hope you find these blobs of text useful in whatever capacity you see fit.
           </p>
         </section>
 
@@ -129,30 +127,22 @@ onUnmounted(() => {
               <!-- Even index: Image left, text right -->
               <div 
                 v-if="index % 2 === 0" 
-                class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+                class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"
               >
                 <!-- Image Left -->
-                <div class="order-1">
-                  <div class="aspect-video overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300" 
+                <div class="order-1 h-full">
+                  <div class="overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300 h-full" 
                        :class="isDark ? 'bg-primary-800' : 'bg-primary-200'">
                     <img 
-                      v-if="post.coverImage"
                       :src="post.coverImage" 
                       :alt="post.title"
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div 
-                      v-else 
-                      class="w-full h-full flex items-center justify-center transition-colors"
-                      :class="isDark ? 'text-primary-500' : 'text-primary-400'"
-                    >
-                      Image placeholder
-                    </div>
                   </div>
                 </div>
 
                 <!-- Text Right -->
-                <div class="order-2 space-y-3">
+                <div class="order-2 flex flex-col justify-center h-full space-y-3">
                   <div class="flex items-center justify-between">
                     <div class="text-sm md:text-base font-medium transition-colors" 
                          :class="isDark ? 'text-primary-500' : 'text-primary-500'">
@@ -164,7 +154,7 @@ onUnmounted(() => {
                       INTERACTIVE
                     </div>
                   </div>
-                  <h2 class="text-xl lg:text-2xl font-bold transition-colors group-hover:opacity-80 leading-tight" 
+                  <h2 class="text-2xl lg:text-3xl font-bold transition-colors group-hover:opacity-80 leading-tight" 
                       :class="isDark ? 'text-primary-100' : 'text-primary-900'">
                     {{ post.title }}
                   </h2>
@@ -182,10 +172,10 @@ onUnmounted(() => {
               <!-- Odd index: Text left, image right -->
               <div 
                 v-else 
-                class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+                class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"
               >
                 <!-- Text Left -->
-                <div class="order-2 lg:order-1 space-y-3">
+                <div class="order-2 lg:order-1 flex flex-col justify-center h-full space-y-3">
                   <div class="flex items-center justify-between">
                     <div class="text-sm md:text-base font-medium transition-colors" 
                          :class="isDark ? 'text-primary-500' : 'text-primary-500'">
@@ -197,7 +187,7 @@ onUnmounted(() => {
                       INTERACTIVE
                     </div>
                   </div>
-                  <h2 class="text-xl lg:text-2xl font-bold transition-colors group-hover:opacity-80 leading-tight" 
+                  <h2 class="text-2xl lg:text-3xl font-bold transition-colors group-hover:opacity-80 leading-tight" 
                       :class="isDark ? 'text-primary-100' : 'text-primary-900'">
                     {{ post.title }}
                   </h2>
@@ -212,22 +202,14 @@ onUnmounted(() => {
                 </div>
 
                 <!-- Image Right -->
-                <div class="order-1 lg:order-2">
-                  <div class="aspect-video overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300" 
+                <div class="order-1 lg:order-2 h-full">
+                  <div class="overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300 h-full" 
                        :class="isDark ? 'bg-primary-800' : 'bg-primary-200'">
                     <img 
-                      v-if="post.coverImage"
                       :src="post.coverImage" 
                       :alt="post.title"
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div 
-                      v-else 
-                      class="w-full h-full flex items-center justify-center transition-colors"
-                      :class="isDark ? 'text-primary-500' : 'text-primary-400'"
-                    >
-                      Image placeholder
-                    </div>
                   </div>
                 </div>
               </div>

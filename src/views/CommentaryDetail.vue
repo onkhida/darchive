@@ -323,6 +323,8 @@ onUnmounted(() => {
 
 /* Ensure bold text is clearly visible in light mode */
 .prose :deep(strong),
+.prose :deep(h3),
+.prose :deep(blockquote),
 .prose :deep(b) {
   color: inherit !important;
   font-weight: 600 !important;

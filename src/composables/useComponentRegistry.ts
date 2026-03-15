@@ -43,6 +43,15 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
             'initial-a': 'Optional: initial vector A as "x,y" (example: "100,-40")',
             'initial-b': 'Optional: initial vector B as "x,y" (example: "-80,80")'
         }
+    },
+
+    'classification-plot': {
+        component: () => import('../components/the-great-divide/ClassificationPlot.vue'),
+        description: 'Interactive classification plot: add points, drag weight vector, see northern/southern halves',
+        props: {
+            'width': 'Optional: plot width in px (default: 560)',
+            'height': 'Optional: plot height in px (default: 400)'
+        }
     }
 
     // Add more components here as needed:

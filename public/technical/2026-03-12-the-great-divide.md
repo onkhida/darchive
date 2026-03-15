@@ -46,6 +46,8 @@ More pertinently, though, the other thing to notice is that when the angle betwe
 
 > What I am thinking of doing is to have a diagram here where the weight vector is fixed. The user can now add "vectors" or points and depending on where the vector is, the component should show "southern half" or "northern half".
 
+<div class="interactive-component" data-component="classification-plot" data-props="%7B%7D"></div>
+
 Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating both categories into each of its halves.
 
 > The closing diagram should show a singular vector, the weight vector, on a graph. It should be movable, and then as it moves, the region should change + also show a shift/reorientation of sections across.

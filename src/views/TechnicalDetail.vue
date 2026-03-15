@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useTechnical, type TechnicalPost } from '../composables/useTechnical'
 import { loadComponent } from '../composables/useComponentRegistry'
 import { useTheme } from '../composables/useTheme'
+import { createApp } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -20,6 +21,8 @@ const isLoading = ref(true)
 // Interactive components
 const interactiveContainer = ref<HTMLElement>()
 const dynamicComponents = ref<Record<string, any>>({})
+// Track runtime-mounted app instances for cleanup
+const mountedApps: Array<{ el: Element; app: any }> = []
 
 // Table of Contents
 const tableOfContents = ref<Array<{ id: string; text: string; level: number }>>([])
@@ -145,6 +148,60 @@ const mountInteractiveComponents = async () => {
 
   // Setup footnote hover tooltip behavior
   setupFootnoteHover()
+
+  // Debug: trace mounting flow
+  console.log('[mountInteractiveComponents] start')
+
+  // Find placeholder divs inserted by parseInteractiveComponents and mount Vue components into them
+  if (interactiveContainer.value) {
+    const placeholders = interactiveContainer.value.querySelectorAll<HTMLDivElement>('.interactive-component[data-component]')
+    console.log('[mountInteractiveComponents] placeholders found:', placeholders.length)
+    for (const ph of Array.from(placeholders)) {
+      const compName = ph.dataset.component
+      const propsJson = ph.dataset.props ? decodeURIComponent(ph.dataset.props) : '{}'
+      let props: Record<string, any> = {}
+      try { props = JSON.parse(propsJson) } catch (err) { props = {} }
+
+      console.log(`[mountInteractiveComponents] attempting to mount component: ${compName}`, props)
+
+      // show loading UI inside placeholder so it's visible while importing
+      try {
+        ph.innerHTML = ''
+        ph.style.minHeight = '120px'
+        const loaderEl = document.createElement('div')
+        loaderEl.className = 'p-4 text-sm text-slate-500'
+        loaderEl.textContent = 'Loading interactive component...'
+        ph.appendChild(loaderEl)
+      } catch (e) {
+        // ignore DOM errors
+      }
+
+      try {
+        const comp = await loadComponent(compName || '')
+        console.log(`[mountInteractiveComponents] loadComponent result for ${compName}:`, comp)
+        if (!comp) {
+          console.warn(`[mountInteractiveComponents] component not found in registry: ${compName}`)
+          ph.innerHTML = '<div class="p-4 text-sm text-red-500">Interactive component not found.</div>'
+          continue
+        }
+
+        const appInstance = createApp(comp, props)
+        // Mount into placeholder
+        appInstance.mount(ph)
+        mountedApps.push({ el: ph, app: appInstance })
+        console.log(`[mountInteractiveComponents] mounted ${compName} into placeholder`) 
+      } catch (err) {
+        console.error('Failed to mount interactive component', compName, err)
+        try {
+          ph.innerHTML = `<div class="p-4 text-sm text-red-500">Failed to load interactive component: ${compName}</div>`
+        } catch (e) { /* ignore */ }
+      }
+    }
+  } else {
+    console.log('[mountInteractiveComponents] no interactiveContainer ref')
+  }
+
+  console.log('[mountInteractiveComponents] complete')
 }
 
 const addCopyButtonsToCodeBlocks = () => {
@@ -271,7 +328,20 @@ const loadPost = async () => {
   
   if (loadedPost) {
     post.value = loadedPost
-    
+
+    // Ensure the loading state is cleared so the article DOM is rendered
+    isLoading.value = false
+
+    // Wait for DOM update and for the interactiveContainer ref to become available
+    // Poll a few times because v-html content can take a couple of frames to attach
+    let attempts = 0
+    while (!interactiveContainer.value && attempts < 12) {
+      console.log('[loadPost] waiting for interactiveContainer ref, attempt', attempts + 1)
+      await nextTick()
+      attempts++
+    }
+    console.log('[loadPost] interactiveContainer available:', !!interactiveContainer.value)
+
     // Load any dynamic components used in this post
     if (loadedPost.components && loadedPost.components.length > 0) {
       await loadPostComponents(loadedPost.components)
@@ -282,9 +352,9 @@ const loadPost = async () => {
     // Generate TOC after content is fully rendered
     await nextTick()
     generateTableOfContents()
+  } else {
+    isLoading.value = false
   }
-  
-  isLoading.value = false
 }
 
 let timeInterval: number
@@ -302,6 +372,11 @@ onUnmounted(() => {
   if (timeInterval) {
     clearInterval(timeInterval)
   }
+  // cleanup mounted interactive apps
+  for (const m of mountedApps) {
+    try { m.app.unmount(); } catch (e) { /* ignore */ }
+  }
+  mountedApps.length = 0
 })
 </script>
 
@@ -858,5 +933,13 @@ aside nav a:hover {
 
 .footnote-ref:hover .footnote-tooltip {
   opacity: 1;
+}
+</style>
+
+<style scoped>
+/* Interactive components global padding utility */
+:deep(.interactive-component) {
+  padding-top: 1.5rem; /* 24px */
+  padding-bottom: 1.5rem; /* 24px */
 }
 </style>

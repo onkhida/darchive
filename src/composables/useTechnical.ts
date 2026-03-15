@@ -259,25 +259,34 @@ Content coming soon...`
     }
 
     const parseInteractiveComponents = (html: string): string => {
-        // Convert custom component tags to Vue component placeholders
+        // Replace custom component tags with safe placeholder DIVs that include the component name and props JSON (URL-encoded)
+        // Example replacement: <vector-playground initial-a="100,-40" />
+        // -> <div class="interactive-component" data-component="vector-playground" data-props="%7B%22initialA%22%3A%22100,-40%22%7D"></div>
+
+        const attrRegex = /([\w:-]+)(?:=(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g
+
         html = html.replace(/<([a-z][a-z0-9]*(?:-[a-z0-9]*)*)((?:\s+[^>]*)?)\s*\/?>>/gi, (match, tagName, attrs) => {
             const lowerTagName = tagName.toLowerCase()
 
-            // Only process if it's a valid component in our registry
-            if (isValidComponent(lowerTagName)) {
-                // Clean up attributes and make them Vue-compatible
-                const cleanAttrs = attrs
-                    .replace(/\s+/g, ' ')
-                    .trim()
-                    // Convert any camelCase attributes to kebab-case for Vue
-                    .replace(/([a-z])([A-Z])/g, '$1-$2')
-                    .toLowerCase()
+            if (!isValidComponent(lowerTagName)) return match
 
-                return `<component is="${lowerTagName}" ${cleanAttrs} class="interactive-component" />`
+            const props: Record<string, any> = {}
+
+            if (attrs && attrs.trim()) {
+                let m: RegExpExecArray | null
+                while ((m = attrRegex.exec(attrs)) !== null) {
+                    if (!m[1]) continue
+                    const name = m[1]
+                    const value = m[2] ?? m[3] ?? m[4] ?? 'true'
+                    // convert attribute name to camelCase-ish prop keys (keep simple)
+                    const propName = name.replace(/-([a-z])/g, (_, ch) => ch.toUpperCase())
+                    props[propName] = value
+                }
             }
 
-            // Return original match if not a registered component
-            return match
+            const propsJson = encodeURIComponent(JSON.stringify(props))
+
+            return `<div class="interactive-component" data-component="${lowerTagName}" data-props="${propsJson}"></div>`
         })
 
         return html

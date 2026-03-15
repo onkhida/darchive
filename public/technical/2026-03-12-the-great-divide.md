@@ -38,7 +38,7 @@ The next set of tools that existing vector mathematics allows us to build upon i
 $$\vec{a}\cdot\vec{b}=|\vec{a}||\vec{b}|\cos(\theta)$$
 (where $|\vec{a}|$ and $|\vec{b}|$ are the magnitudes of vectors $\vec{a}$ and $\vec{b}$ respectively, and the angle, $\theta$, refers to the angle between these two vectors.)
 
->You'll build some cool animation to show an interactive relationship between two vectors that people can pove around. Will show the value of the angles, the magnitudes of said vectors, and then the the dot product
+<div class="interactive-component" data-component="vector-playground" data-props="%7B%7D"></div>
 
 Depending on how you played around with the interactive graph, you may have discovered that the dot product of vectors orthogonal to each other is zero. This is for obvious reasons: if $\cos(90^\circ)$—or its radian equivalent, $\cos\left(\frac{\pi}{2}\right)$—yields zero, then the whole expression will also yield zero! 
 

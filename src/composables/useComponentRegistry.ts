@@ -34,6 +34,15 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
             'language': 'Programming language for syntax highlighting',
             'title': 'Optional title for the code block'
         }
+    },
+
+    'vector-playground': {
+        component: () => import('../components/the-great-divide/VectorPlayground.vue'),
+        description: 'Interactive vector playground used in "The Great Divide" article',
+        props: {
+            'initial-a': 'Optional: initial vector A as "x,y" (example: "100,-40")',
+            'initial-b': 'Optional: initial vector B as "x,y" (example: "-80,80")'
+        }
     }
 
     // Add more components here as needed:

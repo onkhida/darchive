@@ -48,7 +48,6 @@ More pertinently, though, the other thing to notice is that when the angle betwe
 
 Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating both categories into each of its halves.
 
-> The closing diagram should show a singular vector, the weight vector, on a graph. It should be movable, and then as it moves, the region should change + also show a shift/reorientation of sections across.
 ## Without $\theta$
 There exists, also, a way to carry out this computation without even knowing the value of $\theta$, the angle between the two vectors. If the vectors are written in their basic component form à la $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$  and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$, then we can find their dot product $\vec{a}\cdot\vec{b}$ by simply using the distributive property, that is, expanding the bracket.
 $$

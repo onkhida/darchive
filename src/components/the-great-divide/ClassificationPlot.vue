@@ -29,7 +29,7 @@
           <line :x1="bx1" :y1="by1" :x2="bx2" :y2="by2" stroke="#374151" stroke-dasharray="6 6" stroke-width="2" />
 
           <!-- points rendered as thin vectors from origin + circle tip -->
-          <g v-for="(p, i) in points" :key="i">
+          <g v-for="(p) in points" :key="p.id">
             <line
               v-if="showVectors"
               :x1="cx"
@@ -77,7 +77,7 @@
               <label class="flex items-center text-xs"><input type="checkbox" v-model="showVectors" class="mr-2"/> Show vectors</label>
              </div>
              <div class="mt-2 space-y-1">
-              <div v-for="(p,i) in points" :key="i" class="flex items-center justify-between text-xs">
+              <div v-for="p in points" :key="p.id" class="flex items-center justify-between text-xs">
                 <div>{{ p.x.toFixed(2) }}, {{ p.y.toFixed(2) }}</div>
                 <div :class="p.label === 1 ? 'text-red-500' : p.label === -1 ? 'text-teal-600' : 'text-slate-500'">{{ p.label === 1 ? 'north' : p.label === -1 ? 'south' : 'orthogonal' }}</div>
               </div>
@@ -96,7 +96,7 @@
  <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 
-type Pt = { x: number; y: number; label: 1 | -1 | 0 }
+type Pt = { id: string; x: number; y: number; label: 1 | -1 | 0 }
 
 const props = defineProps({ width: { type: Number, default: 560 }, height: { type: Number, default: 400 } })
 const width = props.width
@@ -230,8 +230,15 @@ function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
   const my = screenToModelY(sy)
   const d = classifyModel(mx, my)
   const eps = 1e-6
-  const label = d > eps ? 1 : d < -eps ? -1 : 0
-  points.value.push({ x: mx, y: my, label })
+  const label = (d > eps ? 1 : d < -eps ? -1 : 0) as 1 | -1 | 0
+  // assign a stable unique id so Vue can diff list reliably
+  const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`
+  const newPoint: Pt = { id, x: mx, y: my, label }
+  // Defer the array update to the next animation frame to avoid interfering with Vue's patching
+  requestAnimationFrame(() => {
+    // replace the array (not mutate) to keep keyed diffing reliable
+    points.value = [...points.value, newPoint]
+  })
 }
 
 function clearPoints() { points.value = [] }

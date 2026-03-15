@@ -132,6 +132,8 @@ const wx = computed(() => cx + screenUnitFromAngle(weightAngle.value).ux * weigh
 const wy = computed(() => cy + screenUnitFromAngle(weightAngle.value).uy * weightLen.value)
 // human-friendly degrees
 const weightAngleDeg = computed(() => Math.round((weightAngle.value * 180 / Math.PI) * 10) / 10)
+// referenced in template — read once here to satisfy TypeScript's unused-value check
+void weightAngleDeg
 
 // Helper to test which side of the boundary a given screen point lies on using the same unit vector
 function screenDot(sx: number, sy: number) {

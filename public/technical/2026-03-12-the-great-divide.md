@@ -44,8 +44,6 @@ Depending on how you played around with the interactive graph, you may have disc
 
 More pertinently, though, the other thing to notice is that when the angle between both vectors _**is acute**_ (less than $90^\circ$), the resulting dot product gives us a positive number. On the contrary, if this angle between vectors _**is not acute**_ (greater than $90^\circ$), then this derived dot product is negative. You can sit with this detail for a moment because it is important. If we use the weight vector as the cardinal compass that it is, then the sign $(+ve/-ve)$ of a dot product of a data point with respect to a weight vector can easily tell us what half of the landscape a point belongs to. If a point projection (due to its positive dot product) lands in the "northern half" of our "compass", then it belongs to one category; if another projection (due to its negative dot product) lands in the "southern half" of our compass, then it belongs to the other category. 
 
-> What I am thinking of doing is to have a diagram here where the weight vector is fixed. The user can now add "vectors" or points and depending on where the vector is, the component should show "southern half" or "northern half".
-
 <div class="interactive-component" data-component="classification-plot" data-props="%7B%7D"></div>
 
 Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating both categories into each of its halves.

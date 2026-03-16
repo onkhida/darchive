@@ -52,3 +52,10 @@ Notes & inferences
 - User prefers conservative edits and will manually revert changes they dislike; prefer small, easily reversible edits and document them in this log.
 
 If you want, I can now add a brief checklist or a short patch to implement a microtask mutex around point-add to further reduce the insertBefore error. Otherwise this log should help the next agent pick up where we left off.
+
+Bug List
+- On ClassificationPlot.vue, sometimes it works; sometiems it does not (plot).
+- Latex does not always work. First two behaviours seem dependent on the browser one is on.
+- Dark mode issues for technical components.
+- On the without theta section, it looks horrific on mobile. 
+- horizontal scrolling to gap somewtimes on the site. especially on mobile

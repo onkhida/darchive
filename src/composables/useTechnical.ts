@@ -19,7 +19,7 @@ export interface TechnicalPost {
 
 // List of all markdown files in the technical folder
 const markdownFiles = [
-    '2022-05-04-understanding-cascade-theory.md',
+    // '2022-05-04-understanding-cascade-theory.md',
     '2026-03-12-the-great-divide.md',
 ]
 

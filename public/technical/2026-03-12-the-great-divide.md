@@ -1,7 +1,7 @@
 ---
 title: The Great Divide
 date: 2026-3-12
-desc: Exploring the semantic web and how meaningful markup creates more accessible and intelligent digital experiences.
+desc: An example-based exploration of the algorithm behind Frank Rosenblatt's "Mark I Perceptron", anchored through the lens of my daily decisions.
 coverImage: /assets/images/technical/the-great-divide.jpg
 ---
 
@@ -10,7 +10,7 @@ When I was a child, the most grounding aspects of reality came within the binary
 
 As intelligent beings, although our abilities to tolerate and operate withing the grey is innate, it only actualises after going through a gestation period. And even then, these binary logic systems remain—sometimes dormantly—in the lowest level of our programming, to be reignited whenever we need them [^1].
 
-If the binary can provide a solid enough architectural base for children to build on top of, it makes sense to start the quest for artificial intelligence at its doorstep. Following this line of thinking, there has been many an algorithm over the years that has attempted to equip machines with the ability to duly make these categorical decisions. The most enduring of these is Frank Rosenblatt's *"Mark I Perceptron"*, and this foundational layer with which modern AI and neural networks now builds upon has formed the basis for this post. I've dedicated much of my efforts with this entry towards providing a systematic breakdown of how Rosenblatt's original algorithm works as the foundational piece of engineering that it is. I'll go through each iterative step, explaining finally (in a heavily analogical manner) how this all culminates to form a basic computational system capable of making binary conclusions when confronted with a series of relevant data points (vectors). 
+If the binary can provide a solid enough architectural base for children to build on top of, it makes sense to start the quest for artificial intelligence at its doorstep. Following this line of thinking, there has been many an algorithm over the years that has attempted to equip machines with the ability to duly make these categorical decisions. The most enduring of these has its origins in Frank Rosenblatt's *"Mark I Perceptron"*, and this foundational layer with which modern AI and neural networks now builds upon has formed the basis for this post. I've dedicated much of my efforts with this entry towards providing a systematic breakdown of how Rosenblatt's original algorithm works as the foundational piece of engineering that it is. I'll go through each iterative step, explaining finally (in a heavily analogical manner) how this all culminates to form a basic computational system capable of making binary conclusions when confronted with a series of relevant data points (vectors). 
 # On Vectors
 The last word in my introductory section is "vectors", in parentheses. I've been deliberate in putting this mathematical concept in our atmosphere very early on because apart from its use in underpinning the core mechanism with which the perceptron is built upon, thinking of our inputs as vectors is both useful and intuitive. For coming to any decision, even a simple (binary) one, is usually contingent on a multitude of different factors. 
 
@@ -20,7 +20,7 @@ Every morning, before my commute across town from Ojota to TBS (Tafawa Balewa Sq
 * How important comfort is for me at the moment, as BRT buses are generally more comfortable than the equivalent journey with several stops across Danfos. 
 * Whether or not I am late for the start of the day.
 * Whether or not I can already hear a Danfo conductor belting an alternatively favourable route I could take. 
-* What my patience levels are
+* What my patience levels are.
 * How tired I am.
 * And so many other variables that sometimes reveal themselves in the moment.
 
@@ -46,7 +46,7 @@ More pertinently, though, the other thing to notice is that when the angle betwe
 
 <div class="interactive-component" data-component="classification-plot" data-props="%7B%7D"></div>
 
-Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating both categories into each of its halves.
+Again, the point of the perceptron (and its training process) is to find the right orientation for this weight vector. It needs to align as a compass, capable of separating the binary categories into each of its halves.
 
 ## Without $\theta$
 There exists, also, a way to carry out this computation without even knowing the value of $\theta$, the angle between the two vectors. If the vectors are written in their basic component form à la $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$  and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$, then we can find their dot product $\vec{a}\cdot\vec{b}$ by simply using the distributive property, that is, expanding the bracket.
@@ -58,7 +58,7 @@ $$
 =a_1b_1 + a_2b_2
 \end{gather}
 $$
-If you're wondering what happened to the $\mathbf{i}$s and $\mathbf{j}$s on line $(3)$, you must recall what we established earlier about vectors and orthogonality. Since $\mathbf{i}$ and $\mathbf{j}$ are forever perpendicular, $\mathbf{i}\cdot\mathbf{j}=0$, "taking out" the second and third terms. Conversely, $\mathbf{i}\cdot\mathbf{i}$ and $\mathbf{j}\cdot\mathbf{j}$ evaluate to $1$, preserving the first and last terms.
+If you're wondering what happened to the $\mathbf{i}$ and $\mathbf{j}$ symbols on line $(3)$, you must recall what we established earlier about vectors and orthogonality. Since $\mathbf{i}$ and $\mathbf{j}$ are forever perpendicular, $\mathbf{i}\cdot\mathbf{j}=0$, "taking out" the second and third terms. Conversely, $\mathbf{i}\cdot\mathbf{i}$ and $\mathbf{j}\cdot\mathbf{j}$ evaluate to $1$, preserving the first and last terms.
 
 So, because our cross terms vanish, we are left with an incredibly simple equation to find the dot product between our vectors $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$ and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$:
 $$\vec{a}\cdot\vec{b}=a_1b_1 + a_2b_2$$
@@ -68,7 +68,7 @@ In the perceptron's case, the "weighted sum", $z$, of a vector point is provided
 $$z=\sum(w_i \cdot x_i)+b$$
 We'll go over what each individual equation term means, but at a granular level, the formula is going through every component in vector $w$, identifying its respective component in the vector $x$, and then finding the product of the two corresponding components. It then sums through all the products and adds a bias, $b$ at the end. The equation's expanded form should make it clear that the weighted sum formula is simply finding the dot product between two vectors: $w$ (the weight vector) and $x$ (a data point).
 $$z=w_1x_1+w_2x_2+w_3x_3+\cdots+w_nx_n+b$$
-If you're like me, you might experience some initial uneasiness with how the *b* sticks out as a sore thumb in this sea of $w$s (weights) and $x$s (datapoints). But this is a solvable issue. Since the bias term, $b$, is also just a weight that needs to be learned, it can be rewritten as $w_0x_0$, where $x_0$ is always 1. And if the value of $x_0$ is constantly $1$, then we can even simply refer to the bias term as $w_0$. I'll be using both—$w_0$ and $b$—interchangeably in the paragraphs that follow. Alternatively, because the bias term can be represented as $w_0x_0$, we could simply rewrite the equation of the weighted sum as such:
+If you're like me, you might experience some initial uneasiness with how the *b* sticks out as a sore thumb in this sea of $w$s (weights) and $x$s (data points). But this is a solvable issue. Since the bias term, $b$, is also just a weight that needs to be learned, it can be rewritten as $w_0x_0$, where $x_0$ is always 1. And if the value of $x_0$ is constantly $1$, then we can even simply refer to the bias term as $w_0$. I'll be using both—$w_0$ and $b$—interchangeably in the paragraphs that follow. Alternatively, because the bias term can be represented as $w_0x_0$, we could simply rewrite the equation of the weighted sum as such:
 $$z=w_0x_0+w_1x_1+w_2x_2+\cdots+w_nx_n$$
 The reason we even have a bias term in first place is because it gives our weight vector an offset so that it does not always start at the origin. Whilst the weight vector can reorient and point in different directions by adjusting the values of its components, a bias term allows us to move the orthogonal decision boundary it generates "up" or "down" the weight vector. In the component below, you can try and play around with different values of $w_0$, $w_1$, and $w_2$. I'd recommend that you specifically view a weight vector (and thus its decision boundary) with and without a value for $w_0$ (that is, without a bias term) to fully grasp what the bias does for us.
 
@@ -81,8 +81,6 @@ Regardless of whatever representation of the weighted sum, $z$, that you use (wi
 I want to "zoom in" to my initial example about deciding on a BRT bus or not and imagine, in a remarkably simple and hypothetical world, that my decision was only dependent on 2 factors:
 1. The amount of money (in NGN) in my Cowry Card.
 2. The amount of time (in minutes) I *think* it would take for me to stand in line and board the bus.
-
-As a side quest, I briefly thought about gathering this "data" manually [^3], en route to work each day, but my words came together much faster than the experimental, month-long inquest for data did. As a result, I've pulled these figures arbitrarily from my head to fit into the example's context.
 
 > Table component with data points here
 
@@ -105,7 +103,7 @@ As I explained in the section prior, the line orthogonal to this weight vector�
 
 To figure out how to orient its compass, the perceptron recursively goes through every point in our dataset, **checks*** to see if (based on its current orientation) the point is classified correctly, and adjusts its weight vector (and subsequently its decision boundary) if the point falls on the wrong side of the divisor. But how does it *know*, if a point has been misclassified? It's actually pretty simple. A point has been misclassified if,
 $$y (\vec{w}\cdot\vec{x})\leq0$$
-The $y$ in this case refers to the label given to a point before the commencement of this training process. You would recall, from my decision column a few paragraphs ago, that I decided to label an instance with $+1$ if I took the bus and $-1$ if I didn't. The reason that the product of this label, $y$, and the dot product of the weight and input vector, $(\vec{w}\cdot\vec{x})$, is a good way to check if a point has been classified correctly is because it is only when $y (\vec{w}\cdot\vec{x})$ is positive that the point has been classified correctly. If we have a point labelled to the $-1$ category, then it is only when its dot product is negative—showing that it falls on the southern half as defined initially by its label—that the result of  $y (\vec{w}\cdot\vec{x})$ is a positive number. Similarly, if we have a point labelled to the $1$ category, then it is only when its dot product is positive—showing that it falls on the northern half as specified initially by its label—that the result of $y (\vec{w}\cdot\vec{x})$ is a positive number. 
+The $y$ in this case refers to the label given to a point before the commencement of this training process. You would recall, from my decision column a few paragraphs ago, that I decided to label an instance with $+1$ if I took the bus and $-1$ if I didn't. The reason that multiplying our label, $y$, with the dot product of the weight and input vector, $(\vec{w}\cdot\vec{x})$, is a good way to check if a point has been classified correctly is because it is only when $y (\vec{w}\cdot\vec{x})$ is positive that the point has been classified correctly. If we have a point labelled to the $-1$ category, then it is only when its dot product is negative—showing that it falls on the southern half as defined initially by its label—that the result of  $y (\vec{w}\cdot\vec{x})$ is a positive number. Similarly, if we have a point labelled to the $1$ category, then it is only when its dot product is positive—showing that it falls on the northern half as specified initially by its label—that the result of $y (\vec{w}\cdot\vec{x})$ is a positive number. 
 
 > My feeling as of right now is that this paragraph above needs an animation. Thinking of maybe a weight vector that moves around, with a vector/vector point showing -1 and the dot product also interactively changing. Then the checker equation classifying as needed.
 
@@ -138,9 +136,13 @@ that I've left out in this post to
 
 (My confidence in the perceptron's ability to always find a hyperplane has no bearing in me)
 # For Good Measure
-Best literature I've read about this and then anil ananthaswamy
+This entry metamorphosed, in part, from notes I took at the turn of the year after reading Anil Ananthaswamy's "Why Machines Learn". My father bought the book last year and liked it, so I gave it a try. Ananthaswamy also talks about Rosenblatt's perceptron in the first two chapters, and although it's a concept I encountered—sometimes in-length—beforehand, his text stands as (by far) my favourite contemporary take on the concept. Throughout the book, his conceptual framing goes beyond core technicalities, and he finds unique ways of masterfully weaving in the relevant bits of situational, social commentary to make the reader feel as though they are living through the developmental timeline—experiencing the creation of our modern systems in real time. It is the next [consumable](http://onkhida.me/consumables) that I am to write about, and if you have even a remote interest in the science underpinning current technology, the book will be worth your time.
 
-Code in place
+But the main accelerator for this post was, of course, my daily commute. After making iterative decisions on whether or not to take a BRT bus, I was interested in seeing (as leisure) if a perceptron algorithm could (hypothetically) learn from the actions I took recursively and figure out the main principles guiding my daily decision. I knew that I was organically considering variables in my head repeatedly, and you could say that I was interested in finding out what each variable _weighed_ in my decision process. The plan initially was to manually gather the "data" for every decision instance en route to work each day in the month of March, logging values for all the consequential variables I could identify (fatigue, patience levels, money in Cowry Card, lateness, etc.). Usually, as I develop, I create build notes of what is being created. But somewhere along the way on this occasion, the prose morphed into a narrative explanation of the processes guiding this experiement, and thus the perceptron. 
+
+I've since accepted this directional pivot in turning this into a technical article. The only caveat is that, because my words came together much faster than my experimental, month-long inquest for data, the figures I've tabularised and used on the plot have been pulled arbitrarily from my head to fit into the central example context. And hopefully, despite this shift in my writing aims, this has still been helpful. For good measure (and to round things up), I've also created a "demo" of a sample graphical perceptron simulator that you can use outside of this context. I hope to give you an additional space to visualise these concepts: it works in a similar fashion to the components above, and the only real difference is that it gives you the additional liberty of creating your own data vectors. If the categories are separable, it then proceeds to find a weight vector, generating a _Training Log_ similar to the one you've just seen.
+
+[Try It Out Btn]
 
 [^1]: When in survival mode, organisms often compress their clouds of complexity into dichotomous decisions: eat/don't eat, fight/flight, etc.
 [^2]: More variables to consider means more dimensions. Instead of a 2D plane (x-axis vs y-axis), we'll need many more axes for each variable, even though we can't visualise any dimensions higher than 3D.

@@ -78,9 +78,11 @@ The reason we even have a bias term in first place is because it gives our weigh
 
 <div class="interactive-component" data-component="weight-vector-controller" data-props="%7B%7D"></div>
 
-Regardless of whatever representation of the weighted sum, $z$, that you use (with $w_0x_0$ or $b$ as the bias term), because the $z$ simply represents the dot product between the weight vector and a point, the sign $(+ve/-ve)$ of the result of this sum, $z$, can now finally tell us to which half that a data point, $x$, belongs to according to the weight vector's current orientation. The job of the perceptron from this step would then be to then check if this classification coincides with that of the training data, re-orienting if that is not the case.
+Regardless of whatever representation of the weighted sum, $z$, that you use (with $w_0x_0$ or $b$ as the bias term), because the $z$ simply represents the dot product between the weight vector and a point, the sign $(+ve/-ve)$ of the result of this sum, $z$, can now finally tell us to which half that a data point, $x$, belongs to according to the weight vector's current orientation. 
 
-> I think that, at the end, it would be really cool for me to have another animation component that sequentially shows the incremental process of the weighted sum formula. 
+<div class="interactive-component" data-component="weighted-sum-visualizer" data-props="%7B%7D"></div>
+
+The job of the perceptron from this step would then be to then check if this classification coincides with that of the training data, re-orienting if that is not the case.
 
 # Zooming in to Zoom Out
 I want to "zoom in" to my initial example about deciding on a BRT bus or not and imagine, in a remarkably simple and hypothetical world, that my decision was only dependent on 2 factors:

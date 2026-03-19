@@ -58,6 +58,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/WeightVectorController.vue'),
         description: 'Interactive weight vector controller: adjust w0 (bias), w1, w2 to see how the decision boundary changes',
         props: {}
+    },
+
+    'weighted-sum-visualizer': {
+        component: () => import('../components/the-great-divide/WeightedSumVisualizer.vue'),
+        description: 'Sequential animation showing the incremental weighted sum calculation process',
+        props: {}
     }
 
     // Add more components here as needed:

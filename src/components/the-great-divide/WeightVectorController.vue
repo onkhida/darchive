@@ -21,8 +21,8 @@
           <line :x1="cx" :y1="0" :x2="cx" :y2="height" stroke="#e5e7eb" stroke-width="1" />
 
           <!-- axis labels -->
-          <text :x="width - 20" :y="cy - 8" class="text-xs fill-slate-500">x₁</text>
-          <text :x="cx + 8" :y="20" class="text-xs fill-slate-500">x₂</text>
+          <text :x="width - 20" :y="cy - 8" class="text-xs fill-slate-500" style="color: #64748b">x₁</text>
+          <text :x="cx + 8" :y="20" class="text-xs fill-slate-500" style="color: #64748b">x₂</text>
 
           <!-- decision boundary (orthogonal line to weight vector) -->
           <line
@@ -75,7 +75,7 @@
             step="0.05"
             class="w-full accent-slate-700"
           />
-          <p class="text-xs text-slate-500 mt-1">Bias: shifts the decision boundary along the weight vector direction</p>
+          <span class="text-xs text-slate-500 mt-1 text-slate-600">Bias: shifts the decision boundary along the weight vector direction</span>
         </div>
 
         <!-- w1 slider -->
@@ -92,7 +92,7 @@
             step="0.05"
             class="w-full accent-slate-700"
           />
-          <p class="text-xs text-slate-500 mt-1">Rotates the vector horizontally</p>
+          <span class="text-xs text-slate-500 mt-1 text-slate-600">Rotates the vector horizontally</span>
         </div>
 
         <!-- w2 slider -->
@@ -109,15 +109,15 @@
             step="0.05"
             class="w-full accent-slate-700"
           />
-          <p class="text-xs text-slate-700 mt-1">Rotates the vector vertically</p>
+          <span class="text-xs text-slate-700 mt-1 text-slate-600">Rotates the vector vertically</span>
         </div>
 
         <!-- Weight vector info -->
         <div class="p-3 bg-slate-50 rounded border border-slate-200">
           <div class="text-xs font-medium text-slate-700 mb-2">Weight Vector</div>
           <div class="text-sm text-slate-600 font-mono space-y-1">
-            <div>w = ({{ w1.toFixed(2) }}, {{ w2.toFixed(2) }})</div>
-            <div>|w| = {{ magnitude.toFixed(2) }}</div>
+            <div class="text-slate-600">w = ({{ w1.toFixed(2) }}, {{ w2.toFixed(2) }})</div>
+            <div class="text-slate-600">|w| = {{ magnitude.toFixed(2) }}</div>
             <div v-if="Math.abs(w0) > 0.05" class="text-red-600">bias = {{ w0.toFixed(2) }}</div>
           </div>
         </div>
@@ -125,8 +125,8 @@
         <!-- Instructions -->
         <div class="p-3 bg-blue-50 rounded border border-blue-200">
           <p class="text-xs text-blue-900 leading-relaxed">
-            <strong>Try this:</strong> Keep w₀ at 0 and adjust w₁ and w₂. Notice how the boundary rotates. 
-            Now set w₁=0, w₂=1, and increase w₀. The boundary slides perpendicular to the vector without rotating.
+            <span class="text-slate-900">Try this: Keep w₀ at 0 and adjust w₁ and w₂. Notice how the boundary rotates. 
+            Now set w₁=0, w₂=1, and increase w₀. The boundary slides perpendicular to the vector without rotating.</span>
           </p>
         </div>
 
@@ -206,10 +206,5 @@ input[type="range"] {
 
 svg {
   touch-action: none;
-}
-
-p {
-    /* background-color: red; */
-    color: #1E293B !important;
 }
 </style>

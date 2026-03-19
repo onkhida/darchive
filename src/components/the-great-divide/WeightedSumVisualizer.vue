@@ -68,7 +68,7 @@
               :style="{ width: currentStep > 3 ? '100%' : (currentStep === 3 ? `${stepProgress}%` : '0%') }"
             ></div>
           </div>
-          <div class="text-xs text-slate-600 mt-2 text-center font-mono font-bold">z</div>
+          <div class="text-xs mt-2 text-center font-mono font-bold"><span class="text-slate-600">z</span></div>
         </div>
       </div>
     </div>
@@ -84,12 +84,12 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-blue-600 font-semibold min-w-20">Step 1:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono">w₀</span> × <span class="font-mono">x₀</span>
+              <span class="font-mono text-slate-700">w₀</span> × <span class="font-mono text-slate-700">x₀</span>
               <span v-if="currentStep >= 0" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 0" class="ml-2 font-mono text-blue-600 font-semibold">{{ values.w0 }} × 1 = {{ values.w0 }}</span>
             </span>
           </div>
-          <p v-if="currentStep === 0" class="text-xs text-slate-600 mt-2 pl-24">The bias term, always multiplied by 1</p>
+          <span v-if="currentStep === 0" class="text-xs text-slate-600 mt-2 pl-24">The bias term, always multiplied by 1</span>
         </div>
 
         <!-- Step 1: w₁x₁ -->
@@ -100,12 +100,12 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-emerald-600 font-semibold min-w-20">Step 2:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono">w₁</span> × <span class="font-mono">x₁</span>
+              <span class="font-mono text-slate-700">w₁</span> × <span class="font-mono text-slate-700">x₁</span>
               <span v-if="currentStep >= 1" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 1" class="ml-2 font-mono text-emerald-600 font-semibold">{{ values.w1 }} × {{ values.x1 }} = {{ (values.w1 * values.x1).toFixed(2) }}</span>
             </span>
           </div>
-          <p v-if="currentStep === 1" class="text-xs text-slate-600 mt-2 pl-24">First feature weight multiplied by its input value</p>
+          <span v-if="currentStep === 1" class="text-xs text-slate-600 mt-2 pl-24">First feature weight multiplied by its input value</span>
         </div>
 
         <!-- Step 2: w₂x₂ -->
@@ -116,12 +116,12 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-amber-600 font-semibold min-w-20">Step 3:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono">w₂</span> × <span class="font-mono">x₂</span>
+              <span class="font-mono text-slate-700">w₂</span> × <span class="font-mono text-slate-700">x₂</span>
               <span v-if="currentStep >= 2" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 2" class="ml-2 font-mono text-amber-600 font-semibold">{{ values.w2 }} × {{ values.x2 }} = {{ (values.w2 * values.x2).toFixed(2) }}</span>
             </span>
           </div>
-          <p v-if="currentStep === 2" class="text-xs text-slate-600 mt-2 pl-24">Second feature weight multiplied by its input value</p>
+          <span v-if="currentStep === 2" class="text-xs text-slate-600 mt-2 pl-24">Second feature weight multiplied by its input value</span>
         </div>
 
         <!-- Step 3: Final sum -->
@@ -131,19 +131,19 @@
         >
           <div class="flex items-center gap-3">
             <span class="text-sm font-mono text-rose-600 font-semibold min-w-20">Result:</span>
-            <span v-if="currentStep >= 3" class="text-sm font-mono">
+            <span v-if="currentStep >= 3" class="text-sm font-mono text-slate-700">
               {{ values.w0 }} + {{ (values.w1 * values.x1).toFixed(2) }} + {{ (values.w2 * values.x2).toFixed(2) }}
               <span class="text-slate-400 mx-2">=</span>
               <span class="text-rose-600 font-bold text-lg">{{ finalZ.toFixed(2) }}</span>
             </span>
             <span v-else class="text-sm text-slate-500">Awaiting calculation...</span>
           </div>
-          <p v-if="currentStep === 3" class="text-xs text-slate-600 mt-3">
-            This is <span class="font-mono font-semibold">z</span>, the weighted sum (dot product of <span class="font-mono">w</span> and <span class="font-mono">x</span>).
+          <span v-if="currentStep === 3" class="text-xs text-slate-600 mt-3">
+            This is <span class="font-mono font-semibold text-slate-700">z</span>, the weighted sum (dot product of <span class="font-mono text-slate-700">w</span> and <span class="font-mono text-slate-700">x</span>).
             <span v-if="finalZ > 0" class="text-red-500 font-semibold">Because it is positive, the point falls in the "northern half".</span>
             <span v-else-if="finalZ < 0" class="text-teal-600 font-semibold">Because it is negative, the point falls in the "southern half".</span>
             <span v-else class="text-slate-700 font-semibold">Because it is zero, the point falls on the decision boundary (orthogonal line).</span>
-          </p>
+          </span>
         </div>
       </div>
     </div>
@@ -177,7 +177,7 @@
               v-model.number="values.w0"
               type="number"
               step="0.1"
-              class="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+              class="w-full px-3 py-2 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -187,7 +187,7 @@
               v-model.number="values.w1"
               type="number"
               step="0.1"
-              class="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+              class="w-full px-3 py-2 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -197,7 +197,7 @@
               v-model.number="values.w2"
               type="number"
               step="0.1"
-              class="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+              class="w-full px-3 py-2 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -208,7 +208,7 @@
                 v-model.number="values.x1"
                 type="number"
                 step="0.1"
-                class="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+                class="w-full px-3 py-2 border border-slate-300 rounded text-sm text-slate-700"
                 @input="reset"
               />
             </div>
@@ -218,13 +218,13 @@
                 v-model.number="values.x2"
                 type="number"
                 step="0.1"
-                class="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+                class="w-full px-3 py-2 border border-slate-300 rounded text-sm text-slate-700"
                 @input="reset"
               />
             </div>
           </div>
         </div>
-        <p class="text-xs text-slate-600 mt-auto pt-6">Change any value to reset and recalculate.</p>
+        <span class="text-xs text-slate-600 mt-auto pt-6">Change any value to reset and recalculate.</span>
       </div>
     </div>
 
@@ -241,7 +241,7 @@
               v-model.number="values.w0"
               type="number"
               step="0.1"
-              class="w-full px-2 py-1 border border-slate-300 rounded text-sm"
+              class="w-full px-2 py-1 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -251,7 +251,7 @@
               v-model.number="values.w1"
               type="number"
               step="0.1"
-              class="w-full px-2 py-1 border border-slate-300 rounded text-sm"
+              class="w-full px-2 py-1 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -261,7 +261,7 @@
               v-model.number="values.w2"
               type="number"
               step="0.1"
-              class="w-full px-2 py-1 border border-slate-300 rounded text-sm"
+              class="w-full px-2 py-1 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -271,7 +271,7 @@
               v-model.number="values.x1"
               type="number"
               step="0.1"
-              class="w-full px-2 py-1 border border-slate-300 rounded text-sm"
+              class="w-full px-2 py-1 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -281,7 +281,7 @@
               v-model.number="values.x2"
               type="number"
               step="0.1"
-              class="w-full px-2 py-1 border border-slate-300 rounded text-sm"
+              class="w-full px-2 py-1 border border-slate-300 rounded text-sm text-slate-700"
               @input="reset"
             />
           </div>
@@ -360,10 +360,6 @@ onUnmounted(() => {
 
 <style scoped>
 /* Light theme lock */
-:deep(*) {
-  color-scheme: light;
-}
-
 input[type="range"] {
   cursor: pointer;
 }

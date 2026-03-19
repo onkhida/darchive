@@ -61,7 +61,7 @@
 
       <div class="w-full md:w-72 flex flex-col">
         <div class="space-y-3">
-          <div class="text-sm text-slate-600">Click anywhere on the plot to add a point. Points are auto-labelled by their position relative to the fixed weight vector. If the dot product between a point and a weight vector is positive, the point is classified as north (red); if negative, south (blue); and if close to zero, orthogonal (grey).</div>
+          <div class="text-sm text-slate-600">Click anywhere on the plot to add a point. Points are auto-labelled by their position relative to the fixed weight vector. If the dot product between a point and a weight vector is positive, the point is classified as north (red); if negative, south (blue).</div>
 
           <!-- <div class="p-3 bg-slate-50 rounded">
             <div class="flex justify-between mb-2">
@@ -72,13 +72,13 @@
           </div> -->
 
            <div class="p-3 bg-slate-50 rounded">
-             <div class="text-sm">Points: <span class="font-mono">{{ points.length }}</span></div>
+             <div class="text-sm text-slate-500">Points: <span class="font-mono">{{ points.length }}</span></div>
              <div class="mt-2">
-              <label class="flex items-center text-xs"><input type="checkbox" v-model="showVectors" class="mr-2"/> Show vectors</label>
+              <label class="flex items-center text-xs text-slate-500"><input type="checkbox" v-model="showVectors" class="mr-2"/> Show vectors</label>
              </div>
              <div class="mt-2 space-y-1">
               <div v-for="p in points" :key="p.id" class="flex items-center justify-between text-xs">
-                <div>{{ p.x.toFixed(2) }}, {{ p.y.toFixed(2) }}</div>
+                <div class="text-slate-700">{{ p.x.toFixed(2) }}, {{ p.y.toFixed(2) }}</div>
                 <div :class="p.label === 1 ? 'text-red-500' : p.label === -1 ? 'text-teal-600' : 'text-slate-500'">{{ p.label === 1 ? 'north' : p.label === -1 ? 'south' : 'orthogonal' }}</div>
               </div>
              </div>
@@ -94,7 +94,7 @@
  </template>
 
  <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick, onUnmounted, watch } from 'vue'
 
 type Pt = { id: string; x: number; y: number; label: 1 | -1 | 0 }
 
@@ -110,6 +110,29 @@ const points = ref<Pt[]>([])
 const lastAddAt = ref<number | null>(null)
 // UI toggle: whether to show origin-anchored vectors for plotted points
 const showVectors = ref(true)
+
+// track mounted state to avoid updating after unmount
+const mounted = ref(true)
+onUnmounted(() => { mounted.value = false; console.log('[ClassificationPlot] onUnmounted') })
+
+// Log lifecycle events and initial state for diagnostics
+onMounted(() => {
+  console.log('[ClassificationPlot] mounted', { svgRef: svgRef.value, width, height })
+  // try to read initial CTM if available
+  if (svgRef.value) {
+    try {
+      const ctm = svgRef.value.getScreenCTM()
+      console.log('[ClassificationPlot] initial getScreenCTM', ctm)
+    } catch (err) {
+      console.warn('[ClassificationPlot] initial CTM read failed', err)
+    }
+  }
+})
+
+// Watch showVectors toggles to see if errors occur when toggling even with zero points
+watch(showVectors, (val) => {
+  console.log('[ClassificationPlot] showVectors ->', val, 'points.length=', points.value.length)
+})
 
 // fixed weight for this iteration (angle in model space), default 45°
 const weightAngle = ref(Math.PI / 4)
@@ -200,45 +223,66 @@ function classifyModel(x: number, y: number) {
 }
 
 function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
-  // ignore non-left mouse buttons
-  if ('button' in e && (e as MouseEvent).button !== 0) return
+  try {
+    // ignore non-left mouse buttons
+    if ('button' in e && (e as MouseEvent).button !== 0) return
 
-  const now = Date.now()
-  if (lastAddAt.value && now - lastAddAt.value < 250) return
-  lastAddAt.value = now
+    const now = Date.now()
+    if (lastAddAt.value && now - lastAddAt.value < 250) return
+    lastAddAt.value = now
 
-  const svg = svgRef.value
-  if (!svg) return
+    const svg = svgRef.value
+    if (!svg) {
+      console.warn('[ClassificationPlot] pointerdown: no svgRef')
+      return
+    }
 
-  // Convert client coordinates into SVG internal coordinates using getScreenCTM inverse
-  const clientX = (e as PointerEvent).clientX ?? (e as MouseEvent).clientX
-  const clientY = (e as PointerEvent).clientY ?? (e as MouseEvent).clientY
-  if (typeof clientX !== 'number' || typeof clientY !== 'number') return
+    // Convert client coordinates into SVG internal coordinates using getScreenCTM inverse
+    const clientX = (e as PointerEvent).clientX ?? (e as MouseEvent).clientX
+    const clientY = (e as PointerEvent).clientY ?? (e as MouseEvent).clientY
+    if (typeof clientX !== 'number' || typeof clientY !== 'number') return
 
-  // create an SVGPoint and transform it to the SVG coordinate system
-  const pt = (svg as any).createSVGPoint()
-  pt.x = clientX
-  pt.y = clientY
-  const ctm = svg.getScreenCTM()
-  if (!ctm) return
-  const inv = ctm.inverse()
-  const svgP = pt.matrixTransform(inv)
-  const sx = svgP.x
-  const sy = svgP.y
+    console.log('[ClassificationPlot] pointerdown client', { clientX, clientY })
 
-  const mx = screenToModelX(sx)
-  const my = screenToModelY(sy)
-  const d = classifyModel(mx, my)
-  const eps = 1e-6
-  const label = (d > eps ? 1 : d < -eps ? -1 : 0) as 1 | -1 | 0
-  // assign a stable unique id so Vue can diff list reliably
-  const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`
-  const newPoint: Pt = { id, x: mx, y: my, label }
-  // Defer the array update to the next animation frame to avoid interfering with Vue's patching
-  requestAnimationFrame(() => {
-    // replace the array (not mutate) to keep keyed diffing reliable
-    points.value = [...points.value, newPoint]
-  })
+    // create an SVGPoint and transform it to the SVG coordinate system
+    const pt = (svg as any).createSVGPoint()
+    pt.x = clientX
+    pt.y = clientY
+    const ctm = svg.getScreenCTM()
+    console.log('[ClassificationPlot] getScreenCTM ->', ctm)
+    if (!ctm) return
+    const inv = ctm.inverse()
+    const svgP = pt.matrixTransform(inv)
+    const sx = svgP.x
+    const sy = svgP.y
+
+    const mx = screenToModelX(sx)
+    const my = screenToModelY(sy)
+    const d = classifyModel(mx, my)
+    const eps = 1e-6
+    const label = (d > eps ? 1 : d < -eps ? -1 : 0) as 1 | -1 | 0
+    // assign a stable unique id so Vue can diff list reliably
+    const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`
+    const newPoint: Pt = { id, x: mx, y: my, label }
+    console.log('[ClassificationPlot] newPoint prepared', newPoint)
+
+    // Defer the array update using nextTick and avoid updating after unmount
+    nextTick().then(() => {
+      console.log('[ClassificationPlot] nextTick - before points update', points.value.length)
+      if (!mounted.value) { console.warn('[ClassificationPlot] nextTick aborted - unmounted'); return }
+      try {
+        // replace the array (not mutate) to keep keyed diffing reliable
+        points.value = [...points.value, newPoint]
+        console.log('[ClassificationPlot] nextTick - after points update', points.value.length)
+      } catch (err) {
+        console.error('[ClassificationPlot] error updating points', err)
+        throw err
+      }
+    })
+  } catch (err) {
+    console.error('[ClassificationPlot] onCanvasPointerDown caught', err)
+    throw err
+  }
 }
 
 function clearPoints() { points.value = [] }

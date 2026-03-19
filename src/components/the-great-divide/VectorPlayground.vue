@@ -61,7 +61,7 @@
             </div>
             <div class="flex items-center gap-2">
               <div class="flex flex-col gap-2 w-full">
-                <input v-model.number="angleInput" type="number" step="0.1" class="w-full px-2 py-1 rounded border" />
+                <input v-model.number="angleInput" type="number" step="0.1" class="w-full px-2 py-1 rounded border text-slate-800" />
                 <button @click="applyAngle" class="w-full px-3 py-1 bg-slate-800 text-white rounded text-sm">Apply</button>
               </div>
             </div>
@@ -75,9 +75,9 @@
               <span class="text-xs text-slate-500">Vector A</span>
               <span class="text-xs font-medium text-slate-700">(blue)</span>
             </div>
-            <div class="text-sm">x: <span class="font-mono">{{ ax.toFixed(3) }}</span></div>
-            <div class="text-sm">y: <span class="font-mono">{{ ay.toFixed(3) }}</span></div>
-            <div class="text-sm">|a|: <span class="font-mono">{{ magA.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">x: <span class="font-mono">{{ ax.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">y: <span class="font-mono">{{ ay.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">|a|: <span class="font-mono">{{ magA.toFixed(3) }}</span></div>
           </div>
 
           <div class="p-3 bg-slate-50 rounded">
@@ -85,15 +85,15 @@
               <span class="text-xs text-slate-500">Vector B</span>
               <span class="text-xs font-medium text-slate-700">(red)</span>
             </div>
-            <div class="text-sm">x: <span class="font-mono">{{ bx.toFixed(3) }}</span></div>
-            <div class="text-sm">y: <span class="font-mono">{{ by.toFixed(3) }}</span></div>
-            <div class="text-sm">|b|: <span class="font-mono">{{ magB.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">x: <span class="font-mono">{{ bx.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">y: <span class="font-mono">{{ by.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">|b|: <span class="font-mono">{{ magB.toFixed(3) }}</span></div>
           </div>
 
           <div class="p-3 bg-slate-50 rounded">
-            <div class="text-sm">θ (deg): <span class="font-mono">{{ angleDeg }}</span></div>
-            <div class="text-sm">dot(a, b): <span class="font-mono">{{ dot.toFixed(3) }}</span></div>
-            <div class="text-sm">cos θ: <span class="font-mono">{{ cosTheta.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">θ (deg): <span class="font-mono">{{ angleDeg }}</span></div>
+            <div class="text-sm text-slate-600">dot(a, b): <span class="font-mono">{{ dot.toFixed(3) }}</span></div>
+            <div class="text-sm text-slate-600">cos θ: <span class="font-mono">{{ cosTheta.toFixed(3) }}</span></div>
           </div>
 
           <!-- <div class="flex gap-2">

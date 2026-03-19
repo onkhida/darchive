@@ -366,4 +366,13 @@ onUnmounted(() => {
 input[type="range"] {
   cursor: pointer;
 }
+
+/* Hide default details disclosure triangle */
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
 </style>

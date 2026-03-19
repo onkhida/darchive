@@ -76,7 +76,7 @@ So, because the bias term can be represented as $w_0x_0$, we could simply rewrit
 $$z=w_0x_0+w_1x_1+w_2x_2+\cdots+w_nx_n$$
 The reason we even have a bias term in first place is because it gives our weight vector an offset so that it does not always start at the origin. Whilst the weight vector can reorient and point in different directions by adjusting the values of its components, a bias term allows us to move the orthogonal decision boundary it generates "up" or "down" the weight vector. In the component below, you can try and play around with different values of $w_0$, $w_1$, and $w_2$. I'd recommend that you specifically view a weight vector (and thus its decision boundary) with and without a value for $w_0$ (that is, without a bias term) to fully grasp what the bias does for us.
 
-> Component to play with a weight vector here, to let the user see how the vector may change with different w0, w1, w2 values.
+<div class="interactive-component" data-component="weight-vector-controller" data-props="%7B%7D"></div>
 
 Regardless of whatever representation of the weighted sum, $z$, that you use (with $w_0x_0$ or $b$ as the bias term), because the $z$ simply represents the dot product between the weight vector and a point, the sign $(+ve/-ve)$ of the result of this sum, $z$, can now finally tell us to which half that a data point, $x$, belongs to according to the weight vector's current orientation. The job of the perceptron from this step would then be to then check if this classification coincides with that of the training data, re-orienting if that is not the case.
 

@@ -52,6 +52,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
             'width': 'Optional: plot width in px (default: 560)',
             'height': 'Optional: plot height in px (default: 400)'
         }
+    },
+
+    'weight-vector-controller': {
+        component: () => import('../components/the-great-divide/WeightVectorController.vue'),
+        description: 'Interactive weight vector controller: adjust w0 (bias), w1, w2 to see how the decision boundary changes',
+        props: {}
     }
 
     // Add more components here as needed:

@@ -91,7 +91,7 @@ onUnmounted(() => {
         <!-- About Section -->
         <section id="about" class="mb-16">
 
-          <h1 class="text-6xl font-cormorant font-normal mb-8" :class="isDark ? 'text-primary-50' : 'text-primary-900'">about.</h1>
+          <h1 class="text-6xl font-serif font-normal mb-8" :class="isDark ? 'text-primary-50' : 'text-primary-900'">about.</h1>
 
           <div class="space-y-3 leading-relaxed" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
             <div>

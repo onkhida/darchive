@@ -78,7 +78,7 @@ onUnmounted(() => {
       <main class="container mx-auto px-4 md:px-8 py-10 max-w-3xl">
         <!-- Commentary Header -->
         <section class="mb-12">
-          <h1 class="text-6xl font-cormorant font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">commentary.</h1>
+          <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">commentary.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
             My days are often punctuated with fragmented thoughts and feelings that span across interdisciplinary topics. As I challenge these notions and try to make sense of the wonder that is existence, I have made my commentary page a public log of emotions that stay with me on this journey. I write about anything really, and whilst many of these entries may vary in intensity and brevity, I have thought it fitting to let this segment of my site tell a little bit more about my me, psyche and, the realities that I have lived up until this point.

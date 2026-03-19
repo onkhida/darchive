@@ -78,7 +78,7 @@ onUnmounted(() => {
       <main class="container mx-auto px-4 md:px-8 py-10 max-w-3xl">
         <!-- Readings Header -->
         <section class="mb-12">
-          <h1 class="text-6xl font-cormorant font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">readings.</h1>
+          <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">readings.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
             I go through a sizeable amount of text everyday. These entries here are essentially reviews and public notes 

@@ -99,7 +99,7 @@ onUnmounted(() => {
       <main class="container mx-auto px-4 md:px-8 py-10 max-w-3xl">
         <!-- Technical Header -->
         <section class="mb-12">
-          <h1 class="text-6xl font-cormorant font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">technical.</h1>
+          <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">technical.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
             Here's a log of technical concepts that I've tried to break down in simple ways. A lot of the code written might be heavily opinionated—as the patterns, ideas and solutions are derived from cases and scenarios that I have personally encountered. Nevertheless, I hope you find these blobs of text useful in whatever capacity you see fit.

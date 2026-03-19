@@ -10,9 +10,12 @@ export default {
         '88': '22rem', // 352px - Width of footnotes panel + padding
       },
       fontFamily: {
-        'sans': ['Work Sans', 'sans-serif'],
-        'serif': ['Cormorant', 'serif'],
+        'sans': ['Inter', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif'],
         'cormorant': ['Cormorant', 'serif'],
+        // New font aliases (kept in addition to existing ones for easy revert)
+        'playfair': ['Playfair Display', 'serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
       colors: {
         // Add your custom color palette here

@@ -437,7 +437,7 @@ onUnmounted(() => {
             <article v-else>
               <!-- Post Header -->
               <header class="mb-8">
-                <h1 class="text-5xl md:text-6xl font-cormorant font-normal mb-4 leading-[1.55]" 
+                <h1 class="text-5xl md:text-6xl font-serif font-normal mb-4 leading-[1.55]" 
                     :class="isDark ? 'text-primary-50' : 'text-primary-900'">
                   {{ post.title }}
                 </h1>
@@ -652,7 +652,7 @@ aside nav a:hover {
 .dark .prose :deep(h5),
 .dark .prose :deep(h6) {
   color: rgb(243 244 246) !important; /* text-gray-100 */
-  font-family: 'Work Sans', ui-sans-serif, system-ui, sans-serif !important;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
 }
 
 .dark .prose :deep(h1) {
@@ -800,7 +800,7 @@ aside nav a:hover {
 .prose :deep(h5),
 .prose :deep(h6) {
   color: rgb(17 24 39) !important; /* text-gray-900 */
-  font-family: 'Work Sans', ui-sans-serif, system-ui, sans-serif !important;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
 }
 
 .prose :deep(h1) {

@@ -59,3 +59,4 @@ Bug List
 - Dark mode issues for technical components.
 - On the without theta section, it looks horrific on mobile. 
 - horizontal scrolling to gap somewtimes on the site. especially on mobile
+- og:image

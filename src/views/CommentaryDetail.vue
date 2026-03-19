@@ -198,7 +198,7 @@ onUnmounted(() => {
                       fill="currentColor" />
                   </svg>
                   
-                  <h1 class="text-5xl font-cormorant font-normal" 
+                  <h1 class="text-5xl font-serif font-normal" 
                       :class="isDark ? 'text-primary-50' : 'text-primary-900'">
                     {{ post.title }}
                   </h1>

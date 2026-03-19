@@ -181,7 +181,7 @@ onUnmounted(() => {
         <article v-else>
           <!-- Reading Header -->
           <header class="mb-8">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-cormorant font-normal mb-4" 
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal mb-4" 
                 :class="isDark ? 'text-primary-50' : 'text-primary-900'">
               {{ post.title }}
             </h1>

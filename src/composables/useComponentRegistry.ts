@@ -64,6 +64,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/WeightedSumVisualizer.vue'),
         description: 'Sequential animation showing the incremental weighted sum calculation process',
         props: {}
+    },
+
+    'data-points-table': {
+        component: () => import('../components/the-great-divide/DataPointsTable.vue'),
+        description: 'Expandable table displaying 22 decision instances with money, wait time, and decision labels',
+        props: {}
     }
 
     // Add more components here as needed:

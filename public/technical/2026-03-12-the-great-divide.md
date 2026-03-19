@@ -89,7 +89,7 @@ I want to "zoom in" to my initial example about deciding on a BRT bus or not and
 1. The amount of money (in NGN) in my Cowry Card.
 2. The amount of time (in minutes) I *think* it would take for me to stand in line and board the bus.
 
-> Table component with data points here
+<div class="interactive-component" data-component="data-points-table" data-props="%7B%7D"></div>
 
 If you are interested in seeing all the numbers, you can click the "expand" button on the table above. There are 22 decision instances for every weekday (and morning commute) in March [^5]. Something you would notice is that apart from the two columns detailing *the amount of money in my card* and *how long it would take to board a bus*, there is another column of interest: the <u>*decision column*</u>, storing values of $1$ or $-1$. $1$ means I took the bus, and $-1$ means I did not. In the previous section, we talked about how the sign of the dot product is a really good indication of what half of the graph that a vector is in. You can think of these decision categories (of $±1$) as indications of what side of the decision boundary that each point is meant to fall on once training is complete. These values, in fact, are also used as checkers throughout training process to see if the current weight vector is doing a good job of classifying a point.
 

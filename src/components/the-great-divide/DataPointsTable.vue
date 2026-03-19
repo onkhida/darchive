@@ -86,38 +86,33 @@ interface DataPoint {
 
 const isExpanded = ref(false)
 
-// Generated data: 22 points that are linearly separable
-// The decision boundary roughly separates:
-// - BRT (+1): higher money (2000-6000) with lower wait times (8-18)
-// - Danfo (−1): lower money (0-2000) with higher wait times (18-35)
 const dataPoints = ref<DataPoint[]>([
-  // Danfo decisions (−1) - low money, long wait times
-  { day: 'Mar 1 (Mon)', money: 150, waitTime: 28, decision: -1 },
-  { day: 'Mar 2 (Tue)', money: 280, waitTime: 32, decision: -1 },
-  { day: 'Mar 3 (Wed)', money: 0, waitTime: 35, decision: -1 },
-  { day: 'Mar 4 (Thu)', money: 450, waitTime: 26, decision: -1 },
-  { day: 'Mar 5 (Fri)', money: 320, waitTime: 30, decision: -1 },
-  { day: 'Mar 8 (Mon)', money: 180, waitTime: 33, decision: -1 },
-  { day: 'Mar 9 (Tue)', money: 520, waitTime: 29, decision: -1 },
-  { day: 'Mar 10 (Wed)', money: 75, waitTime: 31, decision: -1 },
-  { day: 'Mar 11 (Thu)', money: 400, waitTime: 27, decision: -1 },
-
-  // Transition zone - mixed decisions (near the boundary)
-  { day: 'Mar 12 (Fri)', money: 1200, waitTime: 22, decision: -1 },
-  { day: 'Mar 15 (Mon)', money: 1800, waitTime: 19, decision: 1 },
-
-  // BRT decisions (+1) - high money, short wait times
-  { day: 'Mar 16 (Tue)', money: 2500, waitTime: 15, decision: 1 },
-  { day: 'Mar 17 (Wed)', money: 3200, waitTime: 12, decision: 1 },
-  { day: 'Mar 18 (Thu)', money: 2800, waitTime: 14, decision: 1 },
-  { day: 'Mar 19 (Fri)', money: 4100, waitTime: 10, decision: 1 },
-  { day: 'Mar 22 (Mon)', money: 3500, waitTime: 13, decision: 1 },
-  { day: 'Mar 23 (Tue)', money: 5200, waitTime: 9, decision: 1 },
-  { day: 'Mar 24 (Wed)', money: 4800, waitTime: 11, decision: 1 },
-  { day: 'Mar 25 (Thu)', money: 3900, waitTime: 12, decision: 1 },
-  { day: 'Mar 26 (Fri)', money: 5600, waitTime: 8, decision: 1 },
-  { day: 'Mar 29 (Mon)', money: 4200, waitTime: 11, decision: 1 },
-  { day: 'Mar 30 (Tue)', money: 6000, waitTime: 9, decision: 1 },
+  { day: 'Mar 1', money: 150, waitTime: 28, decision: -1 },
+  { day: 'Mar 2', money: 3200, waitTime: 12, decision: 1 },
+  { day: 'Mar 3', money: 280, waitTime: 32, decision: -1 },
+  { day: 'Mar 4', money: 4100, waitTime: 10, decision: 1 },
+  { day: 'Mar 5', money: 320, waitTime: 30, decision: -1 },
+  
+  { day: 'Mar 8', money: 2500, waitTime: 15, decision: 1 },
+  { day: 'Mar 9', money: 0, waitTime: 35, decision: -1 },
+  { day: 'Mar 10', money: 3900, waitTime: 12, decision: 1 },
+  { day: 'Mar 11', money: 450, waitTime: 26, decision: -1 },
+  { day: 'Mar 12', money: 5200, waitTime: 9, decision: 1 },
+  
+  { day: 'Mar 15', money: 75, waitTime: 31, decision: -1 },
+  { day: 'Mar 16', money: 4800, waitTime: 11, decision: 1 },
+  { day: 'Mar 17', money: 180, waitTime: 33, decision: -1 },
+  { day: 'Mar 18', money: 2800, waitTime: 14, decision: 1 },
+  { day: 'Mar 19', money: 520, waitTime: 29, decision: -1 },
+  
+  { day: 'Mar 22', money: 3500, waitTime: 13, decision: 1 },
+  { day: 'Mar 23', money: 400, waitTime: 27, decision: -1 },
+  { day: 'Mar 24', money: 5600, waitTime: 8, decision: 1 },
+  { day: 'Mar 25', money: 1200, waitTime: 22, decision: -1 },
+  { day: 'Mar 26', money: 4200, waitTime: 11, decision: 1 },
+  
+  { day: 'Mar 29', money: 1800, waitTime: 19, decision: 1 },
+  { day: 'Mar 30', money: 6000, waitTime: 9, decision: 1 },
 ])
 
 // Computed statistics

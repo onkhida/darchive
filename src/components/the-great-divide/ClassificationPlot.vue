@@ -18,43 +18,48 @@
           </defs>
 
           <!-- shaded halves using two large polygons computed from decision boundary -->
-          <polygon :points="northPoly" fill="#f1f5f9" opacity="0.7" v-if="northPoly" />
-          <polygon :points="southPoly" fill="#fff7ed" opacity="0.7" v-if="southPoly" />
+          <polygon :points="northPoly" fill="#f1f5f9" opacity="0.7" v-show="true" key="north" />
+          <polygon :points="southPoly" fill="#fff7ed" opacity="0.7" v-show="true" key="south" />
 
           <!-- axes -->
-          <line :x1="0" :y1="cy" :x2="width" :y2="cy" stroke="#e5e7eb" />
-          <line :x1="cx" :y1="0" :x2="cx" :y2="height" stroke="#e5e7eb" />
+          <line :x1="0" :y1="cy" :x2="width" :y2="cy" stroke="#e5e7eb" key="axis-x" />
+          <line :x1="cx" :y1="0" :x2="cx" :y2="height" stroke="#e5e7eb" key="axis-y" />
 
           <!-- decision boundary -->
-          <line :x1="bx1" :y1="by1" :x2="bx2" :y2="by2" stroke="#374151" stroke-dasharray="6 6" stroke-width="2" />
+          <line :x1="bx1" :y1="by1" :x2="bx2" :y2="by2" stroke="#374151" stroke-dasharray="6 6" stroke-width="2" key="boundary" />
 
           <!-- points rendered as thin vectors from origin + circle tip -->
-          <g v-for="(p) in points" :key="p.id">
-            <line
-              v-if="showVectors"
-              :x1="cx"
-              :y1="cy"
-              :x2="modelToScreenX(p.x)"
-              :y2="modelToScreenY(p.y)"
-              :stroke="p.label === 1 ? '#ef4444' : p.label === -1 ? '#0ea5a4' : '#9ca3af'"
-              stroke-width="1"
-              stroke-linecap="round"
-              opacity="0.95"
-            />
-            <circle
-              :cx="modelToScreenX(p.x)"
-              :cy="modelToScreenY(p.y)"
-              :r="5"
-              :fill="p.label === 1 ? '#ef4444' : p.label === -1 ? '#0ea5a4' : '#9ca3af'"
-              stroke="#fff"
-              stroke-width="1"
-            />
+          <!-- atomic wrapper keyed to points.length to avoid parent replacement races -->
+          <g :key="'points-' + points.length">
+            <g v-for="(p) in points" :key="p.id">
+              <line
+                v-show="showVectors"
+                :key="`v-${p.id}`"
+                :x1="cx"
+                :y1="cy"
+                :x2="modelToScreenX(p.x)"
+                :y2="modelToScreenY(p.y)"
+                :stroke="p.label === 1 ? '#ef4444' : p.label === -1 ? '#0ea5a4' : '#9ca3af'"
+                stroke-width="1"
+                stroke-linecap="round"
+                opacity="0.95"
+              />
+              <circle
+                :key="`c-${p.id}`"
+                :cx="modelToScreenX(p.x)"
+                :cy="modelToScreenY(p.y)"
+                :r="5"
+                :fill="p.label === 1 ? '#ef4444' : p.label === -1 ? '#0ea5a4' : '#9ca3af'"
+                stroke="#fff"
+                stroke-width="1"
+              />
+            </g>
           </g>
 
           <!-- weight vector (fixed) -->
-          <line :x1="cx" :y1="cy" :x2="wx" :y2="wy" stroke="#111827" stroke-width="3" marker-end="url(#cp-arrow)" />
+          <line :x1="cx" :y1="cy" :x2="wx" :y2="wy" stroke="#111827" stroke-width="3" marker-end="url(#cp-arrow)" key="weight-line" />
           <!-- fixed weight tip (non-draggable) -->
-          <circle :cx="wx" :cy="wy" r="6" fill="#111827" stroke="#fff" stroke-width="1" />
+          <circle :cx="wx" :cy="wy" r="6" fill="#111827" stroke="#fff" stroke-width="1" key="weight-tip" />
 
         </svg>
       </div>
@@ -113,7 +118,18 @@ const showVectors = ref(true)
 
 // track mounted state to avoid updating after unmount
 const mounted = ref(true)
-onUnmounted(() => { mounted.value = false; console.log('[ClassificationPlot] onUnmounted') })
+// guard to prevent re-mounting of parent placeholder during patch cycle
+const isUpdating = ref(false)
+
+onUnmounted(() => { 
+  mounted.value = false
+  isUpdating.value = false
+  // Clean up global flag
+  if (typeof window !== 'undefined') {
+    (window as any).__CP_IS_UPDATING = () => false
+  }
+  console.log('[ClassificationPlot] onUnmounted') 
+})
 
 // Log lifecycle events and initial state for diagnostics
 onMounted(() => {
@@ -237,6 +253,12 @@ function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
       return
     }
 
+    // CRITICAL: Check that SVG is still in the DOM (hasn't been re-mounted/replaced)
+    if (!document.body.contains(svg)) {
+      console.warn('[ClassificationPlot] pointerdown: SVG not in DOM (placeholder was replaced)')
+      return
+    }
+
     // Convert client coordinates into SVG internal coordinates using getScreenCTM inverse
     const clientX = (e as PointerEvent).clientX ?? (e as MouseEvent).clientX
     const clientY = (e as PointerEvent).clientY ?? (e as MouseEvent).clientY
@@ -266,36 +288,75 @@ function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
     const newPoint: Pt = { id, x: mx, y: my, label }
     console.log('[ClassificationPlot] newPoint prepared', newPoint)
 
+    // Mark that we're updating to signal any external mount/unmount handlers to pause
+    isUpdating.value = true
+    console.log('[ClassificationPlot] isUpdating set to true')
+
     // Defer the array update using nextTick and avoid updating after unmount
     nextTick().then(() => {
       console.log('[ClassificationPlot] nextTick - before points update', points.value.length)
-      if (!mounted.value) { console.warn('[ClassificationPlot] nextTick aborted - unmounted'); return }
+      console.log('[ClassificationPlot] points dump', JSON.stringify(points.value))
+      
+      // Check again that SVG is still in DOM before patching
+      if (!mounted.value) { 
+        console.warn('[ClassificationPlot] nextTick aborted - unmounted')
+        isUpdating.value = false
+        return 
+      }
+      
+      if (!document.body.contains(svg)) {
+        console.warn('[ClassificationPlot] nextTick aborted - SVG not in DOM')
+        isUpdating.value = false
+        return
+      }
+
       try {
         // replace the array (not mutate) to keep keyed diffing reliable
         points.value = [...points.value, newPoint]
         console.log('[ClassificationPlot] nextTick - after points update', points.value.length)
+        console.log('[ClassificationPlot] points dump', JSON.stringify(points.value))
       } catch (err) {
         console.error('[ClassificationPlot] error updating points', err)
         throw err
       }
+    }).catch((err) => {
+      console.error('[ClassificationPlot] nextTick promise rejected', err)
+    }).finally(() => {
+      // Clear the update flag after patch cycle completes
+      // Use another nextTick to ensure Vue has finished all DOM updates
+      nextTick().then(() => {
+        isUpdating.value = false
+        console.log('[ClassificationPlot] isUpdating set to false (after second nextTick)')
+      }).catch(() => {
+        // Force clear even if this errors
+        isUpdating.value = false
+      })
     })
   } catch (err) {
     console.error('[ClassificationPlot] onCanvasPointerDown caught', err)
+    isUpdating.value = false
     throw err
   }
 }
 
 function clearPoints() { points.value = [] }
 
-onMounted(() => {
-  // start empty — user will click to add points
-})
-
 // coordinate helpers: model space in [-1,1] on both axes
 function modelToScreenX(x: number) { return cx + x * (width / 2 - 20) }
 function modelToScreenY(y: number) { return cy - y * (height / 2 - 20) }
 function screenToModelX(sx: number) { return (sx - cx) / (width / 2 - 20) }
 function screenToModelY(sy: number) { return (cy - sy) / (height / 2 - 20) }
+
+onMounted(() => {
+  // start empty — user will click to add points
+  // Expose global flag so parent container can avoid concurrent re-mounts
+  // This prevents race conditions when TechnicalDetail.mountInteractiveComponents runs
+  // while ClassificationPlot is in the middle of a patch cycle
+  if (typeof window !== 'undefined') {
+    (window as any).__CP_IS_UPDATING = () => isUpdating.value
+  }
+})
+
 </script>
 
 <style scoped>

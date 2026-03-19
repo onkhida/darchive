@@ -143,6 +143,24 @@ const mountInteractiveComponents = async () => {
   // which automatically detects and renders components using the registry
   await nextTick()
   
+  // GUARD: Don't re-mount components while an existing component is actively patching
+  // This prevents insertBefore errors when ClassificationPlot (or similar) is updating
+  // Use exponential backoff to wait for any concurrent updates to complete
+  let retries = 0
+  const maxRetries = 50 // ~500ms total wait time
+  
+  while (retries < maxRetries && typeof window !== 'undefined' && (window as any).__CP_IS_UPDATING?.()) {
+    console.log(`[mountInteractiveComponents] deferring mount - ClassificationPlot is updating (attempt ${retries + 1}/${maxRetries})`)
+    // Exponential backoff: 10ms initially, then longer waits
+    const delay = Math.min(10 * Math.pow(1.1, retries), 50)
+    await new Promise(resolve => setTimeout(resolve, delay))
+    retries++
+  }
+  
+  if (retries >= maxRetries) {
+    console.warn('[mountInteractiveComponents] timeout waiting for ClassificationPlot update to complete, proceeding anyway')
+  }
+  
   // Add copy buttons to code blocks after content is rendered
   addCopyButtonsToCodeBlocks()
 

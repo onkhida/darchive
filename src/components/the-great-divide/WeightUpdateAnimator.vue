@@ -43,7 +43,7 @@
               :x2="currentBoundary.x2"
               :y2="currentBoundary.y2"
               stroke="#ef4444"
-              stroke-width="2"
+              stroke-width="1"
               stroke-dasharray="6,4"
               opacity="0.7"
               class="transition-all duration-700"
@@ -56,7 +56,7 @@
               :x2="currentWeightScreen.x"
               :y2="currentWeightScreen.y"
               :stroke="currentWeightColor"
-              stroke-width="2.5"
+              stroke-width="1.5"
               class="transition-all duration-700"
             />
             <!-- Arrow head -->

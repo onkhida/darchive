@@ -113,9 +113,9 @@ To figure out how to orient its compass, the perceptron recursively goes through
 $$y (\vec{w}\cdot\vec{x})\leq0$$
 The $y$ in this case refers to the label given to a point before the commencement of this training process. You would recall, from my decision column a few paragraphs ago, that I decided to label an instance with $+1$ if I took the bus and $-1$ if I didn't. The reason that multiplying our label, $y$, with the dot product of the weight and input vector, $(\vec{w}\cdot\vec{x})$, is a good way to check if a point has been classified correctly is because it is only when $y (\vec{w}\cdot\vec{x})$ is positive that the point has been classified correctly. If we have a point labelled to the $-1$ category, then it is only when its dot product is negative—showing that it falls on the southern half as defined initially by its label—that the result of  $y (\vec{w}\cdot\vec{x})$ is a positive number. Similarly, if we have a point labelled to the $1$ category, then it is only when its dot product is positive—showing that it falls on the northern half as specified initially by its label—that the result of $y (\vec{w}\cdot\vec{x})$ is a positive number. 
 
-> My feeling as of right now is that this paragraph above needs an animation. Thinking of maybe a weight vector that moves around, with a vector/vector point showing -1 and the dot product also interactively changing. Then the checker equation classifying as needed.
+<div class="interactive-component" data-component="misclassification-checker" data-props="%7B%7D"></div>
 
-If, indeed, a point has been misclassified, the de facto update rule for the perceptron is as follows.
+Now if, indeed, a point has been misclassified, the de facto update rule for the perceptron is as follows.
 $$w_n=w_o+yx$$
 Here, the new weight, $w_n$, is found by adding $yx$ to the old weight, $w_o$. 
 Although we have a heavy conceptual proof backing this update rule, it is easy to see on a conceptual level why this equation suffices as an iterative corrective mechanism. Remember that if a point is misclassified, then the dot product, $\vec{w}\cdot\vec{x}$, simply has the wrong sign. Because of this, adding $yx$ to the existing weight shifts our weight (and its decision boundary) towards the direction of the misclassified point, increasing the likelihood that it is categorised correctly on the next iteration!

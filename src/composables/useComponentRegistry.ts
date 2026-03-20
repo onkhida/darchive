@@ -88,6 +88,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/MisclassificationChecker.vue'),
         description: 'Interactive tool to test the misclassification formula y(w·x) by placing points and checking classification',
         props: {}
+    },
+
+    'weight-update-animator': {
+        component: () => import('../components/the-great-divide/WeightUpdateAnimator.vue'),
+        description: 'Three-step animation showing perceptron weight update process: misclassified point → computing update (y·x) → reoriented boundary',
+        props: {}
     }
 
     // Add more components here as needed:

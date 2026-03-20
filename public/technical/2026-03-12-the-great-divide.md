@@ -120,7 +120,7 @@ $$w_n=w_o+yx$$
 Here, the new weight, $w_n$, is found by adding $yx$ to the old weight, $w_o$. 
 Although we have a heavy conceptual proof backing this update rule, it is easy to see on a conceptual level why this equation suffices as an iterative corrective mechanism. Remember that if a point is misclassified, then the dot product, $\vec{w}\cdot\vec{x}$, simply has the wrong sign. Because of this, adding $yx$ to the existing weight shifts our weight (and its decision boundary) towards the direction of the misclassified point, increasing the likelihood that it is categorised correctly on the next iteration!
 
-> Maybe an animation that mimics the adding of the process and shifting of the boundary.
+<div class="interactive-component" data-component="weight-update-animator" data-props="%7B%7D"></div>
 
 This process of checking each point and updating the boundary (if necessary) will iteratively happen until the perceptron converges on a solution. And it *will* converge on a solution, just as long as the points are linearly separable.
 

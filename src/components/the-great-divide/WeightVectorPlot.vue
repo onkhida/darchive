@@ -160,7 +160,7 @@ interface NormalizedDataPoint extends RawDataPoint {
 }
 
 const width = 560
-const height = 400
+const height = 560
 
 const gridSize = 40
 
@@ -176,8 +176,8 @@ const originY = (1 / modelSpan) * height
 const axisOriginX = computed(() => ((0 - modelMin) / modelSpan) * width)
 const axisOriginY = computed(() => ((1.0) / modelSpan) * height)
 
-// Initial weight vector (random, pointing roughly northeast)
-const weightVector = ref({ x: 1.0, y: 1.0 })
+// Initial weight vector (scaled appropriately for the normalized space)
+const weightVector = ref({ x: 0.4, y: 0.4 })
 
 // Raw data from the experiment
 const rawData: RawDataPoint[] = [
@@ -258,14 +258,11 @@ const dataPoints = computed((): NormalizedDataPoint[] => {
 
 // Weight vector endpoint (scaled for visualization)
 const weightVectorEnd = computed(() => {
-  const scale = 120 // Length of displayed weight vector
-  const magnitude = Math.sqrt(weightVector.value.x ** 2 + weightVector.value.y ** 2)
-  const normalizedX = weightVector.value.x / magnitude
-  const normalizedY = weightVector.value.y / magnitude
-  
+    const xValue = modelToScreenX(weightVector.value.x, width)
+    const yValue = modelToScreenY(1 - weightVector.value.y, height)
   return {
-    x: originX + normalizedX * scale,
-    y: originY - normalizedY * scale, // Subtract because Y increases downward
+    x: xValue,
+    y: yValue, // Subtract because Y increases downward
   }
 })
 

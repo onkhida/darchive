@@ -125,7 +125,7 @@ interface NormalizedDataPoint extends RawDataPoint {
 }
 
 const width = 560
-const height = 400
+const height = 560
 
 const gridSize = 40
 

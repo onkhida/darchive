@@ -70,6 +70,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/DataPointsTable.vue'),
         description: 'Expandable table displaying 22 decision instances with money, wait time, and decision labels',
         props: {}
+    },
+
+    'graph-plot': {
+        component: () => import('../components/the-great-divide/GraphPlotComponent.vue'),
+        description: 'Normalized data plot showing money vs wait time with min-max normalization applied to decision instances',
+        props: {}
     }
 
     // Add more components here as needed:

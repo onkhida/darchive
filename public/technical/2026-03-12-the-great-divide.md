@@ -100,7 +100,7 @@ I've gone about "normalising" this data by using the very intuitive [min-max nor
 $$x_n=\frac{x-min(X)}{max(X)-min(X)}$$
 The result is a standardised value (which I've rounded to 3 decimal places) that distinctly shows the relative strength (on a scale of 0 to 1) of a vector dimension, without the unit bias.
 
-> Graph Plot Component with data below.
+<div class="interactive-component" data-component="graph-plot" data-props="%7B%7D"></div>
 
 ## Checks and Balances
 Now that we have mapped our normalised data points across the graph, to see how the perceptron goes about finding our decision boundary in practice, we'll need to start by initialising a random weight vector, $\vec{w} = (1, 1)$.

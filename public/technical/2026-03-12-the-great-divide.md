@@ -105,7 +105,7 @@ The result is a standardised value (which I've rounded to 3 decimal places) that
 ## Checks and Balances
 Now that we have mapped our normalised data points across the graph, to see how the perceptron goes about finding our decision boundary in practice, we'll need to start by initialising a random weight vector, $\vec{w} = (1, 1)$.
 
-> Insert Weight Vector + Illustration of the Orthogonal Line
+<div class="interactive-component" data-component="weight-vector-plot" data-props="%7B%7D"></div>
 
 As I explained in the section prior, the line orthogonal to this weight vector—which presents as a dashed line in the graphical illustration above—works as our decision boundary between the two categories. We can see with our naked eye that the perceptron's first boundary does a poor job of classifying the two categories: all of my "decision instances" end up in its "northern half" with none in the "southern half". Ideally, we'd want one category to stay exclusively on one side, with the other category exclusively in the opposite "northern half". 
 

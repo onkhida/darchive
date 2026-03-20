@@ -28,6 +28,33 @@
 
           <text :x="originX + 8" :y="originY - 8" class="text-xs fill-slate-500 text-right">0.0</text>
 
+          <!-- Decision Boundary (orthogonal line - dashed) -->
+          <line
+            :x1="boundaryStart.x"
+            :y1="boundaryStart.y"
+            :x2="boundaryEnd.x"
+            :y2="boundaryEnd.y"
+            stroke="#ef4444"
+            stroke-width="2"
+            stroke-dasharray="5,5"
+            opacity="0.7"
+          />
+
+          <!-- Weight Vector (arrow from origin) -->
+          <line
+            :x1="originX"
+            :y1="originY"
+            :x2="weightVectorEnd.x"
+            :y2="weightVectorEnd.y"
+            stroke="#3b82f6"
+            stroke-width="2.5"
+          />
+          <!-- Arrow head -->
+          <polygon
+            :points="arrowHeadPoints"
+            fill="#3b82f6"
+          />
+
           <!-- Data points -->
           <g v-for="point in dataPoints" :key="`point-${point.day}`">
             <!-- Point circle -->
@@ -70,6 +97,14 @@
       <!-- Legend and Info Panel -->
       <div class="w-full md:w-60 flex flex-col">
         <div class="space-y-4">
+          <!-- Weight Vector Info -->
+          <div class="p-3 bg-slate-50 rounded">
+            <div class="text-xs font-semibold text-slate-700 mb-2">Weight Vector</div>
+            <div class="text-xs text-slate-600 font-mono">
+              w = ({{ weightVector.x.toFixed(3) }}, {{ weightVector.y.toFixed(3) }})
+            </div>
+          </div>
+
           <!-- Sample Normalized Values -->
           <div class="p-3 bg-slate-50 rounded">
             <div class="text-xs font-semibold text-slate-700 mb-2">Formula</div>
@@ -84,11 +119,11 @@
               <div class="text-xs font-semibold text-slate-700 mb-2">{{ hoveredPointData.day }}</div>
               <div>Money (Raw): ₦{{ hoveredPointData.money }}</div>
               <div>Money (Normalized): {{ hoveredPointData.normalizedMoney.toFixed(3) }}</div>
-              <hr>
-              <div class="mt-1">Wait (Raw): {{ hoveredPointData.waitTime }}m</div>
+              <hr class="my-2">
+              <div>Wait (Raw): {{ hoveredPointData.waitTime }}m</div>
               <div>Wait (Normalized): {{ hoveredPointData.normalizedWaitTime.toFixed(3) }}</div>
-              <hr>
-              <div class="mt-1 font-semibold">
+              <hr class="my-2">
+              <div class="font-semibold">
                 Decision:
                 <span
                   :class="
@@ -130,7 +165,6 @@ const height = 400
 const gridSize = 40
 
 // Coordinate system: model space ranges from -0.2 to +1 (span of 1.2)
-// This gives ~83% of space to positive values, ~17% to negative
 const modelMin = -0.2
 const modelMax = 1.0
 const modelSpan = modelMax - modelMin // 1.2
@@ -140,8 +174,10 @@ const originY = (1 / modelSpan) * height
 
 // Compute screen position of axis origin (where model coordinate 0 maps to)
 const axisOriginX = computed(() => ((0 - modelMin) / modelSpan) * width)
-// Y-axis: positive region [0,1] takes up (1.0/1.2) of height at the top
 const axisOriginY = computed(() => ((1.0) / modelSpan) * height)
+
+// Initial weight vector (random, pointing roughly northeast)
+const weightVector = ref({ x: 1.0, y: 1.0 })
 
 // Raw data from the experiment
 const rawData: RawDataPoint[] = [
@@ -186,15 +222,13 @@ const waitStats = computed(() => {
   }
 })
 
-// Normalize a value using min-max formula: (x - min) / (max - min)
+// Normalize a value using min-max formula
 function normalize(value: number, min: number, max: number): number {
   if (max === min) return 0
   return (value - min) / (max - min)
 }
 
 // Convert model coordinates to screen coordinates
-// Model space: -0.2 to +1 (span 1.2)
-// Screen space: 0 to width/height
 function modelToScreenX(modelValue: number, screenDimension: number): number {
   return ((modelValue - modelMin) / modelSpan) * screenDimension
 }
@@ -203,7 +237,7 @@ function modelToScreenY(modelValue: number, screenDimension: number): number {
   return ((modelValue) / modelSpan) * screenDimension
 }
 
-// Compute normalized data points with screen coordinates
+// Compute normalized data points
 const dataPoints = computed((): NormalizedDataPoint[] => {
   const money = moneyStats.value
   const wait = waitStats.value
@@ -212,16 +246,99 @@ const dataPoints = computed((): NormalizedDataPoint[] => {
     const normalizedMoney = normalize(point.money, money.min, money.max)
     const normalizedWaitTime = normalize(point.waitTime, wait.min, wait.max)
 
-    // Normalized values are in [0, 1], so they map directly to model space [0, 1]
-    // Y-axis is inverted: (1 - normalizedWaitTime) so lower wait times appear higher
     return {
       ...point,
       normalizedMoney,
       normalizedWaitTime,
       screenX: modelToScreenX(normalizedMoney, width),
-      screenY: modelToScreenY(1 - normalizedWaitTime, height), // Inverted for Y
+      screenY: modelToScreenY(1 - normalizedWaitTime, height),
     }
   })
+})
+
+// Weight vector endpoint (scaled for visualization)
+const weightVectorEnd = computed(() => {
+  const scale = 120 // Length of displayed weight vector
+  const magnitude = Math.sqrt(weightVector.value.x ** 2 + weightVector.value.y ** 2)
+  const normalizedX = weightVector.value.x / magnitude
+  const normalizedY = weightVector.value.y / magnitude
+  
+  return {
+    x: originX + normalizedX * scale,
+    y: originY - normalizedY * scale, // Subtract because Y increases downward
+  }
+})
+
+// Arrow head points (rotated to face the vector direction)
+const arrowHeadPoints = computed(() => {
+  const dx = weightVectorEnd.value.x - originX
+  const dy = weightVectorEnd.value.y - originY
+  const magnitude = Math.sqrt(dx ** 2 + dy ** 2)
+  
+  // Normalized direction vector
+  const ux = dx / magnitude
+  const uy = dy / magnitude
+  
+  // Perpendicular vector (rotated 90 degrees)
+  const px = -uy
+  const py = ux
+  
+  // Arrow dimensions
+  const arrowLength = 12
+  const arrowWidth = 8
+  
+  // Calculate arrow head points
+  const baseX = weightVectorEnd.value.x - ux * arrowLength
+  const baseY = weightVectorEnd.value.y - uy * arrowLength
+  
+  const left = {
+    x: baseX - px * (arrowWidth / 2),
+    y: baseY - py * (arrowWidth / 2),
+  }
+  
+  const right = {
+    x: baseX + px * (arrowWidth / 2),
+    y: baseY + py * (arrowWidth / 2),
+  }
+  
+  return `${weightVectorEnd.value.x},${weightVectorEnd.value.y} ${left.x},${left.y} ${right.x},${right.y}`
+})
+
+// Decision boundary (orthogonal line perpendicular to weight vector)
+const boundaryStart = computed(() => {
+  // Direction perpendicular to weight vector
+  const perpX = -weightVector.value.y
+  const perpY = weightVector.value.x
+  
+  // Normalize the perpendicular direction
+  const magnitude = Math.sqrt(perpX ** 2 + perpY ** 2)
+  const normPerpX = perpX / magnitude
+  const normPerpY = perpY / magnitude
+  
+  // Extend line from origin in perpendicular direction
+  const boundaryLength = 250
+  return {
+    x: originX - normPerpX * boundaryLength,
+    y: originY + normPerpY * boundaryLength, // Add because Y increases downward
+  }
+})
+
+const boundaryEnd = computed(() => {
+  // Direction perpendicular to weight vector
+  const perpX = -weightVector.value.y
+  const perpY = weightVector.value.x
+  
+  // Normalize the perpendicular direction
+  const magnitude = Math.sqrt(perpX ** 2 + perpY ** 2)
+  const normPerpX = perpX / magnitude
+  const normPerpY = perpY / magnitude
+  
+  // Extend line from origin in opposite perpendicular direction
+  const boundaryLength = 250
+  return {
+    x: originX + normPerpX * boundaryLength,
+    y: originY - normPerpY * boundaryLength, // Subtract because Y increases downward
+  }
 })
 
 // Hover state
@@ -244,12 +361,10 @@ const tooltipY = computed(() => {
 </script>
 
 <style scoped>
-/* Ensure SVG renders crisply */
 svg {
   touch-action: manipulation;
 }
 
-/* Text rendering in SVG */
 text {
   font-family: inherit;
   pointer-events: none;

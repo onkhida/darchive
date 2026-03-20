@@ -76,6 +76,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/GraphPlotComponent.vue'),
         description: 'Normalized data plot showing money vs wait time with min-max normalization applied to decision instances',
         props: {}
+    },
+
+    'weight-vector-plot': {
+        component: () => import('../components/the-great-divide/WeightVectorPlot.vue'),
+        description: 'Normalized data plot with weight vector visualization and orthogonal decision boundary line',
+        props: {}
     }
 
     // Add more components here as needed:

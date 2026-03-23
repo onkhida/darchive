@@ -450,33 +450,72 @@ const arrowHeadPoints = computed(() => {
 // Compute decision boundary
 const boundaryPoints = computed(() => {
   const w = currentWeights.value
-  if (!w || weightMagnitude.value === 0) return null
+  if (!w) return null
+  if (w.w2 === 0) return null
 
-  // Decision boundary is perpendicular to weight vector
-  const unitX = w.w1 / weightMagnitude.value
-  const unitY = w.w2 / weightMagnitude.value
-
-  // Perpendicular direction (rotate 90 degrees)
-  const perpX = -unitY
-  const perpY = unitX
-
-  // Center point: offset from origin by bias along weight direction
-  const biasOffsetX = (unitX * w.w0 / modelSpan) * width
-  const biasOffsetY = -(unitY * w.w0 / modelSpan) * height
+  // Decision boundary: w0 + w1*x + w2*y = 0
+  // We need to find where this line intersects the display area
+  // The line will extend beyond the [0,1] data space into the display space [-1.5, 2.5]
   
-  const centerX = originX.value + biasOffsetX
-  const centerY = originY.value + biasOffsetY
-
-  // Extent along perpendicular direction
-  const extentScale = 250 // How far the boundary line extends
-  const extentX = (perpX * extentScale / modelSpan) * width
-  const extentY = -(perpY * extentScale / modelSpan) * height
+  // Map the display space back to "data-like coordinates" for calculation purposes
+  // Display space [-1.5, 2.5] maps back through inverse of modelToScreenX/Y
+  // x_data = x_screen * modelSpan / width + modelMin
+  // y_data = y_screen * modelSpan / height (and inverted)
+  
+  // For simplicity, solve the equation in extended space that covers both data and display
+  const xMin = -1.5
+  const xMax = 2.5
+  const yMin = -1.5
+  const yMax = 2.5
+  
+  // Solve for y: y = -(w0 + w1*x) / w2
+  const yAtXMin = -(w.w0 + w.w1 * xMin) / w.w2
+  const yAtXMax = -(w.w0 + w.w1 * xMax) / w.w2
+  
+  const isYValid = (y: number) => y >= yMin && y <= yMax
+  
+  let point1: { x: number; y: number } | null = null
+  let point2: { x: number; y: number } | null = null
+  
+  // Try x boundaries
+  if (isYValid(yAtXMin)) {
+    point1 = { x: xMin, y: yAtXMin }
+  }
+  if (isYValid(yAtXMax)) {
+    if (!point1) point1 = { x: xMax, y: yAtXMax }
+    else point2 = { x: xMax, y: yAtXMax }
+  }
+  
+  // If we need a second point, try y boundaries
+  if (!point2 && w.w1 !== 0) {
+    // Solve for x: x = -(w0 + w2*y) / w1
+    const xAtYMin = -(w.w0 + w.w2 * yMin) / w.w1
+    const xAtYMax = -(w.w0 + w.w2 * yMax) / w.w1
+    const isXValid = (x: number) => x >= xMin && x <= xMax
+    
+    if (isXValid(xAtYMin) && (!point1 || (point1 && (point1.x !== xAtYMin || point1.y !== yMin)))) {
+      if (!point1) point1 = { x: xAtYMin, y: yMin }
+      else point2 = { x: xAtYMin, y: yMin }
+    }
+    if (isXValid(xAtYMax) && (!point2 && (!point1 || (point1 && (point1.x !== xAtYMax || point1.y !== yMax))))) {
+      if (!point1) point1 = { x: xAtYMax, y: yMax }
+      else point2 = { x: xAtYMax, y: yMax }
+    }
+  }
+  
+  if (!point1 || !point2) return null
+  
+  // Convert to screen coordinates
+  const x1Screen = modelToScreenX(point1.x)
+  const y1Screen = modelToScreenY(modelMax - point1.y)
+  const x2Screen = modelToScreenX(point2.x)
+  const y2Screen = modelToScreenY(modelMax - point2.y)
 
   return {
-    x1: centerX - extentX,
-    y1: centerY - extentY,
-    x2: centerX + extentX,
-    y2: centerY + extentY,
+    x1: x1Screen,
+    y1: y1Screen,
+    x2: x2Screen,
+    y2: y2Screen,
   }
 })
 

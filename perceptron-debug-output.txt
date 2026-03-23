@@ -1,0 +1,1653 @@
+====================================================================================================
+PERCEPTRON TRAINING DEBUG OUTPUT
+====================================================================================================
+
+CONVERGENCE: true
+EPOCHS NEEDED: 6
+FINAL WEIGHTS: w0=0.400, w1=2.045, w2=-1.563
+
+TOTAL ITERATIONS: 132
+
+----------------------------------------------------------------------------------------------------
+ITERATION DETAILS:
+----------------------------------------------------------------------------------------------------
+
+ITERATION 1:
+  Epoch: 1
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.706296
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=0.400, w2=0.400
+  Weight After: w0=-0.600, w1=0.375, w2=-0.341
+  Weight Delta: Δw0=-1.000, Δw1=-0.025, Δw2=-0.741
+
+ITERATION 2:
+  Epoch: 1
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: -0.450480
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=0.375, w2=-0.341
+  Weight After: w0=0.400, w1=0.908, w2=-0.193
+  Weight Delta: Δw0=1.000, Δw1=0.533, Δw2=0.148
+
+ITERATION 3:
+  Epoch: 1
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.271195
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=0.908, w2=-0.193
+  Weight After: w0=-0.600, w1=0.862, w2=-1.081
+  Weight Delta: Δw0=-1.000, Δw1=-0.047, Δw2=-0.889
+
+ITERATION 4:
+  Epoch: 1
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: -0.091304
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=0.862, w2=-1.081
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+  Weight Delta: Δw0=1.000, Δw1=0.683, Δw2=0.074
+
+ITERATION 5:
+  Epoch: 1
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.338450
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 6:
+  Epoch: 1
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.782570
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 7:
+  Epoch: 1
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.607407
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 8:
+  Epoch: 1
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.255004
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 9:
+  Epoch: 1
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.155730
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 10:
+  Epoch: 1
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 1.701689
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 11:
+  Epoch: 1
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.438849
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 12:
+  Epoch: 1
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.524066
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 13:
+  Epoch: 1
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.486435
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 14:
+  Epoch: 1
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 0.897132
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 15:
+  Epoch: 1
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.249639
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 16:
+  Epoch: 1
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.114693
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 17:
+  Epoch: 1
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.205916
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 18:
+  Epoch: 1
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 1.842000
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=0.400, w1=1.545, w2=-1.007
+
+ITERATION 19:
+  Epoch: 1
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.186641
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=1.545, w2=-1.007
+  Weight After: w0=-0.600, w1=1.345, w2=-1.526
+  Weight Delta: Δw0=-1.000, Δw1=-0.200, Δw2=-0.519
+
+ITERATION 20:
+  Epoch: 1
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 0.171953
+  Correctly Classified: YES
+  Weight Before: w0=-0.600, w1=1.345, w2=-1.526
+  Weight After: w0=-0.600, w1=1.345, w2=-1.526
+
+ITERATION 21:
+  Epoch: 1
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: -0.818174
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=1.345, w2=-1.526
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+  Weight Delta: Δw0=1.000, Δw1=0.300, Δw2=0.407
+
+ITERATION 22:
+  Epoch: 1
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.003573
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 23:
+  Epoch: 2
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.387407
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 24:
+  Epoch: 2
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.111627
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 25:
+  Epoch: 2
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.517472
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 26:
+  Epoch: 2
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: 1.441230
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 27:
+  Epoch: 2
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.423652
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 28:
+  Epoch: 2
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.795430
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 29:
+  Epoch: 2
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.718519
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 30:
+  Epoch: 2
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.303544
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 31:
+  Epoch: 2
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.222304
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 32:
+  Epoch: 2
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 1.784240
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 33:
+  Epoch: 2
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.532250
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 34:
+  Epoch: 2
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.591720
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 35:
+  Epoch: 2
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.586315
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 36:
+  Epoch: 2
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 0.919107
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 37:
+  Epoch: 2
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.327392
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 38:
+  Epoch: 2
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.152450
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 39:
+  Epoch: 2
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.277439
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 40:
+  Epoch: 2
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 1.935333
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=0.400, w1=1.645, w2=-1.119
+
+ITERATION 41:
+  Epoch: 2
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.149027
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=1.645, w2=-1.119
+  Weight After: w0=-0.600, w1=1.445, w2=-1.637
+  Weight Delta: Δw0=-1.000, Δw1=-0.200, Δw2=-0.519
+
+ITERATION 42:
+  Epoch: 2
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 0.229607
+  Correctly Classified: YES
+  Weight Before: w0=-0.600, w1=1.445, w2=-1.637
+  Weight After: w0=-0.600, w1=1.445, w2=-1.637
+
+ITERATION 43:
+  Epoch: 2
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: -0.833441
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=1.445, w2=-1.637
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+  Weight Delta: Δw0=1.000, Δw1=0.300, Δw2=0.407
+
+ITERATION 44:
+  Epoch: 2
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.099458
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 45:
+  Epoch: 3
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.467212
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 46:
+  Epoch: 3
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.148499
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 47:
+  Epoch: 3
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.611571
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 48:
+  Epoch: 3
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: 1.501333
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 49:
+  Epoch: 3
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.508854
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 50:
+  Epoch: 3
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.808290
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 51:
+  Epoch: 3
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.829630
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 52:
+  Epoch: 3
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.352083
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 53:
+  Epoch: 3
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.288878
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 54:
+  Epoch: 3
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 1.866791
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 55:
+  Epoch: 3
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.625650
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 56:
+  Epoch: 3
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.659374
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 57:
+  Epoch: 3
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.686196
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 58:
+  Epoch: 3
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 0.941082
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 59:
+  Epoch: 3
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.405145
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 60:
+  Epoch: 3
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.190207
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 61:
+  Epoch: 3
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.348962
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 62:
+  Epoch: 3
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 2.028667
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=0.400, w1=1.745, w2=-1.230
+
+ITERATION 63:
+  Epoch: 3
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.111414
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=1.745, w2=-1.230
+  Weight After: w0=-0.600, w1=1.545, w2=-1.748
+  Weight Delta: Δw0=-1.000, Δw1=-0.200, Δw2=-0.519
+
+ITERATION 64:
+  Epoch: 3
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 0.287261
+  Correctly Classified: YES
+  Weight Before: w0=-0.600, w1=1.545, w2=-1.748
+  Weight After: w0=-0.600, w1=1.545, w2=-1.748
+
+ITERATION 65:
+  Epoch: 3
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: -0.848709
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=1.545, w2=-1.748
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+  Weight Delta: Δw0=1.000, Δw1=0.300, Δw2=0.407
+
+ITERATION 66:
+  Epoch: 3
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.195343
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 67:
+  Epoch: 4
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.547016
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 68:
+  Epoch: 4
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.185372
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 69:
+  Epoch: 4
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.705670
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 70:
+  Epoch: 4
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: 1.561436
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 71:
+  Epoch: 4
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.594055
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 72:
+  Epoch: 4
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.821151
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 73:
+  Epoch: 4
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.940741
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 74:
+  Epoch: 4
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.400622
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 75:
+  Epoch: 4
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.355452
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 76:
+  Epoch: 4
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 1.949343
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 77:
+  Epoch: 4
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.719050
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 78:
+  Epoch: 4
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.727029
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 79:
+  Epoch: 4
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.786077
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 80:
+  Epoch: 4
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 0.963058
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 81:
+  Epoch: 4
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.482898
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 82:
+  Epoch: 4
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.227965
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 83:
+  Epoch: 4
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.420484
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 84:
+  Epoch: 4
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 2.122000
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=0.400, w1=1.845, w2=-1.341
+
+ITERATION 85:
+  Epoch: 4
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.073801
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=1.845, w2=-1.341
+  Weight After: w0=-0.600, w1=1.645, w2=-1.859
+  Weight Delta: Δw0=-1.000, Δw1=-0.200, Δw2=-0.519
+
+ITERATION 86:
+  Epoch: 4
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 0.344916
+  Correctly Classified: YES
+  Weight Before: w0=-0.600, w1=1.645, w2=-1.859
+  Weight After: w0=-0.600, w1=1.645, w2=-1.859
+
+ITERATION 87:
+  Epoch: 4
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: -0.863976
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=1.645, w2=-1.859
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+  Weight Delta: Δw0=1.000, Δw1=0.300, Δw2=0.407
+
+ITERATION 88:
+  Epoch: 4
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.291228
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 89:
+  Epoch: 5
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.626821
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 90:
+  Epoch: 5
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.222244
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 91:
+  Epoch: 5
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.799768
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 92:
+  Epoch: 5
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: 1.621539
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 93:
+  Epoch: 5
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.679257
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 94:
+  Epoch: 5
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.834011
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 95:
+  Epoch: 5
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -1.051852
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 96:
+  Epoch: 5
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.449161
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 97:
+  Epoch: 5
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.422026
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 98:
+  Epoch: 5
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.031894
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 99:
+  Epoch: 5
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.812450
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 100:
+  Epoch: 5
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.794683
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 101:
+  Epoch: 5
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.885957
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 102:
+  Epoch: 5
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 0.985033
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 103:
+  Epoch: 5
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.560651
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 104:
+  Epoch: 5
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.265722
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 105:
+  Epoch: 5
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.492007
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 106:
+  Epoch: 5
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 2.215333
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=0.400, w1=1.945, w2=-1.452
+
+ITERATION 107:
+  Epoch: 5
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: 0.036188
+  Correctly Classified: NO
+  Weight Before: w0=0.400, w1=1.945, w2=-1.452
+  Weight After: w0=-0.600, w1=1.745, w2=-1.970
+  Weight Delta: Δw0=-1.000, Δw1=-0.200, Δw2=-0.519
+
+ITERATION 108:
+  Epoch: 5
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 0.402570
+  Correctly Classified: YES
+  Weight Before: w0=-0.600, w1=1.745, w2=-1.970
+  Weight After: w0=-0.600, w1=1.745, w2=-1.970
+
+ITERATION 109:
+  Epoch: 5
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: -0.879243
+  Correctly Classified: NO
+  Weight Before: w0=-0.600, w1=1.745, w2=-1.970
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+  Weight Delta: Δw0=1.000, Δw1=0.300, Δw2=0.407
+
+ITERATION 110:
+  Epoch: 5
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.387112
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 111:
+  Epoch: 6
+  Point Index: 0
+  Day: Mar 1
+  Normalized Money: 0.025
+  Normalized Wait: 0.741
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.706625
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 112:
+  Epoch: 6
+  Point Index: 1
+  Day: Mar 2
+  Normalized Money: 0.533
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.259117
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 113:
+  Epoch: 6
+  Point Index: 2
+  Day: Mar 3
+  Normalized Money: 0.047
+  Normalized Wait: 0.889
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.893867
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 114:
+  Epoch: 6
+  Point Index: 3
+  Day: Mar 4
+  Normalized Money: 0.683
+  Normalized Wait: 0.074
+  Decision Label: +1 (BRT)
+  Dot Product: 1.681642
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 115:
+  Epoch: 6
+  Point Index: 4
+  Day: Mar 5
+  Normalized Money: 0.053
+  Normalized Wait: 0.815
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.764459
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 116:
+  Epoch: 6
+  Point Index: 5
+  Day: Mar 8
+  Normalized Money: 0.417
+  Normalized Wait: 0.259
+  Decision Label: +1 (BRT)
+  Dot Product: 0.846871
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 117:
+  Epoch: 6
+  Point Index: 6
+  Day: Mar 9
+  Normalized Money: 0.000
+  Normalized Wait: 1.000
+  Decision Label: -1 (Danfo)
+  Dot Product: -1.162963
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 118:
+  Epoch: 6
+  Point Index: 7
+  Day: Mar 10
+  Normalized Money: 0.650
+  Normalized Wait: 0.148
+  Decision Label: +1 (BRT)
+  Dot Product: 1.497700
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 119:
+  Epoch: 6
+  Point Index: 8
+  Day: Mar 11
+  Normalized Money: 0.075
+  Normalized Wait: 0.667
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.488600
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 120:
+  Epoch: 6
+  Point Index: 9
+  Day: Mar 12
+  Normalized Money: 0.867
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.114446
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 121:
+  Epoch: 6
+  Point Index: 10
+  Day: Mar 15
+  Normalized Money: 0.013
+  Normalized Wait: 0.852
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.905850
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 122:
+  Epoch: 6
+  Point Index: 11
+  Day: Mar 16
+  Normalized Money: 0.800
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.862337
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 123:
+  Epoch: 6
+  Point Index: 12
+  Day: Mar 17
+  Normalized Money: 0.030
+  Normalized Wait: 0.926
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.985838
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 124:
+  Epoch: 6
+  Point Index: 13
+  Day: Mar 18
+  Normalized Money: 0.467
+  Normalized Wait: 0.222
+  Decision Label: +1 (BRT)
+  Dot Product: 1.007008
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 125:
+  Epoch: 6
+  Point Index: 14
+  Day: Mar 19
+  Normalized Money: 0.087
+  Normalized Wait: 0.778
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.638405
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 126:
+  Epoch: 6
+  Point Index: 15
+  Day: Mar 22
+  Normalized Money: 0.583
+  Normalized Wait: 0.185
+  Decision Label: +1 (BRT)
+  Dot Product: 1.303479
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 127:
+  Epoch: 6
+  Point Index: 16
+  Day: Mar 23
+  Normalized Money: 0.067
+  Normalized Wait: 0.704
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.563529
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 128:
+  Epoch: 6
+  Point Index: 17
+  Day: Mar 24
+  Normalized Money: 0.933
+  Normalized Wait: 0.000
+  Decision Label: +1 (BRT)
+  Dot Product: 2.308667
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 129:
+  Epoch: 6
+  Point Index: 18
+  Day: Mar 25
+  Normalized Money: 0.200
+  Normalized Wait: 0.519
+  Decision Label: -1 (Danfo)
+  Dot Product: -0.001425
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 130:
+  Epoch: 6
+  Point Index: 19
+  Day: Mar 26
+  Normalized Money: 0.700
+  Normalized Wait: 0.111
+  Decision Label: +1 (BRT)
+  Dot Product: 1.657837
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 131:
+  Epoch: 6
+  Point Index: 20
+  Day: Mar 29
+  Normalized Money: 0.300
+  Normalized Wait: 0.407
+  Decision Label: +1 (BRT)
+  Dot Product: 0.376737
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+ITERATION 132:
+  Epoch: 6
+  Point Index: 21
+  Day: Mar 30
+  Normalized Money: 1.000
+  Normalized Wait: 0.037
+  Decision Label: +1 (BRT)
+  Dot Product: 2.387112
+  Correctly Classified: YES
+  Weight Before: w0=0.400, w1=2.045, w2=-1.563
+  Weight After: w0=0.400, w1=2.045, w2=-1.563
+
+
+====================================================================================================
+SUMMARY BY EPOCH:
+====================================================================================================
+
+EPOCH 1:
+  Total iterations: 22
+  Correct: 16
+  Misclassified: 6
+  Weights at end: w0=0.400, w1=1.645, w2=-1.119
+
+EPOCH 2:
+  Total iterations: 22
+  Correct: 20
+  Misclassified: 2
+  Weights at end: w0=0.400, w1=1.745, w2=-1.230
+
+EPOCH 3:
+  Total iterations: 22
+  Correct: 20
+  Misclassified: 2
+  Weights at end: w0=0.400, w1=1.845, w2=-1.341
+
+EPOCH 4:
+  Total iterations: 22
+  Correct: 20
+  Misclassified: 2
+  Weights at end: w0=0.400, w1=1.945, w2=-1.452
+
+EPOCH 5:
+  Total iterations: 22
+  Correct: 20
+  Misclassified: 2
+  Weights at end: w0=0.400, w1=2.045, w2=-1.563
+
+EPOCH 6:
+  Total iterations: 22
+  Correct: 22
+  Misclassified: 0
+  Weights at end: w0=0.400, w1=2.045, w2=-1.563
+

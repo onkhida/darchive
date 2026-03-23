@@ -94,6 +94,15 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/WeightUpdateAnimator.vue'),
         description: 'Three-step animation showing perceptron weight update process: misclassified point → computing update (y·x) → reoriented boundary',
         props: {}
+    },
+
+    'perceptron-simulator': {
+        component: () => import('../components/the-great-divide/PerceptronSimulator.vue'),
+        description: 'Complete perceptron training simulator with animated convergence, boundary diaries log, and playback controls',
+        props: {
+            'width': 'Optional: plot width in px (default: 560)',
+            'height': 'Optional: plot height in px (default: 560)'
+        }
     }
 
     // Add more components here as needed:

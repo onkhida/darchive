@@ -404,15 +404,6 @@ const weightVectorEnd = computed(() => {
   const w = currentWeights.value
   if (!w || weightMagnitude.value === 0) return { x: originX.value, y: originY.value }
 
-  // Normalize the weight vector and scale for visualization
-  const unitX = w.w1 / weightMagnitude.value
-  const unitY = w.w2 / weightMagnitude.value
-  const scale = 120 // Scale for visualization in model space
-  
-  // Calculate endpoints directly in screen space
-  const screenDeltaX = (unitX * scale / modelSpan) * width
-  const screenDeltaY = -(unitY * scale / modelSpan) * height // negative because y is inverted in SVG
-
   return {
     // x: originX.value + screenDeltaX,
     // y: originY.value + screenDeltaY,

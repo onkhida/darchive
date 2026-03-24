@@ -4,7 +4,7 @@
       <!-- Title -->
       <div>
         <span class="text-sm text-slate-600">
-          Place a point on the graph, choose its label, and check if it's classified correctly using the formula y(w⃗·x⃗).
+          Place a point on the graph, choose its label, and check if it's classified correctly using the formula <KaTeX expression="y(\vec{w}\cdot\vec{x})" />.
         </span>
       </div>
 
@@ -145,12 +145,12 @@
       </div>
 
       <!-- Result visualization - Full width below -->
-      <div v-if="showResult && classificationResult" class="border-2 rounded-lg p-6 mt-6" :class="classificationResult.isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'">
+      <div v-if="showResult && classificationResult" class="border-2 rounded-lg p-6 mt-6 bg-slate-50">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
           <!-- Dot product step -->
           <div class="p-4 bg-white rounded-lg border border-slate-200">
             <div class="text-sm font-semibold text-slate-800 mb-2">Step 1: Dot Product</div>
-            <div class="text-lg text-slate-700 font-mono font-bold mb-2">w⃗·x⃗ = <span class="text-blue-600">{{ classificationResult.dotProduct.toFixed(2) }}</span></div>
+            <div class="text-lg text-slate-700 font-mono font-bold mb-2"><KaTeX expression="\vec{w}\cdot\vec{x}" /> = <span class="text-blue-600">{{ classificationResult.dotProduct.toFixed(2) }}</span></div>
             <div class="text-xs text-slate-600">
               {{ classificationResult.dotProduct > 0 ? 'Positive: point in positive half' : 'Negative: point in negative half' }}
             </div>
@@ -160,7 +160,7 @@
           <div class="p-4 bg-white rounded-lg border border-slate-200">
             <div class="text-sm font-semibold text-slate-800 mb-2">Step 2: Multiply by Label</div>
             <div class="text-xs text-slate-600 mb-2">
-              y × (w⃗·x⃗) = {{ classificationResult.label === 1 ? '(+1)' : '(−1)' }} × {{ classificationResult.dotProduct.toFixed(2) }}
+              <KaTeX expression="y(\vec{w}\cdot\vec{x})" /> = {{ classificationResult.label === 1 ? '(+1)' : '(−1)' }} <KaTeX expression="\times" /> {{ classificationResult.dotProduct.toFixed(2) }}
             </div>
             <span class="text-lg text-slate-700 font-mono font-bold" :class="classificationResult.product > 0 ? 'text-green-600' : 'text-red-600'">
               = {{ classificationResult.product.toFixed(2) }}
@@ -169,17 +169,21 @@
         </div>
 
         <!-- Verdict - Full width below steps -->
-        <div
-          class="mt-6 p-4 rounded-lg text-center border-2"
-          :class="classificationResult.isCorrect ? 'bg-green-100 border-green-300' : 'bg-red-100 border-red-300'"
-        >
-          <span :class="classificationResult.isCorrect ? 'text-green-900' : 'text-red-900'" class="text-lg font-bold">
-            {{ classificationResult.isCorrect ? 'CORRECTLY CLASSIFIED :)' : 'MISCLASSIFIED :(' }}
-          </span>
-          <div :class="classificationResult.isCorrect ? 'text-green-800' : 'text-red-800'" class="text-sm mt-2">
-            {{ classificationResult.isCorrect
-              ? 'Product is positive. Label and dot product agree!'
-              : 'Product is negative. Label and dot product disagree!' }}
+        <div class="mt-6 p-4 bg-white rounded-lg border-2 border-slate-200">
+          <div class="flex items-center justify-center gap-2" :class="classificationResult.isCorrect ? 'text-green-800' : 'text-red-800'">
+            <!-- Checkmark for correct -->
+            <svg v-if="classificationResult.isCorrect" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 flex-shrink-0 text-green-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+            </svg>
+            <!-- Warning icon for incorrect -->
+            <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 flex-shrink-0 text-red-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+            </svg>
+            <span class="text-sm">
+              {{ classificationResult.isCorrect
+                ? 'Product is positive. Label and dot product agree!'
+                : 'Product is negative. Label and dot product disagree!' }}
+            </span>
           </div>
         </div>
       </div>
@@ -189,6 +193,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import KaTeX from '../KaTeX.vue'
 
 const plotSize = 300
 const placSize = plotSize // typo helper for template

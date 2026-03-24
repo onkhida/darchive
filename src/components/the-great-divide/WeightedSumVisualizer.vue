@@ -17,7 +17,7 @@
               :style="{ width: currentStep > 0 ? '100%' : (currentStep === 0 ? `${stepProgress}%` : '0%') }"
             ></div>
           </div>
-          <div class="text-xs text-slate-600 mt-2 text-center font-mono">w₀x₀</div>
+          <div class="text-xs text-slate-600 mt-2 text-center font-mono"><KaTeX expression="w_0x_0" /></div>
         </div>
 
         <!-- Arrow -->
@@ -34,7 +34,7 @@
               :style="{ width: currentStep > 1 ? '100%' : (currentStep === 1 ? `${stepProgress}%` : '0%') }"
             ></div>
           </div>
-          <div class="text-xs text-slate-600 mt-2 text-center font-mono">w₁x₁</div>
+          <div class="text-xs text-slate-600 mt-2 text-center font-mono"><KaTeX expression="w_1x_1" /></div>
         </div>
 
         <!-- Arrow -->
@@ -51,7 +51,7 @@
               :style="{ width: currentStep > 2 ? '100%' : (currentStep === 2 ? `${stepProgress}%` : '0%') }"
             ></div>
           </div>
-          <div class="text-xs text-slate-600 mt-2 text-center font-mono">w₂x₂</div>
+          <div class="text-xs text-slate-600 mt-2 text-center font-mono"><KaTeX expression="w_2x_2" /></div>
         </div>
 
         <!-- Arrow -->
@@ -68,7 +68,7 @@
               :style="{ width: currentStep > 3 ? '100%' : (currentStep === 3 ? `${stepProgress}%` : '0%') }"
             ></div>
           </div>
-          <div class="text-xs mt-2 text-center font-mono font-bold"><span class="text-slate-600">z</span></div>
+          <div class="text-xs mt-2 text-center font-mono font-bold"><span class="text-slate-600"><KaTeX expression="z" /></span></div>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-blue-600 font-semibold min-w-20">Step 1:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono text-slate-700">w₀</span> × <span class="font-mono text-slate-700">x₀</span>
+              <span class="font-mono text-slate-700"><KaTeX expression="w_0" /></span> <KaTeX expression="\cdot" /> <span class="font-mono text-slate-700"><KaTeX expression="x_0" /></span>
               <span v-if="currentStep >= 0" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 0" class="ml-2 font-mono text-blue-600 font-semibold">{{ values.w0 }} × 1 = {{ values.w0 }}</span>
             </span>
@@ -100,7 +100,7 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-emerald-600 font-semibold min-w-20">Step 2:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono text-slate-700">w₁</span> × <span class="font-mono text-slate-700">x₁</span>
+              <span class="font-mono text-slate-700"><KaTeX expression="w_1" /></span> <KaTeX expression="\cdot" /> <span class="font-mono text-slate-700"><KaTeX expression="x_1" /></span>
               <span v-if="currentStep >= 1" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 1" class="ml-2 font-mono text-emerald-600 font-semibold">{{ values.w1 }} × {{ values.x1 }} = {{ (values.w1 * values.x1).toFixed(2) }}</span>
             </span>
@@ -116,7 +116,7 @@
           <div class="flex items-baseline gap-3">
             <span class="text-sm font-mono text-amber-600 font-semibold min-w-20">Step 3:</span>
             <span class="text-sm text-slate-700">
-              <span class="font-mono text-slate-700">w₂</span> × <span class="font-mono text-slate-700">x₂</span>
+              <span class="font-mono text-slate-700"><KaTeX expression="w_2" /></span> <KaTeX expression="\cdot" /> <span class="font-mono text-slate-700"><KaTeX expression="x_2" /></span>
               <span v-if="currentStep >= 2" class="ml-3 text-slate-500">=</span>
               <span v-if="currentStep >= 2" class="ml-2 font-mono text-amber-600 font-semibold">{{ values.w2 }} × {{ values.x2 }} = {{ (values.w2 * values.x2).toFixed(2) }}</span>
             </span>
@@ -175,7 +175,7 @@
       <div class="hidden lg:flex lg:flex-col py-8 px-4 bg-slate-50 rounded-lg border border-slate-200">
         <div class="space-y-4 flex-1">
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-2">w₀ (bias)</label>
+            <label class="block text-xs font-medium text-slate-700 mb-2"><KaTeX expression="w_0" />  (bias)</label>
             <input
               v-model.number="values.w0"
               type="number"
@@ -185,7 +185,7 @@
             />
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-2">w₁</label>
+            <label class="block text-xs font-medium text-slate-700 mb-2"><KaTeX expression="w_1" /> </label>
             <input
               v-model.number="values.w1"
               type="number"
@@ -195,7 +195,7 @@
             />
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-2">w₂</label>
+            <label class="block text-xs font-medium text-slate-700 mb-2"><KaTeX expression="w_2" /> </label>
             <input
               v-model.number="values.w2"
               type="number"
@@ -206,7 +206,7 @@
           </div>
           <div class="border-t border-slate-200 pt-4 grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-2">x₁</label>
+              <label class="block text-xs font-medium text-slate-700 mb-2"><KaTeX expression="x_1" /> </label>
               <input
                 v-model.number="values.x1"
                 type="number"
@@ -216,7 +216,7 @@
               />
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-2">x₂</label>
+              <label class="block text-xs font-medium text-slate-700 mb-2"><KaTeX expression="x_2" /> </label>
               <input
                 v-model.number="values.x2"
                 type="number"
@@ -294,6 +294,7 @@
   </div>
 </template><script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
+import KaTeX from '../KaTeX.vue'
 
 // State
 const currentStep = ref(0)

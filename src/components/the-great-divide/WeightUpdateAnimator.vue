@@ -142,14 +142,14 @@
                 The blue weight vector <span class="font-mono font-semibold">w₀ = (0.6, 0.8)</span> currently defines a decision boundary (red dashed line) that is orthogonal to it.
               </p>
               <p class="text-xs text-slate-700 leading-relaxed">
-                However, the red point with label <span class="font-mono">y = +1</span> falls on the <span class="font-italic">wrong side</span> of the boundary. We detect this because <span class="font-mono">y(w⃗·x⃗) ≤ 0</span>:
+                However, the red point with label <span class="font-mono"><KaTeX expression="y = +1" /></span> falls on the <span class="font-italic">wrong side</span> of the boundary. We detect this because <KaTeX expression="y(\vec{w}\cdot\vec{x})<0" />:
               </p>
               <div class="bg-white rounded p-3 space-y-2 text-xs font-mono text-slate-600 border-l-2 border-red-400">
-                <div><span class="text-slate-600">x = </span><span class="text-red-600">(-0.4, 0.1)</span></div>
-                <div><span class="text-slate-600">w₀ · x = </span><span class="text-red-600">(0.6)(-0.4) + (0.8)(0.1)</span></div>
-                <div><span class="text-slate-600"></span><span class="text-red-600">= -0.24 + 0.08</span></div>
-                <div><span class="text-slate-600"></span><span class="text-red-600">= -0.16</span></div>
-                <div class="border-t border-red-200 pt-2 mt-2"><span class="text-slate-600">y(w₀ · x) = </span><span class="text-red-600 font-semibold">(+1)(-0.16) <br> = -0.16 ≤ 0</span></div>
+                <div><span class="text-slate-600"><KaTeX expression="x = " /></span><span class="text-red-600"><KaTeX expression="(-0.4, 0.1)" /></span></div>
+                <div><span class="text-slate-600"><KaTeX expression="w_o \cdot x = " /></span><span class="text-red-600"><KaTeX expression="(0.6)(-0.4) + (0.8)(0.1)" /></span></div>
+                <div><span class="text-slate-600"></span><span class="text-red-600"><KaTeX expression="= -0.24 + 0.08" /></span></div>
+                <div><span class="text-slate-600"></span><span class="text-red-600"><KaTeX expression="= -0.16" /></span></div>
+                <div class="border-t border-red-200 pt-2 mt-2"><span class="text-slate-600"><KaTeX expression="y(\vec{w}\cdot\vec{x}) = " /></span><span class="text-red-600 font-semibold"><KaTeX expression="(+1)(-0.16) " /></span><br><span><KaTeX expression="= -0.16 \le 0" /></span></div>
               </div>
             </div>
 
@@ -157,13 +157,13 @@
             <div v-else-if="currentStep === 2" class="space-y-3">
               <h3 class="font-semibold text-slate-800 text-sm">Compute Update</h3>
               <p class="text-xs text-slate-700 leading-relaxed">
-                We apply the perceptron update rule by computing <span class="font-semibold text-emerald-600">y·x</span>, shown as the green dashed vector.
+                We apply the perceptron update rule by computing <span class="font-semibold text-emerald-600"><KaTeX expression="y \cdot x" /></span>, shown as the green dashed vector.
               </p>
               <div class="bg-white rounded p-3 space-y-1 text-xs font-mono border-l-2 border-emerald-400">
-                <div><span class="text-slate-600">y (label):</span> <span class="text-emerald-600">+1</span></div>
-                <div><span class="text-slate-600">x (point):</span> <span class="text-emerald-600">(-0.4, 0.1)</span></div>
+                <div><span class="text-slate-600"><KaTeX expression="y"/> (label):</span> <span class="text-emerald-600"><KaTeX expression="+1"/></span></div>
+                <div><span class="text-slate-600"><KaTeX expression="x"/> (point):</span> <span class="text-emerald-600"><KaTeX expression="(-0.4, 0.1)"/></span></div>
                 <div class="border-t border-slate-200 pt-1 mt-1 text-emerald-600 font-semibold">
-                  y·x = (-0.4, 0.1)
+                  <KaTeX expression="y \cdot x = (-0.4, 0.1)" />
                 </div>
               </div>
               <p class="text-xs text-slate-700 leading-relaxed">
@@ -173,14 +173,14 @@
 
             <!-- Step 3 -->
             <div v-else class="space-y-3">
-              <h3 class="font-semibold text-slate-800 text-sm">Reorient Weight Vector</h3>
+              <h3 class="font-semibold text-slate-800 text-sm">Set Weight Vector</h3>
               <p class="text-xs text-slate-700 leading-relaxed">
-                The new weight <span class="font-mono font-semibold text-amber-600">w_n</span> is computed and the boundary rotates accordingly:
+                The new weight <span class="font-mono font-semibold text-amber-600"><KaTeX expression="w_n"/></span> is computed and the boundary rotates accordingly:
               </p>
               <div class="bg-white rounded p-3 space-y-1 text-xs font-mono border-l-2 border-amber-400">
-                <div class="text-slate-700">w_n = w₀ + y·x</div>
-                <div class="text-slate-700">= (0.6, 0.8) + (-0.4, 0.1)</div>
-                <div class="text-amber-600 font-semibold">= (0.2, 0.9)</div>
+                <div class="text-slate-700"><KaTeX expression="w_n = w_o + y \cdot x"/></div>
+                <div class="text-slate-700"><KaTeX expression="= (0.6, 0.8) + (-0.4, 0.1)"/></div>
+                <div class="text-amber-600 font-semibold"><KaTeX expression="= (0.2, 0.9)"/></div>
               </div>
               <p class="text-xs text-slate-700 leading-relaxed">
                 Notice how the dashed boundary has rotated? The misclassified point is now closer to being on the correct side. This iterative process continues until convergence.
@@ -205,6 +205,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
+import KaTeX from '../KaTeX.vue'
 
 const currentStep = ref(1)
 const autoPlay = ref(false)

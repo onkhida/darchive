@@ -109,7 +109,7 @@
           <div class="p-3 bg-slate-50 rounded">
             <div class="text-xs font-semibold text-slate-700 mb-2">Formula</div>
             <div class="text-xs text-slate-600 font-mono">
-              x<sub>n</sub> = (x - min) / (max - min)
+              <KaTeX expression="x_n=(x - min)\div(max - min)" /> 
             </div>
           </div>
 
@@ -144,6 +144,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import KaTeX from '../KaTeX.vue'
 
 interface RawDataPoint {
   day: string

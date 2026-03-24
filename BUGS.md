@@ -1,8 +1,6 @@
 Bug List
 - Latex does not always work. First two behaviours seem dependent on the browser one is on.
 - Dark mode issues for technical components.
-- On the without theta section, it looks horrific on mobile. 
-- horizontal scrolling to gap somewtimes on the site. especially on mobile
 - og:image
 - can we make the march 25 a little clearer?
 - the bias/weight vector component is not exactly correct (weight-vector-controller)

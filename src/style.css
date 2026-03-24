@@ -221,3 +221,37 @@
     font-size: 3rem !important;
   }
 }
+
+/* KaTeX responsive styles for small screens */
+@media (max-width: 640px) {
+
+  /* Reduce font size of KaTeX math on small screens */
+  .katex {
+    font-size: 0.85em;
+  }
+
+  /* Allow horizontal scroll for display math on small screens */
+  .katex-display {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  /* Further reduce on very small screens */
+  .katex {
+    font-size: 0.75em;
+  }
+}
+
+@media (max-width: 375px) {
+
+  /* Aggressive reduction on tiny screens */
+  .katex {
+    font-size: 0.65em;
+  }
+}

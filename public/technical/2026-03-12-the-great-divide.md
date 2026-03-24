@@ -54,14 +54,14 @@ Again, the point of the perceptron (and its training process) is to find the rig
 ## Without $\theta$
 There exists, also, a way to carry out this computation without even knowing the value of $\theta$, the angle between the two vectors. If the vectors are written in their basic component form à la $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$  and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$, then we can find their dot product $\vec{a}\cdot\vec{b}$ by simply using the distributive property, that is, expanding the bracket.
 $$
-\begin{gather}
+\begin{gather*}
 \vec{a}\cdot\vec{b}=(a_1\mathbf{i} + a_2\mathbf{j})\cdot(b_1\mathbf{i} + b_2\mathbf{j}) \\
 =a_1\mathbf{i}b_1\mathbf{i}+a_1\mathbf{i}b_2\mathbf{j}+a_2\mathbf{j}b_1\mathbf{i}+a_2\mathbf{j}b_2\mathbf{j} \\
 =a_1b_1(\mathbf{i}\cdot\mathbf{i})+a_1b_2(\mathbf{i}\cdot\mathbf{j})+a_2b_1(\mathbf{j}\cdot\mathbf{i})+a_2b_2(\mathbf{j}\cdot\mathbf{j}) \\
 =a_1b_1 + a_2b_2
-\end{gather}
+\end{gather*}
 $$
-If you're wondering what happened to the $\mathbf{i}$ and $\mathbf{j}$ symbols on line $(3)$, you must recall what we established earlier about vectors and orthogonality. Since $\mathbf{i}$ and $\mathbf{j}$ are forever perpendicular, then $\mathbf{i}\cdot\mathbf{j}=0$, "taking out" the second and third terms. Conversely, $\mathbf{i}\cdot\mathbf{i}$ and $\mathbf{j}\cdot\mathbf{j}$ evaluate to $1$, preserving the first and last terms.
+If you're wondering what happened to the $\mathbf{i}$ and $\mathbf{j}$ symbols on line 3, you must recall what we established earlier about vectors and orthogonality. Since $\mathbf{i}$ and $\mathbf{j}$ are forever perpendicular, then $\mathbf{i}\cdot\mathbf{j}=0$, "taking out" the second and third terms. Conversely, $\mathbf{i}\cdot\mathbf{i}$ and $\mathbf{j}\cdot\mathbf{j}$ evaluate to $1$, preserving the first and last terms.
 
 So, because our cross terms vanish, we are left with an incredibly simple equation to find the dot product between our vectors $\vec{a}=(a_1\mathbf{i} + a_2\mathbf{j})$ and $\vec{b}=(b_1\mathbf{i} + b_2\mathbf{j})$:
 $$\vec{a}\cdot\vec{b}=a_1b_1 + a_2b_2$$

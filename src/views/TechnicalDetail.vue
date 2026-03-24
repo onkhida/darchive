@@ -346,6 +346,9 @@ const loadPost = async () => {
   
   if (loadedPost) {
     post.value = loadedPost
+    
+    // Set page title based on post title
+    document.title = `${loadedPost.title} - onkhida`
 
     // Ensure the loading state is cleared so the article DOM is rendered
     isLoading.value = false
@@ -371,6 +374,8 @@ const loadPost = async () => {
     await nextTick()
     generateTableOfContents()
   } else {
+    // Post not found
+    document.title = 'Technical Not Found - onkhida'
     isLoading.value = false
   }
 }

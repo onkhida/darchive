@@ -15,8 +15,7 @@ However, addressing the effervescent, emotional cocktail now buzzing within me i
 Hilariously, the beacons I’ve identified all come in the form of music. I listen to a lot of music on a regular [^2], but this already large tally has seen an exponential upturn in the past few. The critique that friends, family, and even parts of myself keep bringing up is that I might be using sound to drown out the melee. I don’t think that that is the case. I still sit in silence with my thoughts sometimes, and music has always just been a helpful part of my [sense-making process](https://onkhida.me/c/centre-stage). Hopefully, the paragraphs that follow also support that premise.
 
 ![Nne'm and me in (I think) 2018. It’s my favourite picture of the both of us.](/assets/images/commentary/mother.png)
-
-Nne'm and me in (I think) 2018. It’s my favourite picture of the both of us.
+_Nne'm and me in (I think) 2018. It’s my favourite picture of the both of us._
 
 ### I — A Soft Place To Land
 
@@ -45,8 +44,7 @@ Its opening piano keys introduce a special kind of warmth that I’ve struggled 
 But my immense admiration for the general sound and instrumentals does not sink, in any way, my appreciation for the lyrics on this. It is masterfully written, and every line in this song has served a turn in my head as my central motto even beyond this period, a raison d'être. And though it is also very hard to pick a segment that I find most evocative, I find myself particularly enamoured with the [[Verse 2]](https://genius.com/Msaki-nal-ithemba-harbouring-hope-lyrics). She builds a steady crescendo across it, finally grounding us at its climax when she belts: “I′m alive in the promise…made for the deep of the sea.” And it’s what I’ve clutched close to my chest at this point in time. It’s given me a sort of blind faith, a *hope* because I am alive in the promise, “made for the deep of the sea”.
 
 ![Paul, Ife, and I at **Muri Okunola Park** yesterday. We listened to these songs together :)](/assets/images/commentary/muriokinola.png)
-
-Paul, Ife, and I at **Muri Okunola Park** yesterday. We listened to these songs together :)
+_Paul, Ife, and I at **Muri Okunola Park** yesterday. We listened to these songs together :)_
 
 So nal’ ithemba. These have been my signposts. For I know that to become accustomed to this new reality, I will need to dream, so that I may have “a soft place to land”; to hope bravely, so that the “dear wind [may] carry me now, beyond the limits of fear"; and to trust the warmth of my community, that I may realise that "this earth may not be so bitter after all”.
 

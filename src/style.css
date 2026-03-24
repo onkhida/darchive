@@ -211,3 +211,10 @@
     @apply bg-transparent p-0;
   }
 }
+
+/* Responsive heading styles for small mobile devices */
+@media (max-width: 400px) {
+  h1 {
+    font-size: 3rem !important;
+  }
+}

@@ -103,6 +103,18 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
             'width': 'Optional: plot width in px (default: 560)',
             'height': 'Optional: plot height in px (default: 560)'
         }
+    },
+
+    'decision-classifier': {
+        component: () => import('../components/the-great-divide/DecisionClassifier.vue'),
+        description: 'Post-training decision classifier: use final trained weights to classify user-clicked points in real-time',
+        props: {
+            'w0': 'Bias weight (required)',
+            'w1': 'Money feature weight (required)',
+            'w2': 'Time feature weight (required)',
+            'width': 'Optional: plot width in px (default: 560)',
+            'height': 'Optional: plot height in px (default: 560)'
+        }
     }
 
     // Add more components here as needed:

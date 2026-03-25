@@ -8,4 +8,6 @@ Bug List
 - finish last footnote
 - need to have a speed toggler
 
+- When I finish doing QMB, need to look at the SVG height of the final decision component. Aldo do not need to make many points. Just one point.
+
 I have an incredible amount of love for people with passion. There isn't a better feeling that watching someone's eyes light up when they talk about what mvoes them

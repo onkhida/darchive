@@ -6,5 +6,6 @@ Bug List
 - tooltip on final perceptron visual component
 - emoji footnote arrows
 - finish last footnote
+- need to have a speed toggler
 
 I have an incredible amount of love for people with passion. There isn't a better feeling that watching someone's eyes light up when they talk about what mvoes them

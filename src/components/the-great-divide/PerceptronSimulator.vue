@@ -1,62 +1,6 @@
 <template>
   <div class="py-6 px-4 bg-white rounded-lg shadow-sm">
     <div class="space-y-6">
-      <!-- Controls Section -->
-      <div class="flex flex-col gap-4">
-        <!-- Play/Pause and Speed Controls -->
-        <div class="flex items-center gap-4 flex-wrap">
-          <button
-            @click="togglePlayPause"
-            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium transition-colors"
-          >
-            {{ isPlaying ? 'Pause' : 'Play' }}
-          </button>
-
-          <button
-            @click="reset"
-            class="px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded font-medium transition-colors"
-          >
-            Reset
-          </button>
-
-          <div class="flex items-center gap-2">
-            <label class="text-sm text-slate-600">Speed:</label>
-            <select
-              v-model.number="speedMultiplier"
-              class="px-2 py-1 border border-slate-300 rounded text-sm"
-            >
-              <option value="0.5">Slow (0.5x)</option>
-              <option value="1">Normal (1x)</option>
-              <option value="2">Fast (2x)</option>
-              <option value="4">Very Fast (4x)</option>
-            </select>
-          </div>
-
-          <!-- Iteration Counter -->
-          <div class="text-sm text-slate-600 ml-auto">
-            <span class="font-semibold">{{ currentIterationIndex + 1 }}</span> / {{ totalIterations }}
-          </div>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="w-full bg-slate-200 rounded-full h-2">
-          <div
-            class="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${(currentIterationIndex / Math.max(totalIterations - 1, 1)) * 100}%` }"
-          ></div>
-        </div>
-
-        <!-- Status Message -->
-        <div v-if="convergenceResult" class="p-3 rounded" :class="convergenceResult.converged ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'">
-          <div class="text-sm font-semibold" :class="convergenceResult.converged ? 'text-green-700' : 'text-amber-700'">
-            {{ convergenceResult.converged ? 'Converged!' : 'Training...' }}
-          </div>
-          <div class="text-xs" :class="convergenceResult.converged ? 'text-green-600' : 'text-amber-600'">
-            {{ convergenceResult.converged ? `Found solution in ${convergenceResult.epochsNeeded} epoch(s)` : 'Finding optimal decision boundary...' }}
-          </div>
-        </div>
-      </div>
-
       <!-- Main Visualization and Sidebar -->
       <div class="flex flex-col lg:flex-row gap-6 min-h-[500px]">
         <!-- Graph Section -->
@@ -163,70 +107,118 @@
             </g>
           </svg>
 
-          <!-- Legend -->
-          <div class="flex gap-6 justify-center mt-4 text-xs">
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 rounded-full bg-red-500"></div>
-              <span class="text-slate-600">BRT (+1)</span>
+          <!-- Current Weights Display -->
+          <div v-if="currentWeights" class="flex items-center gap-4 justify-center mt-4 text-xs bg-slate-50 p-2 rounded border border-slate-200">
+            <div class="flex items-center gap-1">
+              <label class="font-semibold text-slate-700">w0:</label>
+              <input 
+                type="text" 
+                :value="currentWeights.w0.toFixed(3)" 
+                disabled 
+                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+              />
             </div>
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 rounded-full bg-teal-500"></div>
-              <span class="text-slate-600">Danfo (−1)</span>
+            <div class="flex items-center gap-1">
+              <label class="font-semibold text-slate-700">w1:</label>
+              <input 
+                type="text" 
+                :value="currentWeights.w1.toFixed(3)" 
+                disabled 
+                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+              />
             </div>
-            <div class="flex items-center gap-2">
-              <div class="w-1 h-1 rounded-full bg-blue-500 mx-1"></div>
-              <span class="text-slate-600">Weight Vector</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="w-2 border-t-2 border-dashed border-red-500"></div>
-              <span class="text-slate-600">Decision Boundary</span>
+            <div class="flex items-center gap-1">
+              <label class="font-semibold text-slate-700">w2:</label>
+              <input 
+                type="text" 
+                :value="currentWeights.w2.toFixed(3)" 
+                disabled 
+                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+              />
             </div>
           </div>
         </div>
 
         <!-- Boundary Diaries Sidebar -->
-        <div class="w-full lg:w-80 flex flex-col border-l border-slate-200 pl-6">
-          <div class="text-sm font-bold text-slate-700 mb-4">Boundary Diaries</div>
+        <div class="w-full lg:w-96 flex flex-col border-l border-slate-200 pl-6 max-h-[600px]">
+          <!-- Header -->
+          <div class="text-center text-sm font-bold text-slate-700 mb-2">Boundary Diaries</div>
 
-          <!-- Current Info Box -->
-          <div v-if="currentIteration" class="mb-4 p-3 bg-blue-50 rounded border border-blue-200">
-            <div class="text-xs font-semibold text-blue-700 mb-2">Current Step</div>
-            <div class="text-xs text-blue-600 space-y-1">
-              <div><span class="font-medium">Day:</span> {{ currentIteration.pointDay }}</div>
-              <div><span class="font-medium">Epoch:</span> {{ currentIteration.epoch }}</div>
-              <div><span class="font-medium">Dot Product:</span> {{ currentIteration.dotProduct.toFixed(3) }}</div>
-              <div v-if="!currentIteration.isCorrect" class="text-red-600 font-semibold">Misclassified - Updating...</div>
-              <div v-else class="text-green-600 font-semibold">Correctly Classified</div>
+          <!-- Epoch and Navigation -->
+          <div class="mb-4 pb-4 border-b border-slate-200">
+            <div class="text-xs font-semibold text-slate-600 mb-3 text-center">
+              Epoch <span class="text-slate-900">{{ currentIteration?.epoch || '—' }}</span>
+            </div>
+
+            <!-- Navigation Controls (Centered) -->
+            <div class="flex items-center justify-center gap-1 mb-3">
+              <button
+                @click="goToFirstEpoch"
+                class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-700 inline-flex items-center justify-center"
+                title="Go to beginning (Epoch 1)"
+              >
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.94976 2.74989C1.94976 2.44613 2.196 2.19989 2.49976 2.19989C2.80351 2.19989 3.04976 2.44613 3.04976 2.74989V7.2825C3.0954 7.18802 3.17046 7.10851 3.26662 7.05776L12.2666 2.30776C12.4216 2.22596 12.6081 2.23127 12.7582 2.32176C12.9083 2.41225 13 2.57471 13 2.74995V12.25C13 12.4252 12.9083 12.5877 12.7582 12.6781C12.6081 12.7686 12.4216 12.7739 12.2666 12.6921L3.26662 7.94214C3.17046 7.89139 3.0954 7.81188 3.04976 7.7174V12.2499C3.04976 12.5536 2.80351 12.7999 2.49976 12.7999C2.196 12.7999 1.94976 12.5536 1.94976 12.2499V2.74989ZM4.57122 7.49995L12 11.4207V3.5792L4.57122 7.49995Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+              <button
+                @click="goToPreviousEpoch"
+                class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-700 inline-flex items-center justify-center"
+                title="Previous epoch"
+              >
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+              <button
+                @click="togglePlayPause"
+                class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-700 inline-flex items-center justify-center"
+                :title="isPlaying ? 'Pause' : 'Play'"
+              >
+                <svg v-if="isPlaying" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.04995 2.74998C6.04995 2.44623 5.80371 2.19998 5.49995 2.19998C5.19619 2.19998 4.94995 2.44623 4.94995 2.74998V12.25C4.94995 12.5537 5.19619 12.8 5.49995 12.8C5.80371 12.8 6.04995 12.5537 6.04995 12.25V2.74998ZM10.05 2.74998C10.05 2.44623 9.80371 2.19998 9.49995 2.19998C9.19619 2.19998 8.94995 2.44623 8.94995 2.74998V12.25C8.94995 12.5537 9.19619 12.8 9.49995 12.8C9.80371 12.8 10.05 12.5537 10.05 12.25V2.74998Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                <svg v-else width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.24182 2.32181C3.3919 2.23132 3.5784 2.22601 3.73338 2.30781L12.7334 7.05781C12.8974 7.14436 13 7.31457 13 7.5C13 7.68543 12.8974 7.85564 12.7334 7.94219L3.73338 12.6922C3.5784 12.774 3.3919 12.7687 3.24182 12.6782C3.09175 12.5877 3 12.4252 3 12.25V2.75C3 2.57476 3.09175 2.4123 3.24182 2.32181ZM4 3.57925V11.4207L11.4288 7.5L4 3.57925Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+              <button
+                @click="goToNextEpoch"
+                class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-700 inline-flex items-center justify-center"
+                title="Next epoch"
+              >
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+              <button
+                @click="goToLastEpoch"
+                class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-700 inline-flex items-center justify-center"
+                title="Go to end"
+              >
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.0502 2.74989C13.0502 2.44613 12.804 2.19989 12.5002 2.19989C12.1965 2.19989 11.9502 2.44613 11.9502 2.74989V7.2825C11.9046 7.18802 11.8295 7.10851 11.7334 7.05776L2.73338 2.30776C2.5784 2.22596 2.3919 2.23127 2.24182 2.32176C2.09175 2.41225 2 2.57471 2 2.74995V12.25C2 12.4252 2.09175 12.5877 2.24182 12.6781C2.3919 12.7686 2.5784 12.7739 2.73338 12.6921L11.7334 7.94214C11.8295 7.89139 11.9046 7.81188 11.9502 7.7174V12.2499C11.9502 12.5536 12.1965 12.7999 12.5002 12.7999C12.804 12.7999 13.0502 12.5536 13.0502 12.2499V2.74989ZM3 11.4207V3.5792L10.4288 7.49995L3 11.4207Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+            </div>
+
+            <!-- Point Counter (Centered) -->
+            <div class="text-xs text-center text-slate-600 font-semibold">
+              <span class="text-slate-900">{{ currentPointIndex }}</span> / 22
             </div>
           </div>
 
-          <!-- Weight Info -->
-          <div v-if="currentWeights" class="mb-4 p-3 bg-slate-50 rounded">
-            <div class="text-xs font-semibold text-slate-700 mb-2">Current Weights</div>
-            <div class="text-xs text-slate-600 font-mono space-y-1">
-              <div>w0 (bias): {{ currentWeights.w0.toFixed(3) }}</div>
-              <div>w1 (money): {{ currentWeights.w1.toFixed(3) }}</div>
-              <div>w2 (wait): {{ currentWeights.w2.toFixed(3) }}</div>
-            </div>
-          </div>
-
-          <!-- Log Scroll Area -->
-          <div class="flex-1 overflow-y-auto bg-slate-50 rounded p-3 space-y-2 mb-4">
+          <!-- Log Scroll Area - Filtered by Current Epoch -->
+          <div 
+            ref="scrollContainer"
+            class="flex-1 overflow-y-auto bg-slate-50 rounded p-3 space-y-2 mb-4"
+          >
             <div
-              v-for="(iteration, idx) in recentIterations"
+              v-for="(iteration, idx) in epochFilteredIterations"
               :key="idx"
               class="text-xs text-slate-600 p-2 bg-white rounded border-l-2 transition-all"
-              :class="idx === recentIterations.length - 1 ? 'border-blue-400 bg-blue-50 font-semibold' : 'border-slate-300'"
+              :class="[
+                iteration.isCorrect ? 'border-green-400' : 'border-red-400',
+                idx === epochFilteredIterations.length - 1 ? 'bg-blue-50 font-semibold' : ''
+              ]"
             >
               {{ iteration.logMessage }}
             </div>
-            <div v-if="recentIterations.length === 0" class="text-xs text-slate-400 italic">
+            <div v-if="epochFilteredIterations.length === 0" class="text-xs text-slate-400 italic">
               Waiting to start...
             </div>
           </div>
 
           <!-- Final Result Box -->
-          <div v-if="convergenceResult && convergenceResult.converged" class="p-3 bg-green-50 rounded border border-green-200">
+          <!-- <div v-if="convergenceResult && convergenceResult.converged" class="p-3 bg-green-50 rounded border border-green-200">
             <div class="text-xs font-semibold text-green-700 mb-2">Solution Found</div>
             <div class="text-xs text-green-600 font-mono space-y-1">
               <div>Epochs: {{ convergenceResult.epochsNeeded }}</div>
@@ -234,7 +226,7 @@
               <div>Final w1: {{ convergenceResult.finalWeights.w1.toFixed(3) }}</div>
               <div>Final w2: {{ convergenceResult.finalWeights.w2.toFixed(3) }}</div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -242,7 +234,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { usePerceptronTraining, type NormalizedDataPoint, type ConvergenceResult } from '../../composables/usePerceptronTraining'
 
 interface ComputedDataPoint extends NormalizedDataPoint {
@@ -304,6 +296,7 @@ const speedMultiplier = ref(1)
 const currentIterationIndex = ref(0)
 const hoveredDay = ref<string | null>(null)
 const convergenceResult = ref<ConvergenceResult | null>(null)
+const scrollContainer = ref<HTMLElement | null>(null)
 
 // Compute normalized data points
 const moneyStats = computed(() => {
@@ -382,11 +375,23 @@ const currentWeights = computed(() => {
   return currentIteration.value?.weightAfter || null
 })
 
+const currentPointIndex = computed(() => {
+  if (!currentIteration.value) return 0
+  // For Mar 0 (initial state), show as point 0
+  if (currentIteration.value.pointIndex === -1) return 0
+  // Otherwise use the actual pointIndex and add 1 for 1-based display
+  return currentIteration.value.pointIndex + 1
+})
+
 // Get recent iterations for the log (last 8)
-const recentIterations = computed(() => {
-  if (!convergenceResult.value) return []
-  const start = Math.max(0, currentIterationIndex.value - 7)
-  return convergenceResult.value.iterations.slice(start, currentIterationIndex.value + 1)
+const epochFilteredIterations = computed(() => {
+  if (!convergenceResult.value || !currentIteration.value) return []
+  const currentEpoch = currentIteration.value.epoch
+  // Return all iterations from the current epoch up to and including the current iteration
+  return convergenceResult.value.iterations.filter(
+    it => it.epoch === currentEpoch && 
+          convergenceResult.value!.iterations.indexOf(it) <= Math.floor(currentIterationIndex.value)
+  )
 })
 
 const totalIterations = computed(() => {
@@ -524,6 +529,51 @@ const tooltipY = computed(() => {
 // Animation loop
 let animationFrameId: number | null = null
 
+// Epoch Navigation Functions
+function goToFirstEpoch() {
+  if (!convergenceResult.value) return
+  // Go to the first iteration (which is Mar 0)
+  currentIterationIndex.value = 0
+}
+
+function goToLastEpoch() {
+  if (!convergenceResult.value) return
+  // Go to the last iteration
+  currentIterationIndex.value = totalIterations.value - 1
+}
+
+function goToPreviousEpoch() {
+  if (!convergenceResult.value || !currentIteration.value) return
+  const currentEpoch = currentIteration.value.epoch
+  // Find the last iteration of the previous epoch
+  const previousEpochIterations = convergenceResult.value.iterations.filter(
+    it => it.epoch === currentEpoch - 1
+  )
+  if (previousEpochIterations.length > 0) {
+    const lastIterationOfPrevEpoch = previousEpochIterations[previousEpochIterations.length - 1]!
+    const idx = convergenceResult.value.iterations.indexOf(lastIterationOfPrevEpoch)
+    if (idx !== -1) {
+      currentIterationIndex.value = idx
+    }
+  }
+}
+
+function goToNextEpoch() {
+  if (!convergenceResult.value || !currentIteration.value) return
+  const currentEpoch = currentIteration.value.epoch
+  // Find the first iteration of the next epoch
+  const nextEpochIterations = convergenceResult.value.iterations.filter(
+    it => it.epoch === currentEpoch + 1
+  )
+  if (nextEpochIterations.length > 0) {
+    const firstIterationOfNextEpoch = nextEpochIterations[0]!
+    const idx = convergenceResult.value.iterations.indexOf(firstIterationOfNextEpoch)
+    if (idx !== -1) {
+      currentIterationIndex.value = idx
+    }
+  }
+}
+
 function animate() {
   if (isPlaying.value && convergenceResult.value) {
     currentIterationIndex.value += (speedMultiplier.value * 1) / 60
@@ -543,6 +593,15 @@ watch(isPlaying, (playing) => {
   }
 })
 
+// Auto-scroll to bottom when new iterations are added
+watch(epochFilteredIterations, () => {
+  nextTick(() => {
+    if (scrollContainer.value) {
+      scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
+    }
+  })
+}, { deep: true })
+
 onMounted(() => {
   initializeTraining()
 })
@@ -558,11 +617,11 @@ function togglePlayPause() {
   isPlaying.value = !isPlaying.value
 }
 
-function reset() {
-  isPlaying.value = false
-  currentIterationIndex.value = 0
-  initializeTraining()
-}
+// function reset() {
+//   isPlaying.value = false
+//   currentIterationIndex.value = 0
+//   initializeTraining()
+// }
 </script>
 
 <style scoped>

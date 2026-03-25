@@ -86,6 +86,30 @@ export function usePerceptronTraining(dataPoints: NormalizedDataPoint[]) {
             w2: 0.4,
         }
 
+        // Create a dummy initial data point to show starting weights
+        const initialWeights = { ...weights }
+        const dummyInitialPoint: NormalizedDataPoint = {
+            day: 'Mar 0',
+            money: 0,
+            waitTime: 0,
+            decision: 1 as const,
+            normalizedMoney: 0,
+            normalizedWaitTime: 0,
+        }
+
+        // Add initial state as the first iteration
+        iterations.push({
+            epoch: 0,
+            pointIndex: -1,
+            pointDay: 'Mar 0',
+            point: dummyInitialPoint,
+            weightBefore: initialWeights,
+            weightAfter: initialWeights,
+            dotProduct: 0,
+            isCorrect: true,
+            logMessage: 'Initial weights before training',
+        })
+
         let epoch = 0
         let converged = false
 

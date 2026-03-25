@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 px-4 bg-white rounded-lg shadow-sm">
+  <div class="py-6 px-4 bg-white rounded-lg shadow-sm relative">
     <div class="space-y-6">
       <!-- Main Visualization and Sidebar -->
       <div class="flex flex-col lg:flex-row gap-6 min-h-[500px]">
@@ -108,14 +108,20 @@
           </svg>
 
           <!-- Current Weights Display -->
-          <div v-if="currentWeights" class="flex items-center gap-4 justify-center mt-4 text-xs bg-slate-50 p-2 rounded border border-slate-200">
+          <div v-if="currentWeights" :class="[
+            'flex items-center gap-4 justify-center mt-4 text-xs p-2 rounded border',
+            isAtFinalIteration ? 'bg-green-50 border-green-200' : 'bg-slate-50 border-slate-200'
+          ]">
             <div class="flex items-center gap-1">
               <label class="font-semibold text-slate-700">w0:</label>
               <input 
                 type="text" 
                 :value="currentWeights.w0.toFixed(3)" 
                 disabled 
-                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+                :class="[
+                  'w-12 px-1 py-0.5 border rounded text-xs',
+                  isAtFinalIteration ? 'border-green-300 bg-green-100 text-green-800' : 'border-slate-300 bg-white text-slate-600'
+                ]"
               />
             </div>
             <div class="flex items-center gap-1">
@@ -124,7 +130,10 @@
                 type="text" 
                 :value="currentWeights.w1.toFixed(3)" 
                 disabled 
-                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+                :class="[
+                  'w-12 px-1 py-0.5 border rounded text-xs',
+                  isAtFinalIteration ? 'border-green-300 bg-green-100 text-green-800' : 'border-slate-300 bg-white text-slate-600'
+                ]"
               />
             </div>
             <div class="flex items-center gap-1">
@@ -133,7 +142,10 @@
                 type="text" 
                 :value="currentWeights.w2.toFixed(3)" 
                 disabled 
-                class="w-12 px-1 py-0.5 border border-slate-300 rounded bg-white text-slate-600 text-xs"
+                :class="[
+                  'w-12 px-1 py-0.5 border rounded text-xs',
+                  isAtFinalIteration ? 'border-green-300 bg-green-100 text-green-800' : 'border-slate-300 bg-white text-slate-600'
+                ]"
               />
             </div>
           </div>
@@ -229,11 +241,39 @@
           </div> -->
         </div>
       </div>
+
+      <!-- Speed Control Icon (Bottom Right of Component) -->
+      <div class="absolute bottom-4 right-4">
+        <button
+          @click="showSpeedControl = !showSpeedControl"
+          class="p-1.5 hover:bg-slate-100 rounded transition-colors text-slate-600 inline-flex items-center justify-center"
+          title="Speed control"
+        >
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.49998 0.5C5.49998 0.223858 5.72383 0 5.99998 0H7.49998H8.99998C9.27612 0 9.49998 0.223858 9.49998 0.5C9.49998 0.776142 9.27612 1 8.99998 1H7.99998V2.11922C9.09832 2.20409 10.119 2.56622 10.992 3.13572C11.0116 3.10851 11.0336 3.08252 11.058 3.05806L11.858 2.25806C12.1021 2.01398 12.4978 2.01398 12.7419 2.25806C12.986 2.50214 12.986 2.89786 12.7419 3.14194L11.967 3.91682C13.1595 5.07925 13.9 6.70314 13.9 8.49998C13.9 12.0346 11.0346 14.9 7.49998 14.9C3.96535 14.9 1.09998 12.0346 1.09998 8.49998C1.09998 5.13362 3.69904 2.3743 6.99998 2.11922V1H5.99998C5.72383 1 5.49998 0.776142 5.49998 0.5ZM2.09998 8.49998C2.09998 5.51764 4.51764 3.09998 7.49998 3.09998C10.4823 3.09998 12.9 5.51764 12.9 8.49998C12.9 11.4823 10.4823 13.9 7.49998 13.9C4.51764 13.9 2.09998 11.4823 2.09998 8.49998ZM7.99998 4.5C7.99998 4.22386 7.77612 4 7.49998 4C7.22383 4 6.99998 4.22386 6.99998 4.5V9.5C6.99998 9.77614 7.22383 10 7.49998 10C7.77612 10 7.99998 9.77614 7.99998 9.5V4.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <!-- Speed Control Slider (Hidden by default, appears above button) -->
+        <div
+          v-if="showSpeedControl"
+          class="absolute bottom-12 right-0 bg-white border border-slate-300 rounded shadow-lg p-3 z-10"
+        >
+          <div class="text-xs font-semibold text-slate-700 mb-2">Speed</div>
+          <input
+            v-model.number="speedMultiplier"
+            type="range"
+            min="0.25"
+            max="3"
+            step="0.25"
+            class="w-32 h-1.5"
+          />
+          <div class="text-xs text-slate-600 text-center mt-2">
+            {{ speedMultiplier.toFixed(2) }}x
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</template>
-
-<script setup lang="ts">
+</template><script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { usePerceptronTraining, type NormalizedDataPoint, type ConvergenceResult } from '../../composables/usePerceptronTraining'
 
@@ -297,6 +337,7 @@ const currentIterationIndex = ref(0)
 const hoveredDay = ref<string | null>(null)
 const convergenceResult = ref<ConvergenceResult | null>(null)
 const scrollContainer = ref<HTMLElement | null>(null)
+const showSpeedControl = ref(false)
 
 // Compute normalized data points
 const moneyStats = computed(() => {
@@ -381,6 +422,12 @@ const currentPointIndex = computed(() => {
   if (currentIteration.value.pointIndex === -1) return 0
   // Otherwise use the actual pointIndex and add 1 for 1-based display
   return currentIteration.value.pointIndex + 1
+})
+
+// Check if we're at the final iteration (all data points have been trained)
+const isAtFinalIteration = computed(() => {
+  if (!convergenceResult.value || !currentIteration.value) return false
+  return Math.floor(currentIterationIndex.value) === totalIterations.value - 1
 })
 
 // Get recent iterations for the log (last 8)

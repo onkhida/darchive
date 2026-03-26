@@ -1,6 +1,5 @@
 Bug List
 - Latex does not always work. First two behaviours seem dependent on the browser one is on.
-- tooltip on final perceptron visual component
 
 - og:image
 - finish last footnote

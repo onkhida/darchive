@@ -88,8 +88,8 @@
             <!-- Tooltip -->
             <g v-if="hoveredDay">
               <rect
-                :x="tooltipX + 10"
-                :y="tooltipY - 20"
+                :x="width - 70"
+                :y="10"
                 width="60"
                 height="18"
                 fill="white"
@@ -98,8 +98,8 @@
                 rx="4"
               />
               <text
-                :x="tooltipX + 15"
-                :y="tooltipY - 6"
+                :x="width - 65"
+                :y="24"
                 class="text-xs font-semibold fill-slate-700"
               >
                 {{ hoveredDay }}
@@ -585,17 +585,6 @@ const boundaryPoints = computed(() => {
     x2: x2Screen,
     y2: y2Screen,
   }
-})
-
-// Tooltip
-const tooltipX = computed(() => {
-  const point = currentPoint.value
-  return point ? point.screenX : 0
-})
-
-const tooltipY = computed(() => {
-  const point = currentPoint.value
-  return point ? point.screenY : 0
 })
 
 // Animation loop

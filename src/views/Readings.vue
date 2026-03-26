@@ -3,10 +3,19 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useReadings } from '../composables/useReadings'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const router = useRouter()
 const { posts, isLoading, loadAllPosts } = useReadings()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+
+// Set up meta tags for readings page
+useMetaTags({
+  title: 'Readings - onkhida',
+  description: 'Entries on entities I consume.',
+  image: '/assets/images/og_image.png',
+  type: 'website',
+})
 
 // Real-time Lagos time
 const currentTime = ref('')

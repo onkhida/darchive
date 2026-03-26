@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCommentary, type CommentaryPost } from '../composables/useCommentary'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,6 +20,27 @@ const isLoading = ref(true)
 // Footnotes panel
 const activeFootnote = ref<number | null>(null)
 const expandedFootnote = ref<number | null>(null)
+
+// Set up dynamic meta tags for the post
+useMetaTags(() => {
+  if (post.value) {
+    return {
+      title: `${post.value.title} - onkhida`,
+      description: post.value.desc || `${post.value.title}`,
+      image: '/assets/images/og_image.png', // Can be customized per post in future
+      url: `${typeof window !== 'undefined' ? window.location.origin : ''}/c/${route.params.slug}`,
+      type: 'article',
+      author: 'Onkhida',
+    }
+  }
+  
+  return {
+    title: 'Commentary | Public Archive',
+    description: 'Essays and reflections on life, culture, and ideas.',
+    image: '/assets/images/og_image.png',
+    type: 'website',
+  }
+})
 
 const updateTime = () => {
   const now = new Date()

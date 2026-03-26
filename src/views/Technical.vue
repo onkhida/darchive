@@ -3,10 +3,19 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTechnical } from '../composables/useTechnical'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const router = useRouter()
 const { loadAllPosts: loadTechnicalPosts } = useTechnical()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+
+// Set up meta tags for technical page
+useMetaTags({
+  title: 'Technical - onkhida',
+  description: 'Posts on technology.',
+  image: '/assets/images/og_image.png',
+  type: 'website',
+})
 
 // Real-time Lagos time
 const currentTime = ref('')

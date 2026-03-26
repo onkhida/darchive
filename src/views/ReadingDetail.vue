@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useReadings, type ReadingPost } from '../composables/useReadings'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const route = useRoute()
 const router = useRouter()
@@ -21,6 +22,27 @@ const activeFootnote = ref<number | null>(null)
 const expandedFootnote = ref<number | null>(null)
 // Keep track of the last reference anchor id that was clicked in the content (e.g. 'fnref-3-2')
 const lastRefAnchorId = ref<string | null>(null)
+
+// Set up dynamic meta tags for the post
+useMetaTags(() => {
+  if (post.value) {
+    return {
+      title: `${post.value.title} - onkhida`,
+      description: post.value.desc || `${post.value.title}`,
+      image: '/assets/images/og_image.png', // Can be customized per post in future
+      url: `${typeof window !== 'undefined' ? window.location.origin : ''}/readings/${route.params.slug}`,
+      type: 'article',
+      author: 'Onkhida',
+    }
+  }
+  
+  return {
+    title: 'Readings | Public Archive',
+    description: 'Books and articles that shaped my thinking.',
+    image: '/assets/images/og_image.png',
+    type: 'website',
+  }
+})
 
 const updateTime = () => {
   const now = new Date()

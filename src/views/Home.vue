@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+
+// Set up meta tags for home page
+useMetaTags({
+  title: 'Public Archive',
+  description: 'An archive. Daniel Eta.',
+  image: '/assets/images/og_image.png',
+  type: 'website',
+})
 
 // Real-time Lagos time
 const currentTime = ref('')

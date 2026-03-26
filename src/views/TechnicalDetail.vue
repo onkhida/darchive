@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useTechnical, type TechnicalPost } from '../composables/useTechnical'
 import { loadComponent } from '../composables/useComponentRegistry'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 import { createApp } from 'vue'
 
 const route = useRoute()
@@ -27,6 +28,27 @@ const mountedApps: Array<{ el: Element; app: any }> = []
 // Table of Contents
 const tableOfContents = ref<Array<{ id: string; text: string; level: number }>>([])
 const activeHeadingId = ref<string | null>(null)
+
+// Set up dynamic meta tags for the post
+useMetaTags(() => {
+  if (post.value) {
+    return {
+      title: `${post.value.title} - onkhida`,
+      description: post.value.desc || `${post.value.title}`,
+      image: '/assets/images/og_image.png', // Can be customized per post in future
+      url: `${typeof window !== 'undefined' ? window.location.origin : ''}/technical/${route.params.slug}`,
+      type: 'article',
+      author: 'Onkhida',
+    }
+  }
+  
+  return {
+    title: 'Technical - onkhida',
+    description: 'Posts on technology.',
+    image: '/assets/images/og_image.png',
+    type: 'website',
+  }
+})
 
 // Provide theme state to child components
 provide('isDark', isDark)

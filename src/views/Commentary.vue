@@ -3,10 +3,19 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCommentary } from '../composables/useCommentary'
 import { useTheme } from '../composables/useTheme'
+import { useMetaTags } from '../composables/useMetaTags'
 
 const router = useRouter()
 const { posts, isLoading, loadAllPosts } = useCommentary()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+
+// Set up meta tags for commentary page
+useMetaTags({
+  title: 'Commentary - onkhida',
+  description: 'Entries on everything I could not fit into structure.',
+  image: '/assets/images/og_image.png',
+  type: 'website',
+})
 
 // Real-time Lagos time
 const currentTime = ref('')

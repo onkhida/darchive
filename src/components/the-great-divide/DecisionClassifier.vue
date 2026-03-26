@@ -11,8 +11,7 @@
           style="touch-action: manipulation;"
           @pointerdown="onCanvasPointerDown"
         >
-          <!-- shaded halves using two large polygons computed from decision boundary -->
-          <polygon :points="northPoly" fill="#f1f5f9" opacity="0.7" />
+          <!-- shaded halves using polygon computed from decision boundary -->
           <polygon :points="southPoly" fill="#fff7ed" opacity="0.7" />
 
           <!-- axes -->
@@ -295,18 +294,6 @@ function screenDot(sx: number, sy: number): number {
 }
 
 // Polygon shadings
-const northPoly = computed(() => {
-  if (!boundaryPoints.value) return ''
-  const { sx1, sy1, sx2, sy2 } = boundaryPoints.value
-  const cxPoly = (sx1 + sx2 + width + width) / 4
-  const cyPoly = (sy1 + sy2 + height + 0) / 4
-  const isPositive = screenDot(cxPoly, cyPoly) > 0
-  if (isPositive) {
-    return `${sx1},${sy1} ${sx2},${sy2} ${width},${height} ${width},0`
-  }
-  return `0,0 0,${height} ${sx1},${sy1} ${sx2},${sy2}`
-})
-
 const southPoly = computed(() => {
   if (!boundaryPoints.value) return ''
   const { sx1, sy1, sx2, sy2 } = boundaryPoints.value

@@ -58,6 +58,53 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        const currentPath = window.location.pathname
+        const response = await fetch('/metadata.json')
+        const routes = await response.json()
+        const route = routes.find(r => r.path === currentPath)
+
+        if (route) {
+          const setMeta = (property, content, attribute = 'property') => {
+            let el = document.querySelector(`meta[${attribute}="${property}"]`)
+            if (!el) {
+              el = document.createElement('meta')
+              el.setAttribute(attribute, property)
+              document.head.appendChild(el)
+            }
+            el.setAttribute('content', content)
+          }
+
+          const absoluteUrl = 'https://onkhida.me' + route.path
+
+          document.title = route.title
+          setMeta('title', route.title, 'name')
+          setMeta('description', route.description, 'name')
+
+          setMeta('og:type', route.type)
+          setMeta('og:url', absoluteUrl)
+          setMeta('og:title', route.title)
+          setMeta('og:description', route.description)
+          setMeta('og:image', route.image)
+
+          setMeta('twitter:card', 'summary_large_image', 'name')
+          setMeta('twitter:url', absoluteUrl, 'name')
+          setMeta('twitter:title', route.title, 'name')
+          setMeta('twitter:description', route.description, 'name')
+          setMeta('twitter:image', route.image, 'name')
+
+          setMeta('linkedin:title', route.title)
+          setMeta('reddit:card', 'link', 'name')
+          setMeta('pinterest:description', route.description, 'name')
+        }
+      } catch (err) {
+        console.warn('Meta tag injection failed:', err)
+      }
+    })()
+  </script>
 </head>
 
 <body>

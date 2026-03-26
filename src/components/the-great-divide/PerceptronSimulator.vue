@@ -154,12 +154,12 @@
         <!-- Boundary Diaries Sidebar -->
         <div class="w-full lg:w-96 flex flex-col border-l border-slate-200 pl-6 max-h-[600px]">
           <!-- Header -->
-          <div class="text-center text-sm font-bold text-slate-700 mb-2">Boundary Diaries</div>
+          <span class="text-center text-sm font-bold text-slate-700 mb-2">Boundary Diaries</span>
 
           <!-- Epoch and Navigation -->
           <div class="mb-4 pb-4 border-b border-slate-200">
             <div class="text-xs font-semibold text-slate-600 mb-3 text-center">
-              Epoch <span class="text-slate-900">{{ currentIteration?.epoch || '—' }}</span>
+              Epoch <span class="text-slate-900">{{ currentIteration?.epoch || '—' }}</span> <span class="text-slate-500">({{ misclassificationsInEpoch }} wrong)</span>
             </div>
 
             <!-- Navigation Controls (Centered) -->
@@ -222,7 +222,25 @@
                 idx === epochFilteredIterations.length - 1 ? 'bg-blue-50 font-semibold' : ''
               ]"
             >
-              {{ iteration.logMessage }}
+              <!-- {{ iteration.logMessage }} -->
+                <div v-if="iteration.pointIndex > -1">
+                  <span class="text-sm">Point #{{ iteration.pointIndex+1 }} ({{ iteration.pointDay }})</span>
+                  <hr class="m-2">
+                  <span><KaTeX :expression="`y: ${iteration.point.decision}`" /></span><br>
+                  <span><KaTeX :expression="`x: (${iteration.point.normalizedMoney.toFixed(2)}, ${iteration.point.normalizedWaitTime.toFixed(2)})`" /></span><br>
+                  <span><KaTeX :expression="`w_o: (${iteration.weightBefore.w0.toFixed(2)}, ${iteration.weightBefore.w1.toFixed(2)}, ${iteration.weightBefore.w2.toFixed(2)})`" /></span><br>
+                  <span><KaTeX :expression="`wx: ${iteration.dotProduct.toFixed(2)}`" /></span><br>
+                  <span><KaTeX :expression="`y(wx): ${(iteration.dotProduct * iteration.point.decision).toFixed(2)}`" /></span><br>
+                  <hr class="m-2">
+                  <div v-if="iteration.dotProduct * iteration.point.decision < 0">
+                    <span><KaTeX expression="w_n = w_o + y \cdot x" /></span><br>
+                    <span><KaTeX :expression="`w_n = (${iteration.weightBefore.w0.toFixed(2)}, ${iteration.weightBefore.w1.toFixed(2)}, ${iteration.weightBefore.w2.toFixed(2)}) + ${iteration.point.decision}(1, ${iteration.point.normalizedMoney.toFixed(2)}, ${iteration.point.normalizedWaitTime.toFixed(2)})`" /></span><br>
+                    <span><KaTeX :expression="`w_n = (${iteration.weightBefore.w0.toFixed(2)}, ${iteration.weightBefore.w1.toFixed(2)}, ${iteration.weightBefore.w2.toFixed(2)}) + (${iteration.point.decision * 1}, ${(iteration.point.decision * iteration.point.normalizedMoney).toFixed(2)}, ${(iteration.point.decision * iteration.point.normalizedWaitTime).toFixed(2)})`" /></span><br>
+                    <span><KaTeX :expression="`w_n = (${iteration.weightAfter.w0.toFixed(2)}, ${iteration.weightAfter.w1.toFixed(2)}, ${iteration.weightAfter.w2.toFixed(2)})`" /></span>
+                  </div>
+                  <div v-else>(No weight update required)</div>
+                </div>
+                <div v-else>Training...</div>
             </div>
             <div v-if="epochFilteredIterations.length === 0" class="text-xs text-slate-400 italic">
               Waiting to start...
@@ -276,6 +294,7 @@
 </template><script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { usePerceptronTraining, type NormalizedDataPoint, type ConvergenceResult } from '../../composables/usePerceptronTraining'
+import KaTeX from '../KaTeX.vue'
 
 interface ComputedDataPoint extends NormalizedDataPoint {
   screenX: number
@@ -439,6 +458,11 @@ const epochFilteredIterations = computed(() => {
     it => it.epoch === currentEpoch && 
           convergenceResult.value!.iterations.indexOf(it) <= Math.floor(currentIterationIndex.value)
   )
+})
+
+// Count misclassifications in current epoch
+const misclassificationsInEpoch = computed(() => {
+  return epochFilteredIterations.value.filter(it => !it.isCorrect).length
 })
 
 const totalIterations = computed(() => {

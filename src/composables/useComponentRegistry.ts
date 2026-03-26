@@ -115,6 +115,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
             'width': 'Optional: plot width in px (default: 560)',
             'height': 'Optional: plot height in px (default: 560)'
         }
+    },
+
+    'xor-problem': {
+        component: () => import('../components/the-great-divide/XORProblem.vue'),
+        description: 'Visual representation of the XOR problem: showing why a single-layer perceptron cannot solve it',
+        props: {}
     }
 
     // Add more components here as needed:

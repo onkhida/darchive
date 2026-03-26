@@ -64,31 +64,73 @@
         <div class="space-y-3">
           <div class="text-sm text-slate-600">Click anywhere on the plot to classify a point based on the trained weight vector. Alternatively, you can input raw values for money and time and see it normalised + plot on the graph.</div>
 
-          <div class="p-3 bg-slate-50 rounded">
-            <div class="text-sm text-slate-500 mb-2">Trained Weights</div>
-            <div class="text-xs font-mono space-y-1 text-slate-700">
-              <div>w₀ (bias): {{ w0.toFixed(3) }}</div>
-              <div>w₁ (money): {{ w1.toFixed(3) }}</div>
-              <div>w₂ (time): {{ w2.toFixed(3) }}</div>
+          <!-- Input for raw values -->
+          <div class="p-3 bg-slate-50 rounded space-y-2">
+            <div class="text-sm text-slate-500 font-semibold">Input Raw Values</div>
+            <div class="flex gap-2">
+              <input
+                v-model.number="inputMoney"
+                type="number"
+                placeholder="Money (₦)"
+                min="0"
+                max="6000"
+                class="flex-1 px-2 py-1.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                v-model.number="inputWaitTime"
+                type="number"
+                placeholder="Wait Time (m)"
+                min="8"
+                max="35"
+                class="flex-1 px-2 py-1.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                @click="addPointFromRawValues"
+                class="px-3 py-1.5 bg-blue-500 text-white rounded text-sm font-medium hover:bg-blue-600 transition-colors"
+              >
+                Plot
+              </button>
             </div>
           </div>
 
           <div class="p-3 bg-slate-50 rounded">
-            <div class="text-sm text-slate-500">Points: <span class="font-mono">{{ points.length }}</span></div>
-            <div class="mt-2">
-              <label class="flex items-center text-xs text-slate-500"><input type="checkbox" v-model="showVectors" class="mr-2" /> Show vectors</label>
-            </div>
-            <div class="mt-3 space-y-2 max-h-48 overflow-y-auto">
-              <div v-for="p in points" :key="p.id" class="text-xs p-2 bg-white rounded border-l-2" :class="p.label === 1 ? 'border-red-400' : 'border-teal-400'">
-                <div class="flex justify-between mb-1">
-                  <span class="text-slate-700">{{ p.x.toFixed(3) }}, {{ p.y.toFixed(3) }}</span>
-                  <span :class="p.label === 1 ? 'text-red-500 font-semibold' : 'text-teal-600 font-semibold'">{{ p.label === 1 ? 'BRT' : 'No BRT' }}</span>
+            <div class="text-sm text-slate-500">Current Point</div>
+            <div class="mt-3 space-y-2">
+              <div v-if="currentPoint" class="text-xs p-2 bg-white rounded border-l-2" :class="currentPoint.label === 1 ? 'border-red-400' : 'border-teal-400'">
+                <!-- Denormalized raw values -->
+                <div class="mb-2 pb-2 border-b border-slate-200">
+                  <div class="font-semibold text-slate-700 mb-1">Raw Values</div>
+                  <div class="text-slate-600">
+                    Money: <span class="font-mono">₦{{ currentPointDenormalized?.money }}</span>
+                  </div>
+                  <div class="text-slate-600">
+                    Wait Time: <span class="font-mono">{{ currentPointDenormalized?.waitTime }}m</span>
+                  </div>
                 </div>
-                <div class="text-slate-600">z = {{ p.z.toFixed(3) }}</div>
+                
+                <!-- Normalized values -->
+                <div class="mb-2 pb-2 border-b border-slate-200">
+                  <div class="font-semibold text-slate-700 mb-1">Normalized</div>
+                  <div class="text-slate-600">x: {{ currentPoint.x.toFixed(3) }}, y: {{ currentPoint.y.toFixed(3) }}</div>
+                </div>
+                
+                <!-- Classification result -->
+                <div>
+                  <div class="font-semibold text-slate-700 mb-1">Decision</div>
+                  <div class="flex justify-between items-center">
+                    <span :class="currentPoint.label === 1 ? 'text-red-500 font-semibold' : 'text-teal-600 font-semibold'">
+                      {{ currentPoint.label === 1 ? 'BRT (Take it)' : 'No BRT (Skip it)' }}
+                    </span>
+                  </div>
+                  <div class="text-slate-600 text-xs mt-1">z = {{ currentPoint.z.toFixed(3) }}</div>
+                </div>
+              </div>
+              <div v-else class="text-xs text-slate-400 italic">
+                Click on the plot to classify a point
               </div>
             </div>
             <div class="mt-3">
-              <button @click="clearPoints" class="px-3 py-1 border rounded text-sm text-slate-600 hover:bg-slate-100">Clear points</button>
+              <button @click="clearPoints" class="px-3 py-1 border rounded text-sm text-slate-600 hover:bg-slate-100">Clear point</button>
             </div>
           </div>
         </div>
@@ -121,8 +163,18 @@ const points = ref<Point[]>([])
 const lastAddAt = ref<number | null>(null)
 const showVectors = ref(true)
 
+// Input refs for raw values
+const inputMoney = ref<number | null>(null)
+const inputWaitTime = ref<number | null>(null)
+
+// Data ranges for denormalization (from PerceptronSimulator training data)
+const moneyMin = 0
+const moneyMax = 6000
+const waitMin = 8
+const waitMax = 35
+
 // Coordinate system: [-1.5, 2.5] range (matching PerceptronSimulator)
-const modelMin = -1.5
+const modelMin = -2
 const modelMax = 2.5
 const modelSpan = modelMax - modelMin
 
@@ -146,6 +198,11 @@ function screenToModelX(screenValue: number): number {
 
 function screenToModelY(screenValue: number): number {
   return modelMax - (screenValue / height) * modelSpan
+}
+
+// Denormalization: convert from [0,1] normalized space back to raw values
+function denormalizeValue(normalized: number, min: number, max: number): number {
+  return normalized * (max - min) + min
 }
 
 // Weight vector endpoint - treat w1, w2 as model-space coordinates
@@ -231,6 +288,33 @@ function classifyPoint(x: number, y: number): { label: 1 | -1 | 0; z: number } {
   return { label, z }
 }
 
+// Current point (only one at a time)
+const currentPoint = computed(() => {
+  return points.value.length > 0 ? points.value[0] : null
+})
+
+// Denormalized values for current point (raw money and wait time)
+const currentPointDenormalized = computed(() => {
+  if (!currentPoint.value) return null
+  
+  // The points are stored in model space [-2, 2.5]
+  // The actual training data occupies [0, 1] in normalized space
+  // But the display allows clicking anywhere in the model space
+  // We should NOT clamp to [0, 1] - allow extrapolation beyond training data
+  
+  const normalizedMoney = currentPoint.value.x  // Can be > 1 or < 0
+  const normalizedWait = currentPoint.value.y   // Can be > 1 or < 0
+  
+  // Denormalize to raw values (allow values beyond training range)
+  const rawMoney = denormalizeValue(normalizedMoney, moneyMin, moneyMax)
+  const rawWait = denormalizeValue(normalizedWait, waitMin, waitMax)
+  
+  return {
+    money: Math.round(rawMoney),
+    waitTime: Math.round(rawWait)
+  }
+})
+
 // Handle click
 function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
   try {
@@ -262,7 +346,8 @@ function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
     const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
     const newPoint: Point = { id, x: mx, y: my, label, z }
 
-    points.value = [...points.value, newPoint]
+    // Replace any existing point with the new one (only keep one point)
+    points.value = [newPoint]
   } catch (err) {
     console.error('[DecisionClassifier] error', err)
   }
@@ -270,6 +355,30 @@ function onCanvasPointerDown(e: PointerEvent | MouseEvent) {
 
 function clearPoints() {
   points.value = []
+}
+
+function addPointFromRawValues() {
+  if (inputMoney.value === null || inputWaitTime.value === null) return
+
+  // Normalize the raw values
+  const normalizedMoney = (inputMoney.value - moneyMin) / (moneyMax - moneyMin)
+  const normalizedWaitTime = (inputWaitTime.value - waitMin) / (waitMax - waitMin)
+
+  // Clamp to [0, 1] to keep within training range
+  const mx = Math.max(0, Math.min(1, normalizedMoney))
+  const my = Math.max(0, Math.min(1, normalizedWaitTime))
+
+  const { label, z } = classifyPoint(mx, my)
+
+  const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
+  const newPoint: Point = { id, x: mx, y: my, label, z }
+
+  // Replace any existing point with the new one
+  points.value = [newPoint]
+
+  // Clear inputs
+  inputMoney.value = null
+  inputWaitTime.value = null
 }
 
 onMounted(() => {

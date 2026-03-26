@@ -50,12 +50,6 @@
 
           <!-- weight vector tip (circle) -->
           <circle :cx="wx" :cy="wy" r="6" fill="#111827" stroke="#fff" stroke-width="1" />
-
-          <!-- bias offset visualization (small indicator) -->
-          <g v-if="Math.abs(w0) > 0.05">
-            <circle :cx="biasIndicatorX" :cy="biasIndicatorY" r="4" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.6" />
-            <text :x="biasIndicatorX + 10" :y="biasIndicatorY - 5" class="text-xs fill-red-500" opacity="0.7">bias offset</text>
-          </g>
         </svg>
       </div>
 
@@ -75,7 +69,7 @@
             step="0.05"
             class="w-full accent-slate-700"
           />
-          <span class="text-xs text-slate-500 mt-1 text-slate-600">Bias: shifts the decision boundary along the weight vector direction</span>
+          <span class="text-xs text-slate-500 mt-1 text-slate-600">Bias: shifts the decision boundary. The equation is w₀ + w₁x + w₂y = 0</span>
         </div>
 
         <!-- w1 slider -->
@@ -163,34 +157,60 @@ const wy = computed(() => cy - w2.value * scale) // negate because SVG y grows d
 // Magnitude of weight vector
 const magnitude = computed(() => Math.sqrt(w1.value ** 2 + w2.value ** 2) || 1)
 
-// Unit vector for the weight direction (in model space: w1 right, w2 up)
-const ux = computed(() => w1.value / magnitude.value)
-const uy = computed(() => w2.value / magnitude.value)
-
-// Decision boundary: orthogonal line through a point offset by bias
-// The boundary passes through: center + w0 * (scale) * unit_vector (in screen coords)
-const biasOffsetX = computed(() => cx + w0.value * scale * ux.value)
-const biasOffsetY = computed(() => cy - w0.value * scale * uy.value) // negate because SVG y grows down
-
-// Perpendicular direction in SCREEN SPACE
-// If weight is (ux, -uy) in screen space, perpendicular is (uy, ux)
-// This gives us a 90° counterclockwise rotation
-const perpX = computed(() => uy.value)
-const perpY = computed(() => ux.value)
-
-// Boundary line endpoints (extended far off screen)
-const boundaryLen = Math.max(width, height) * 1.2
-const boundaryX1 = computed(() => biasOffsetX.value + perpX.value * boundaryLen)
-const boundaryY1 = computed(() => biasOffsetY.value + perpY.value * boundaryLen)
-const boundaryX2 = computed(() => biasOffsetX.value - perpX.value * boundaryLen)
-const boundaryY2 = computed(() => biasOffsetY.value - perpY.value * boundaryLen)
+// Decision boundary: w0 + w1*x + w2*y = 0
+// Solve for boundary line endpoints using the direct equation
+const boundaryPoints = computed(() => {
+  const w1Val = w1.value
+  const w2Val = w2.value
+  const w0Val = w0.value
+  
+  // Convert screen coordinates to model coordinates
+  const screenToModelX = (sx: number) => (sx - cx) / scale
+  const modelToScreenX = (mx: number) => cx + mx * scale
+  const modelToScreenY = (my: number) => cy - my * scale // negate because SVG y grows down
+  
+  // Threshold to detect near-vertical or near-horizontal lines
+  const threshold = 0.05
+  let x1, y1, x2, y2
+  
+  if (Math.abs(w2Val) > threshold) {
+    // Line is not horizontal: y = -(w0 + w1*x) / w2
+    // Use left and right edges of screen
+    const leftX = screenToModelX(0)
+    const rightX = screenToModelX(width)
+    
+    const leftY = -(w0Val + w1Val * leftX) / w2Val
+    const rightY = -(w0Val + w1Val * rightX) / w2Val
+    
+    x1 = modelToScreenX(leftX)
+    y1 = modelToScreenY(leftY)
+    x2 = modelToScreenX(rightX)
+    y2 = modelToScreenY(rightY)
+  } else if (Math.abs(w1Val) > threshold) {
+    // Line is vertical: x = -w0 / w1
+    const boundaryX = -w0Val / w1Val
+    const screenX = modelToScreenX(boundaryX)
+    
+    x1 = screenX
+    y1 = 0
+    x2 = screenX
+    y2 = height
+  } else {
+    // Both w1 and w2 near zero, no clear boundary
+    return null
+  }
+  
+  return { x1, y1, x2, y2 }
+})
 
 // Only show boundary if weight vector is not near zero
-const boundaryVisible = computed(() => magnitude.value > 0.1)
+const boundaryVisible = computed(() => magnitude.value > 0.1 && boundaryPoints.value !== null)
 
-// Bias indicator position (small circle on the weight vector at offset w0)
-const biasIndicatorX = computed(() => biasOffsetX.value)
-const biasIndicatorY = computed(() => biasOffsetY.value)
+// Boundary endpoints with fallback
+const boundaryX1 = computed(() => boundaryPoints.value?.x1 ?? 0)
+const boundaryY1 = computed(() => boundaryPoints.value?.y1 ?? 0)
+const boundaryX2 = computed(() => boundaryPoints.value?.x2 ?? 0)
+const boundaryY2 = computed(() => boundaryPoints.value?.y2 ?? 0)
 
 const resetWeights = () => {
   w0.value = 0

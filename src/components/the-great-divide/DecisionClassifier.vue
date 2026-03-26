@@ -217,12 +217,6 @@ const wy = computed(() => {
 // Decision boundary: solve w0 + w1*x + w2*y = 0
 const boundaryPoints = computed(() => {
   const { w0, w1, w2 } = props
-
-  let weights = {
-      w0: 0.4,
-      w1: 2.045,
-      w2: -1.563,
-  }
   
   // If w2 is near zero, use vertical line approach
   if (Math.abs(w2) < 1e-6) {
@@ -242,11 +236,8 @@ const boundaryPoints = computed(() => {
   const yMax = 2.5
 
   // Solve for y: y = -(w0 + w1*x) / w2
-  const yAtXMin = -(weights.w0 + weights.w1 * xMin) / weights.w2
-  const yAtXMax = -(weights.w0 + weights.w1 * xMax) / weights.w2
-
-  console.log(yAtXMax)
-  console.log(yAtXMin)
+  const yAtXMin = -(w0 + w1 * xMin) / w2
+  const yAtXMax = -(w0 + w1 * xMax) / w2
 
   const isYValid = (y: number) => y >= yMin && y <= yMax
 
@@ -263,10 +254,10 @@ const boundaryPoints = computed(() => {
   }
   
   // If we need a second point, try y boundaries
-  if (!point2 && w1 !== 0) {
+  if (!point2 && Math.abs(w1) > 1e-6) {
     // Solve for x: x = -(w0 + w2*y) / w1
-    const xAtYMin = -(weights.w0 + weights.w2 * yMin) / weights.w1
-    const xAtYMax = -(weights.w0 + weights.w2 * yMax) / weights.w1
+    const xAtYMin = -(w0 + w2 * yMin) / w1
+    const xAtYMax = -(w0 + w2 * yMax) / w1
     const isXValid = (x: number) => x >= xMin && x <= xMax
     
     if (isXValid(xAtYMin) && (!point1 || (point1 && (point1.x !== xAtYMin || point1.y !== yMin)))) {
@@ -281,11 +272,11 @@ const boundaryPoints = computed(() => {
   
   if (!point1 || !point2) return null
   
-  // Convert to screen coordinates
+  // Convert to screen coordinates (no double transformation)
   const sx1 = modelToScreenX(point1.x)
-  const sy1 = modelToScreenY(modelMax - point1.y)
+  const sy1 = modelToScreenY(point1.y)
   const sx2 = modelToScreenX(point2.x)
-  const sy2 = modelToScreenY(modelMax - point2.y)
+  const sy2 = modelToScreenY(point2.y)
 
   return { sx1, sy1, sx2, sy2 }
 })

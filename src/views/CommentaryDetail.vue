@@ -258,7 +258,11 @@ onUnmounted(() => {
                        class="pl-4 pb-3 pr-2 leading-relaxed text-xs animate-in slide-in-from-top-2 duration-200"
                        :class="isDark ? 'text-primary-400' : 'text-primary-700'">
                     <span :id="`footnote-${footnote.id}`">{{ footnote.content }}</span>
-                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 text-xs opacity-60" aria-label="Back to reference">↩</a>
+                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 inline-flex items-center opacity-60 hover:opacity-100 transition-opacity" aria-label="Back to reference">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m7.49 12-3.75 3.75m0 0 3.75 3.75m-3.75-3.75h16.5V4.499" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -285,7 +289,11 @@ onUnmounted(() => {
                       {{ footnote.id }}:
                     </span>
                     <span :id="`footnote-${footnote.id}`" v-html="footnote.content"></span>
-                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 text-xs opacity-60" aria-label="Back to reference">↩</a>
+                    <a :href="`#fnref-${footnote.id}-1`" class="ml-2 inline-flex items-center opacity-60 hover:opacity-100 transition-opacity" aria-label="Back to reference">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m7.49 12-3.75 3.75m0 0 3.75 3.75m-3.75-3.75h16.5V4.499" />
+                      </svg>
+                    </a>
                   </p>
                 </div>
               </div>

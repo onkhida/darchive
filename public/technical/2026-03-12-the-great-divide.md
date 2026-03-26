@@ -187,7 +187,7 @@ I've since accepted this directional pivot in turning this into a technical arti
 
 [^1]: When in survival mode, organisms often compress their clouds of complexity into dichotomous decisions: eat/don't eat, fight/flight, etc.
 [^2]: A BRT "Cowry Card" is meant to serve as a seamless and cashless means of payment for bus rides. Riders "top-up" their card balances beforehand and then tap the card once on the bus' card reader for access.
-[^3]: Coming mainly in their distinct yellow and black stripes, Danfo buses provide an alternate means of transportation across the city. Their comparatively smaller sizes to BRT buses come with more agility, but they usually traverse through shorter and more segmented routes, hence the many stops to get to a destination.
+[^3]: Coming mainly in their distinct yellow and black stripes, Danfo buses provide an alternate means of moving across the city. Their comparatively smaller sizes to BRT buses come with more agility, but they usually traverse through shorter and more segmented routes, hence the many stops to get to a destination.
 [^4]: More variables to consider means more dimensions. Instead of a 2D plane (x-axis vs y-axis), we'll need many more axes for each variable, even though we struggle to visualise any dimensions beyond 3D.
 [^5]: Nigeria's Federal Government has just announced that the 19th and 20th of this month will be a public holiday due to this year's Eid celebrations. So, technically it will be 20 work days; I've just persisted with 22 because this entry was essentially done when the announcement came in.
 [^6]: (Explain why normalisation is important in accelerating convergence?)

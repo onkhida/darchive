@@ -152,9 +152,10 @@
         </div>
 
         <!-- Boundary Diaries Sidebar -->
-        <div class="w-full lg:w-96 flex flex-col border-l border-slate-200 pl-6 max-h-[600px]">
+        <div class="w-full lg:w-96 flex flex-col md:border-l border-slate-200 md:pl-6 max-h-[600px]">
           <!-- Header -->
-          <span class="text-center text-sm font-bold text-slate-700 mb-2">Boundary Diaries</span>
+
+            <h3 style="color: #334155 !important;" class="text-center text-sm font-bold text-slate-700 mb-2">Boundary Diaries</h3>
 
           <!-- Epoch and Navigation -->
           <div class="mb-4 pb-4 border-b border-slate-200">

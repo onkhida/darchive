@@ -217,6 +217,12 @@ const wy = computed(() => {
 // Decision boundary: solve w0 + w1*x + w2*y = 0
 const boundaryPoints = computed(() => {
   const { w0, w1, w2 } = props
+
+  let weights = {
+      w0: 0.4,
+      w1: 2.045,
+      w2: -1.563,
+  }
   
   // If w2 is near zero, use vertical line approach
   if (Math.abs(w2) < 1e-6) {
@@ -230,24 +236,64 @@ const boundaryPoints = computed(() => {
     }
   }
 
-  // Solve for y at two x boundaries
-  const xMin = modelMin
-  const xMax = modelMax
-  const yAtXMin = -(w0 + w1 * xMin) / w2
-  const yAtXMax = -(w0 + w1 * xMax) / w2
+  const xMin = -2
+  const xMax = 2.5
+  const yMin = -2
+  const yMax = 2.5
 
-  const sx1 = modelToScreenX(xMin)
-  const sy1 = modelToScreenY(Math.max(modelMin, Math.min(modelMax, yAtXMin)))
-  const sx2 = modelToScreenX(xMax)
-  const sy2 = modelToScreenY(Math.max(modelMin, Math.min(modelMax, yAtXMax)))
+  // Solve for y: y = -(w0 + w1*x) / w2
+  const yAtXMin = -(weights.w0 + weights.w1 * xMin) / weights.w2
+  const yAtXMax = -(weights.w0 + weights.w1 * xMax) / weights.w2
+
+  console.log(yAtXMax)
+  console.log(yAtXMin)
+
+  const isYValid = (y: number) => y >= yMin && y <= yMax
+
+  let point1: { x: number; y: number } | null = null
+  let point2: { x: number; y: number } | null = null
+
+  // Try x boundaries
+  if (isYValid(yAtXMin)) {
+    point1 = { x: xMin, y: yAtXMin }
+  }
+  if (isYValid(yAtXMax)) {
+    if (!point1) point1 = { x: xMax, y: yAtXMax }
+    else point2 = { x: xMax, y: yAtXMax }
+  }
+  
+  // If we need a second point, try y boundaries
+  if (!point2 && w1 !== 0) {
+    // Solve for x: x = -(w0 + w2*y) / w1
+    const xAtYMin = -(weights.w0 + weights.w2 * yMin) / weights.w1
+    const xAtYMax = -(weights.w0 + weights.w2 * yMax) / weights.w1
+    const isXValid = (x: number) => x >= xMin && x <= xMax
+    
+    if (isXValid(xAtYMin) && (!point1 || (point1 && (point1.x !== xAtYMin || point1.y !== yMin)))) {
+      if (!point1) point1 = { x: xAtYMin, y: yMin }
+      else point2 = { x: xAtYMin, y: yMin }
+    }
+    if (isXValid(xAtYMax) && (!point2 && (!point1 || (point1 && (point1.x !== xAtYMax || point1.y !== yMax))))) {
+      if (!point1) point1 = { x: xAtYMax, y: yMax }
+      else point2 = { x: xAtYMax, y: yMax }
+    }
+  }
+  
+  if (!point1 || !point2) return null
+  
+  // Convert to screen coordinates
+  const sx1 = modelToScreenX(point1.x)
+  const sy1 = modelToScreenY(modelMax - point1.y)
+  const sx2 = modelToScreenX(point2.x)
+  const sy2 = modelToScreenY(modelMax - point2.y)
 
   return { sx1, sy1, sx2, sy2 }
 })
 
-const bx1 = computed(() => boundaryPoints.value.sx1)
-const by1 = computed(() => boundaryPoints.value.sy1)
-const bx2 = computed(() => boundaryPoints.value.sx2)
-const by2 = computed(() => boundaryPoints.value.sy2)
+const bx1 = computed(() => boundaryPoints.value?.sx1 ?? 0)
+const by1 = computed(() => boundaryPoints.value?.sy1 ?? 0)
+const bx2 = computed(() => boundaryPoints.value?.sx2 ?? 0)
+const by2 = computed(() => boundaryPoints.value?.sy2 ?? 0)
 
 // Helper: which side of the boundary is a screen point on?
 function screenDot(sx: number, sy: number): number {
@@ -259,6 +305,7 @@ function screenDot(sx: number, sy: number): number {
 
 // Polygon shadings
 const northPoly = computed(() => {
+  if (!boundaryPoints.value) return ''
   const { sx1, sy1, sx2, sy2 } = boundaryPoints.value
   const cxPoly = (sx1 + sx2 + width + width) / 4
   const cyPoly = (sy1 + sy2 + height + 0) / 4
@@ -270,6 +317,7 @@ const northPoly = computed(() => {
 })
 
 const southPoly = computed(() => {
+  if (!boundaryPoints.value) return ''
   const { sx1, sy1, sx2, sy2 } = boundaryPoints.value
   const cxPoly = (sx1 + sx2 + 0 + 0) / 4
   const cyPoly = (sy1 + sy2 + 0 + height) / 4

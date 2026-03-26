@@ -8,34 +8,6 @@ export interface ComponentRegistryEntry {
 
 export const componentRegistry: Record<string, ComponentRegistryEntry> = {
     // Shared interactive components
-    'color-picker': {
-        component: () => import('../components/ColorPicker.vue'),
-        description: 'Interactive color picker with theme awareness',
-        props: {
-            'initial-color': 'Initial hex color (default: #007bff)',
-            'theme': 'Light or dark theme (default: auto-detected)'
-        }
-    },
-
-    'live-css-editor': {
-        component: () => import('../components/LiveCSSEditor.vue'),
-        description: 'Live CSS editor with real-time preview',
-        props: {
-            'initial-css': 'Initial CSS content',
-            'target-selector': 'CSS selector to apply styles to (default: .preview)'
-        }
-    },
-
-    'code-sandbox': {
-        component: () => import('../components/CodeSandbox.vue'),
-        description: 'Code display with copy functionality',
-        props: {
-            'code': 'Code content to display',
-            'language': 'Programming language for syntax highlighting',
-            'title': 'Optional title for the code block'
-        }
-    },
-
     'vector-playground': {
         component: () => import('../components/the-great-divide/VectorPlayground.vue'),
         description: 'Interactive vector playground used in "The Great Divide" article',

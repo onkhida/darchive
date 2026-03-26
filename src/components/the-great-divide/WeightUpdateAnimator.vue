@@ -111,7 +111,7 @@
               :y="currentWeightScreen.y - 10"
               class="text-xs font-semibold fill-blue-600"
             >
-              w₀
+              w_o
             </text>
             <text
               v-if="currentStep === 3"
@@ -137,13 +137,13 @@
           <div class="bg-gradient-to-br from-blue-50 to-slate-50 rounded-lg p-5 border border-slate-200 flex-1 overflow-y-auto">
             <!-- Step 1 -->
             <div v-if="currentStep === 1" class="space-y-3">
-              <h3 class="font-semibold text-slate-800 text-sm">Detect Misclassification</h3>
-              <p class="text-xs text-slate-700 leading-relaxed">
-                The blue weight vector <span class="font-mono font-semibold">w₀ = (0.6, 0.8)</span> currently defines a decision boundary (red dashed line) that is orthogonal to it.
-              </p>
-              <p class="text-xs text-slate-700 leading-relaxed">
+              <span class="text-xl font-semibold text-slate-800 text-sm">Detect Misclassification</span><br>
+              <span class="text-xs text-slate-700 leading-relaxed">
+                The blue weight vector <span class="font-mono font-semibold">w_o = (0.6, 0.8)</span> currently defines a decision boundary (red dashed line) that is orthogonal to it.
+              </span><br>
+              <span class="text-xs text-slate-700 leading-relaxed">
                 However, the red point with label <span class="font-mono"><KaTeX expression="y = +1" /></span> falls on the <span class="font-italic">wrong side</span> of the boundary. We detect this because <KaTeX expression="y(\vec{w}\cdot\vec{x})<0" />:
-              </p>
+              </span>
               <div class="bg-white rounded p-3 space-y-2 text-xs font-mono text-slate-600 border-l-2 border-red-400">
                 <div><span class="text-slate-600"><KaTeX expression="x = " /></span><span class="text-red-600"><KaTeX expression="(-0.4, 0.1)" /></span></div>
                 <div><span class="text-slate-600"><KaTeX expression="w_o \cdot x = " /></span><span class="text-red-600"><KaTeX expression="(0.6)(-0.4) + (0.8)(0.1)" /></span></div>
@@ -155,10 +155,10 @@
 
             <!-- Step 2 -->
             <div v-else-if="currentStep === 2" class="space-y-3">
-              <h3 class="font-semibold text-slate-800 text-sm">Compute Update</h3>
-              <p class="text-xs text-slate-700 leading-relaxed">
+              <span class="font-semibold text-slate-800 text-xl">Compute Update</span><br>
+              <span class="text-xs text-slate-700 leading-relaxed">
                 We apply the perceptron update rule by computing <span class="font-semibold text-emerald-600"><KaTeX expression="y \cdot x" /></span>, shown as the green dashed vector.
-              </p>
+              </span>
               <div class="bg-white rounded p-3 space-y-1 text-xs font-mono border-l-2 border-emerald-400">
                 <div><span class="text-slate-600"><KaTeX expression="y"/> (label):</span> <span class="text-emerald-600"><KaTeX expression="+1"/></span></div>
                 <div><span class="text-slate-600"><KaTeX expression="x"/> (point):</span> <span class="text-emerald-600"><KaTeX expression="(-0.4, 0.1)"/></span></div>
@@ -166,25 +166,25 @@
                   <KaTeX expression="y \cdot x = (-0.4, 0.1)" />
                 </div>
               </div>
-              <p class="text-xs text-slate-700 leading-relaxed">
+              <span class="text-xs text-slate-700 leading-relaxed">
                 This vector points toward the misclassified point, which is key. We're about to shift our weight in that direction.
-              </p>
+              </span>
             </div>
 
             <!-- Step 3 -->
             <div v-else class="space-y-3">
-              <h3 class="font-semibold text-slate-800 text-sm">Set Weight Vector</h3>
-              <p class="text-xs text-slate-700 leading-relaxed">
+              <span class="font-semibold text-slate-800 text-xl">Set Weight Vector</span><br>
+              <span class="text-xs text-slate-700 leading-relaxed">
                 The new weight <span class="font-mono font-semibold text-amber-600"><KaTeX expression="w_n"/></span> is computed and the boundary rotates accordingly:
-              </p>
+              </span>
               <div class="bg-white rounded p-3 space-y-1 text-xs font-mono border-l-2 border-amber-400">
                 <div class="text-slate-700"><KaTeX expression="w_n = w_o + y \cdot x"/></div>
                 <div class="text-slate-700"><KaTeX expression="= (0.6, 0.8) + (-0.4, 0.1)"/></div>
                 <div class="text-amber-600 font-semibold"><KaTeX expression="= (0.2, 0.9)"/></div>
               </div>
-              <p class="text-xs text-slate-700 leading-relaxed">
+              <span class="text-xs text-slate-700 leading-relaxed">
                 Notice how the dashed boundary has rotated? The misclassified point is now closer to being on the correct side. This iterative process continues until convergence.
-              </p>
+              </span>
             </div>
           </div>
 

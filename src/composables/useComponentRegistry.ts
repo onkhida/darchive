@@ -93,6 +93,12 @@ export const componentRegistry: Record<string, ComponentRegistryEntry> = {
         component: () => import('../components/the-great-divide/XORProblem.vue'),
         description: 'Visual representation of the XOR problem: showing why a single-layer perceptron cannot solve it',
         props: {}
+    },
+
+    'try-it-out-button': {
+        component: () => import('../components/the-great-divide/TryItOutButton.vue'),
+        description: 'Button to navigate to the perceptron demo page',
+        props: {}
     }
 
     // Add more components here as needed:

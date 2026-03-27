@@ -1,6 +1,6 @@
 ---
 title: The Great Divide
-date: 2026-3-12
+date: 2026-3-27
 desc: An example-based exploration of the algorithm behind Frank Rosenblatt's "Mark I Perceptron", anchored through the lens of an important daily decision of mine.
 coverImage: /assets/images/technical/the-great-divide.jpg
 ogImage: /assets/images/og-images/thegreatdivide-ogimage.jpg
@@ -184,7 +184,7 @@ But the main accelerator for this post was, of course, my daily commute. After m
 
 I've since accepted this directional pivot in turning this into a technical article. The only caveat is that, because my words came together much faster than my experimental, month-long inquest for data, the figures I've tabularised and used on the plot have been pulled arbitrarily from my head to fit into the central example context. I've also limited the hypothetical to two variables, because a 2D graph makes for much easier visualisations. And hopefully, despite this shift in my writing aims, this has still been helpful. I've had fun attempting to make this make sense, and for good measure (and to round things up), I've also created a "demo" of a sample graphical perceptron simulator that you can use outside of this context. I hope to give you an additional space to visualise these concepts: it works in a similar fashion to the components above, and the only real difference is that it gives you the additional liberty of creating your own data vectors. If the categories are separable, it then proceeds to find a weight vector, generating a _"Boundary Diaries"_ similar to the one you've just seen.
 
-[Try It Out Btn]
+<div class="interactive-component" data-component="try-it-out-button" data-props="%7B%7D"></div>
 
 [^1]: When in survival mode, organisms often compress their clouds of complexity into dichotomous decisions: eat/don't eat, fight/flight, etc.
 [^2]: A BRT "Cowry Card" is meant to serve as a seamless and cashless means of payment for bus rides. Riders "top up" their card balances beforehand and then tap the card once on the bus's card reader for access.

@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useConsumables } from '../composables/useConsumables'
 import { useTheme } from '../composables/useTheme'
 import { useMetaTags } from '../composables/useMetaTags'
 
+const router = useRouter()
+const { posts, isLoading, loadAllPosts } = useConsumables()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
 
-// Set up meta tags for home page
+// Set up meta tags for consumables page
 useMetaTags({
-  title: "Daniel's Dossier",
-  description: 'An archive. Daniel Eta.',
+  title: 'Consumables - onkhida',
+  description: 'Entries on entities I consume.',
   image: '/assets/images/og_image.png',
   type: 'website',
 })
@@ -16,25 +20,8 @@ useMetaTags({
 // Real-time Lagos time
 const currentTime = ref('')
 
-// Hover preview state for name-follow image
-const showPreview = ref(false)
-const previewX = ref(0)
-const previewY = ref(0)
-// Use the same public asset used elsewhere
-const previewSrc = '/assets/images/me.png'
-
-const updatePreviewPos = (e: MouseEvent) => {
-  const offset = 16
-  previewX.value = e.clientX + offset
-  previewY.value = e.clientY + offset
-}
-
-const onNameEnter = (e: MouseEvent) => {
-  updatePreviewPos(e)
-  showPreview.value = true
-}
-const onNameLeave = () => {
-  showPreview.value = false
+const goToConsumable = (slug: string) => {
+  router.push(`/consumables/${slug}`)
 }
 
 const updateTime = () => {
@@ -56,10 +43,11 @@ onMounted(() => {
   initializeTheme()
   
   // Set page title
-  document.title = 'About - onkhida'
+  document.title = 'Consumables - onkhida'
   
   updateTime()
   timeInterval = setInterval(updateTime, 1000)
+  loadAllPosts()
 })
 
 onUnmounted(() => {
@@ -97,56 +85,74 @@ onUnmounted(() => {
 
       <!-- Main Content -->
       <main class="container mx-auto px-4 md:px-8 py-10 max-w-3xl">
-        <!-- About Section -->
-        <section id="about" class="mb-16">
+        <!-- Consumables Header -->
+        <section class="mb-12">
+          <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">consumables.</h1>
+          
+          <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
+            This section exists to extend the limits of my Letterboxd, Goodreads, and StoryGraph accounts. This was to be titled, "readings" to give me a space to log thoughts about the texts that I am most engaged with, but I've (of recent) taken a liking to film, and I now want to log my interactions with moving pictures as well. A lot of this is recreational. Away from what is formally positioned as work, I've just thought to centralise my engagements with the things I find myself consuming.
+          </p>
+        </section>
 
-          <h1 class="text-6xl font-serif font-normal mb-8" :class="isDark ? 'text-primary-50' : 'text-primary-900'">about.</h1>
+        <!-- Divider -->
+        <hr class="mb-12 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
 
-          <div class="space-y-3 leading-relaxed" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-            <div>
-              <p class="text-sm mb-1" :class="isDark ? 'text-primary-500' : 'text-primary-500'">
-                Pronunciation — /ˈetə/
+        <!-- Consumable Entries -->
+        <section class="mb-12">
+          <!-- Loading state -->
+          <div v-if="isLoading" class="text-center py-8">
+            <div :class="isDark ? 'text-primary-400' : 'text-primary-600'">Loading consumables...</div>
+          </div>
+          
+          <!-- Consumable List -->
+          <div v-else class="space-y-4">
+            <article 
+              v-for="post in posts" 
+              :key="post.slug"
+              class="flex items-center gap-3 md:gap-4 cursor-pointer group py-3 md:py-4 px-4 md:px-6 rounded-lg transition-all duration-200 hover:scale-[1.02] font-sans"
+              :class="isDark ? 'bg-primary-900/40 hover:bg-primary-900/60' : 'bg-primary-100/60 hover:bg-primary-100/80'"
+              @click="goToConsumable(post.slug)"
+            >
+              <!-- Author Image (Circle) -->
+              <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 transition-colors" 
+                   :class="isDark ? 'border-primary-700' : 'border-primary-300'">
+                <img 
+                  v-if="post.authorImage"
+                  :src="post.authorImage" 
+                  :alt="post.author"
+                  class="w-full h-full object-cover"
+                />
+                <div 
+                  v-else 
+                  class="w-full h-full flex items-center justify-center text-xs font-medium transition-colors"
+                  :class="isDark ? 'text-primary-400 bg-primary-800' : 'text-primary-500 bg-primary-200'"
+                >
+                  {{ post.author ? post.author.charAt(0).toUpperCase() : '?' }}
+                </div>
+              </div>
+
+              <!-- Title (center) -->
+              <h2 class="flex-1 text-sm md:text-base font-medium transition-colors group-hover:opacity-80 !font-sans" 
+                  :class="isDark ? 'text-primary-100' : 'text-primary-900'">
+                {{ post.title }}
+              </h2>
+              
+              <!-- Author and year (right) - hidden on mobile -->
+              <p class="hidden md:flex text-sm transition-colors flex-shrink-0" 
+                 :class="isDark ? 'text-primary-400' : 'text-primary-600'">
+                {{ post.author }}{{ post.year ? `, ${post.year}` : '' }}
               </p>
-              <p>
-                My name is 
-                <span class="underline cursor-pointer" 
-                      @mouseenter="onNameEnter" 
-                      @mouseleave="onNameLeave" 
-                      @mousemove="updatePreviewPos">
-                  Daniel Eta</span>.
-              </p>
-            </div>
+            </article>
+          </div>
 
-            <p>This site—and the content in it—doubles as my personal archive and also as a documentation of my progression through the years. Much of the content that you will find here is related to technology (and software in general), but a healthy chunk of what I post here has roots in different (sometimes even diverging) fields.
-            </p>
-            <p>I suppose my goal with a lot of what I do seems to tend towards some sort of consilience. The wanderlust within has always transmuted beyond the physical; I can't always control where my mind and its pursuits will take me. 
-            </p>
-            <p>I try to spin <a href="http://onkhida.me/technical" class="underline">narratives around technology</a>, <a href="http://onkhida.me/consumables" class="underline">the entities I consume</a>, and <a href="http://onkhida.me/commentary" class="underline">the thoughts that stay with me</a> as I continue existing. In the same vein, I also spend time logging my <a href="http://notebooks.onkhida.me/" class="underline">process of learning</a> and what is commonly the output of this learning process—in an <a href="http://papers.onkhida.me/" class="underline">academic</a> or <a href="http://demos.onkhida.me/" class="underline">practical</a> sense.
-            </p>
-            <p>The best way to reach is me is (by far) through my <a href="mailto:daniel.eta@outlook.com" class="underline">email</a>. I love reading/writing to/from people, and it is my most active channel of communication. Though I do have accounts on <a href="https://www.reddit.com/user/onkhida/" class="underline">Reddit</a>, <a href="https://www.linkedin.com/in/daniel-eta/" class="underline">LinkedIn</a> and <a href="https://github.com/onkhida" class="underline">GitHub</a> to allow me to share some of my work and provide me with some sort of digital footprint. 
-            </p>            
-            
-            <div class="mt-8">
-              <a href="https://linktr.ee/onkhida" class="fancy text-sm" :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'">
-                web links 
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 17L17 7"/>
-                  <path d="M7 7h10v10"/>
-                </svg>
-              </a>
+          <!-- Empty state -->
+          <div v-if="!isLoading && posts.length === 0" class="text-center py-16">
+            <div class="transition-colors" :class="isDark ? 'text-primary-400' : 'text-primary-600'">
+              No consumables yet. Check back soon!
             </div>
           </div>
         </section>
       </main>
-
-      <!-- Hover-follow preview image (detached from flow) -->
-      <img
-        v-show="showPreview"
-        :src="previewSrc"
-        :style="{ left: previewX + 'px', top: previewY + 'px', height: '100px', width: 'auto' }"
-        class="fixed pointer-events-none shadow-lg z-50 transition-opacity duration-150"
-        :class="showPreview ? 'opacity-100' : 'opacity-0'"
-        alt="preview" />
 
       <!-- Footer - aligned with content -->
       <footer class="container mx-auto max-w-3xl px-4 md:px-8 pb-12 pt-8 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">

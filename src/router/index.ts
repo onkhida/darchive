@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Commentary from '../views/Commentary.vue'
 import CommentaryDetail from '../views/CommentaryDetail.vue'
-import Readings from '../views/Readings.vue'
-import ReadingDetail from '../views/ReadingDetail.vue'
+import Consumables from '../views/Consumables.vue'
+import ConsumableDetail from '../views/ConsumableDetail.vue'
 import Technical from '../views/Technical.vue'
 import TechnicalDetail from '../views/TechnicalDetail.vue'
 import TextEditor from '../views/TextEditor.vue'
@@ -33,14 +33,14 @@ const router = createRouter({
             component: CommentaryDetail
         },
         {
-            path: '/readings',
-            name: 'readings',
-            component: Readings
+            path: '/consumables',
+            name: 'consumables',
+            component: Consumables
         },
         {
-            path: '/readings/:slug',
-            name: 'reading-detail',
-            component: ReadingDetail
+            path: '/consumables/:slug',
+            name: 'consumable-detail',
+            component: ConsumableDetail
         },
         {
             path: '/technical',

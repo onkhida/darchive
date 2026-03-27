@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useReadings, type ReadingPost } from '../composables/useReadings'
+import { useConsumables, type ConsumablePost } from '../composables/useConsumables'
 import { useTheme } from '../composables/useTheme'
 import { useMetaTags } from '../composables/useMetaTags'
 import { useKaTeX } from '../composables/useKaTeX'
 
 const route = useRoute()
 const router = useRouter()
-const { getPostBySlug, renderMarkdown } = useReadings()
+const { getPostBySlug, renderMarkdown } = useConsumables()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
 const { renderDOM } = useKaTeX()
 
@@ -16,7 +16,7 @@ const { renderDOM } = useKaTeX()
 const currentTime = ref('')
 
 // Post data
-const post = ref<ReadingPost | null>(null)
+const post = ref<ConsumablePost | null>(null)
 const isLoading = ref(true)
 
 // Footnotes panel
@@ -32,15 +32,15 @@ useMetaTags(() => {
       title: `${post.value.title} - onkhida`,
       description: post.value.desc || `${post.value.title}`,
       image: '/assets/images/og_image.png', // Can be customized per post in future
-      url: `${typeof window !== 'undefined' ? window.location.origin : ''}/readings/${route.params.slug}`,
+      url: `${typeof window !== 'undefined' ? window.location.origin : ''}/consumables/${route.params.slug}`,
       type: 'article',
       author: 'Onkhida',
     }
   }
   
   return {
-    title: 'Readings - onkhida',
-    description: 'Entries on entities I consume.',
+    title: 'Consumables - onkhida',
+    description: 'Entries on things I consume.',
     image: '/assets/images/og_image.png',
     type: 'website',
   }
@@ -59,7 +59,7 @@ const updateTime = () => {
 }
 
 const goBack = () => {
-  router.push('/readings')
+  router.push('/consumables')
 }
 
 const toggleFootnote = (footnoteId: number) => {
@@ -129,12 +129,12 @@ const loadPost = async () => {
   
   if (loadedPost) {
     post.value = loadedPost
-    // Set page title based on reading title
+    // Set page title based on consumable title
     document.title = `${loadedPost.title} - onkhida`
     // Render KaTeX after content is loaded and injected into DOM
     await renderDOM()
   } else {
-    document.title = 'Reading Not Found - onkhida'
+    document.title = 'Consumable Not Found - onkhida'
   }
   
   isLoading.value = false
@@ -201,11 +201,11 @@ onUnmounted(() => {
         </div>
         
         <div v-else-if="!post" class="text-center py-12">
-          <div :class="isDark ? 'text-primary-400' : 'text-primary-600'">Reading not found</div>
+          <div :class="isDark ? 'text-primary-400' : 'text-primary-600'">Consumable not found</div>
         </div>
         
         <article v-else>
-          <!-- Reading Header -->
+          <!-- Consumable Header -->
           <header class="mb-8">
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal mb-4" 
                 :class="isDark ? 'text-primary-50' : 'text-primary-900'">
@@ -248,7 +248,7 @@ onUnmounted(() => {
           <!-- Divider -->
           <hr class="mb-8 border-t transition-colors" :class="isDark ? 'border-primary-800' : 'border-primary-200'">
 
-          <!-- Reading Content -->
+          <!-- Consumable Content -->
           <div class="prose prose-lg max-w-none leading-relaxed" :class="isDark ? 'text-base prose-invert text-primary-300' : 'text-base text-primary-700'">
             <div v-html="renderMarkdown(post.content)" @click="handleFootnoteClick"></div>
           </div>
@@ -363,7 +363,7 @@ onUnmounted(() => {
 
 .prose :deep(ul ul),
 .prose :deep(ol ol),
-.prose :deep(ul ol),
+.prose :deep(ul ul),
 .prose :deep(ol ul) {
   padding-left: 1rem !important; /* nested indent */
 }

@@ -109,8 +109,8 @@ export function getPageMetadata(slug?: string, type?: 'commentary' | 'reading' |
             type: 'website',
         },
         readings: {
-            title: 'Readings - onkhida',
-            description: 'Entries on entities I consume.',
+            title: 'Consumables - onkhida',
+            description: 'Entries on things I consume.',
             image: '/assets/images/og_image.png',
             type: 'website',
         },

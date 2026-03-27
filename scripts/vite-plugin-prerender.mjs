@@ -82,12 +82,12 @@ export default function vitePluginPrerender(options = {}) {
 function collectRoutes() {
     const commentaryDir = path.join(__dirname, '../public/commentary')
     const technicalDir = path.join(__dirname, '../public/technical')
-    const readingsDir = path.join(__dirname, '../public/readings')
+    const consumablesDir = path.join(__dirname, '../public/consumables')
 
     const routes = [
         {
             path: '/',
-            title: 'Public Archive',
+            title: "Daniel's Dossier",
             description: 'An archive. Daniel Eta.',
             type: 'website',
         },
@@ -98,9 +98,9 @@ function collectRoutes() {
             type: 'website',
         },
         {
-            path: '/readings',
-            title: 'Readings - onkhida',
-            description: 'Entries on entities I consume.',
+            path: '/consumables',
+            title: 'Consumables - onkhida',
+            description: 'Entries on things I consume.',
             type: 'website',
         },
         {
@@ -149,14 +149,14 @@ function collectRoutes() {
         })
     }
 
-    // Scan readings
-    if (fs.existsSync(readingsDir)) {
-        const files = fs.readdirSync(readingsDir).filter((f) => f.endsWith('.md'))
+    // Scan consumables
+    if (fs.existsSync(consumablesDir)) {
+        const files = fs.readdirSync(consumablesDir).filter((f) => f.endsWith('.md'))
         files.forEach((file) => {
             const slug = generateSlug(file)
-            const meta = extractMetadata(path.join(readingsDir, file))
+            const meta = extractMetadata(path.join(consumablesDir, file))
             routes.push({
-                path: `/readings/${slug}`,
+                path: `/consumables/${slug}`,
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
                     meta.desc || `${meta.title || file.replace('.md', '')}`,

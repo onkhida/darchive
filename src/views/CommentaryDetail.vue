@@ -37,8 +37,8 @@ useMetaTags(() => {
   }
   
   return {
-    title: 'Commentary | Public Archive',
-    description: 'Essays and reflections on life, culture, and ideas.',
+    title: 'Commentary - onkhida',
+    description: 'Entries on everything I could not fit into structure.',
     image: '/assets/images/og_image.png',
     type: 'website',
   }

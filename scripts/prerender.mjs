@@ -30,7 +30,7 @@ function prerender() {
     const routes = [
         {
             path: '/',
-            title: 'Public Archive',
+            title: "Daniel's Dossier",
             description: 'An archive. Daniel Eta.',
             image: IMAGE_URL,
             type: 'website'
@@ -66,7 +66,7 @@ function prerender() {
             const meta = extractMetadata(path.join(contentDir, file))
             routes.push({
                 path: `/c/${slug}`,
-                title: `${meta.title || file.replace('.md', '')} | Public Archive`,
+                title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description: meta.description || `${meta.title || file.replace('.md', '')} - A commentary piece.`,
                 image: IMAGE_URL,
                 type: 'article'
@@ -82,8 +82,8 @@ function prerender() {
             const meta = extractMetadata(path.join(technicalDir, file))
             routes.push({
                 path: `/technical/${slug}`,
-                title: `${meta.title || file.replace('.md', '')} | Public Archive`,
-                description: meta.description || `${meta.title || file.replace('.md', '')} - A technical post.`,
+                title: `${meta.title || file.replace('.md', '')} - onkhida`,
+                description: meta.description || `${meta.title || file.replace('.md', '')}`,
                 image: IMAGE_URL,
                 type: 'article'
             })
@@ -98,8 +98,8 @@ function prerender() {
             const meta = extractMetadata(path.join(readingsDir, file))
             routes.push({
                 path: `/readings/${slug}`,
-                title: `${meta.title || file.replace('.md', '')} | Public Archive`,
-                description: meta.description || `${meta.title || file.replace('.md', '')} - A reading note.`,
+                title: `${meta.title || file.replace('.md', '')} - onkhida`,
+                description: meta.description || `${meta.title || file.replace('.md', '')}`,
                 image: IMAGE_URL,
                 type: 'article'
             })

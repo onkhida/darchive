@@ -10,8 +10,8 @@ export interface MetaTagConfig {
     author?: string
 }
 
-const DEFAULT_TITLE = 'Public Archive'
-const DEFAULT_DESCRIPTION = 'A collection of thoughts, readings, and technical explorations.'
+const DEFAULT_TITLE = "Daniel's Dossier"
+const DEFAULT_DESCRIPTION = 'An Archive. Daniel Eta.'
 const DEFAULT_IMAGE = '/assets/images/og_image.png'
 const SITE_URL = typeof window !== 'undefined' ? window.location.origin : ''
 
@@ -97,26 +97,26 @@ export function useMetaTags(config: MetaTagConfig | (() => MetaTagConfig)) {
 export function getPageMetadata(slug?: string, type?: 'commentary' | 'reading' | 'technical'): MetaTagConfig {
     const baseConfig: Record<string, MetaTagConfig> = {
         home: {
-            title: 'Public Archive',
-            description: 'A collection of thoughts, readings, and technical explorations.',
+            title: 'Daniel\'s Dossier',
+            description: 'An archive. Daniel Eta.',
             image: '/assets/images/og_image.png',
             type: 'website',
         },
         commentary: {
-            title: 'Commentary | Public Archive',
-            description: 'Essays and reflections on life, culture, and ideas.',
+            title: 'Commentary - onkhida',
+            description: 'Entries on everything I could not fit into structure.',
             image: '/assets/images/og_image.png',
             type: 'website',
         },
         readings: {
-            title: 'Readings | Public Archive',
-            description: 'Books and articles that shaped my thinking.',
+            title: 'Readings - onkhida',
+            description: 'Entries on entities I consume.',
             image: '/assets/images/og_image.png',
             type: 'website',
         },
         technical: {
-            title: 'Technical | Public Archive',
-            description: 'Deep dives into technical concepts and implementations.',
+            title: 'Technical - onkhida',
+            description: 'Posts on technology.',
             image: '/assets/images/og_image.png',
             type: 'website',
         },

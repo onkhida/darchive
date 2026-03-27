@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prerender": "node scripts/prerender.mjs",
-    "build": "npm run prerender && vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

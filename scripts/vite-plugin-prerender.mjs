@@ -121,7 +121,7 @@ function collectRoutes() {
                 path: `/c/${slug}`,
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
-                    meta.description || `${meta.title || file.replace('.md', '')}`,
+                    meta.desc || `${meta.title || file.replace('.md', '')}`,
                 image: meta.image || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',
@@ -133,13 +133,15 @@ function collectRoutes() {
     if (fs.existsSync(technicalDir)) {
         const files = fs.readdirSync(technicalDir).filter((f) => f.endsWith('.md'))
         files.forEach((file) => {
-            const slug = generateSlug(file)
+            // Technical files use YYYY-MM-DD-slug format, strip the date prefix
+            const nameNoExt = file.replace(/\.md$/, '')
+            const slug = nameNoExt.replace(/^\d{4}-\d{2}-\d{2}-/, '')
             const meta = extractMetadata(path.join(technicalDir, file))
             routes.push({
                 path: `/technical/${slug}`,
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
-                    meta.description || `${meta.title || file.replace('.md', '')}`,
+                    meta.desc || `${meta.title || file.replace('.md', '')}`,
                 image: meta.coverImage || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',
@@ -157,7 +159,7 @@ function collectRoutes() {
                 path: `/readings/${slug}`,
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
-                    meta.description || `${meta.title || file.replace('.md', '')}`,
+                    meta.desc || `${meta.title || file.replace('.md', '')}`,
                 image: meta.image || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',

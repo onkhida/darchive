@@ -1,3 +1,4 @@
+import { nextTick } from 'vue'
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
 
@@ -34,8 +35,36 @@ export function useKaTeX() {
         }
     }
 
+    /**
+     * Auto-render KaTeX in the DOM after content injection
+     * Call this after markdown content is rendered via v-html
+     * Handles CDN script loading with retries
+     */
+    const renderDOM = async () => {
+        await nextTick()
+
+        const renderWhenReady = (attempts = 0) => {
+            // @ts-ignore
+            if (window && (window as any).renderMathInElement) {
+                // @ts-ignore
+                (window as any).renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false }
+                    ],
+                    throwOnError: false
+                })
+            } else if (attempts < 20) {
+                setTimeout(() => renderWhenReady(attempts + 1), 100)
+            }
+        }
+
+        renderWhenReady()
+    }
+
     return {
         renderInline,
         renderDisplay,
+        renderDOM,
     }
 }

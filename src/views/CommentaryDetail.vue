@@ -4,11 +4,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useCommentary, type CommentaryPost } from '../composables/useCommentary'
 import { useTheme } from '../composables/useTheme'
 import { useMetaTags } from '../composables/useMetaTags'
+import { useKaTeX } from '../composables/useKaTeX'
 
 const route = useRoute()
 const router = useRouter()
 const { getPostBySlug, renderMarkdown } = useCommentary()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+const { renderDOM } = useKaTeX()
 
 // Real-time Lagos time
 const currentTime = ref('')
@@ -120,6 +122,8 @@ const loadPost = async () => {
     if (loadedPost) {
       // Set page title based on commentary title
       document.title = `${loadedPost.title} - onkhida`
+      // Render KaTeX after content is loaded and injected into DOM
+      await renderDOM()
     } else {
       document.title = 'Commentary Not Found - onkhida'
     }

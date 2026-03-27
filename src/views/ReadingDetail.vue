@@ -4,11 +4,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useReadings, type ReadingPost } from '../composables/useReadings'
 import { useTheme } from '../composables/useTheme'
 import { useMetaTags } from '../composables/useMetaTags'
+import { useKaTeX } from '../composables/useKaTeX'
 
 const route = useRoute()
 const router = useRouter()
 const { getPostBySlug, renderMarkdown } = useReadings()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
+const { renderDOM } = useKaTeX()
 
 // Real-time Lagos time
 const currentTime = ref('')
@@ -129,6 +131,8 @@ const loadPost = async () => {
     post.value = loadedPost
     // Set page title based on reading title
     document.title = `${loadedPost.title} - onkhida`
+    // Render KaTeX after content is loaded and injected into DOM
+    await renderDOM()
   } else {
     document.title = 'Reading Not Found - onkhida'
   }

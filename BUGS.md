@@ -1,6 +1,6 @@
 Bug List
-- finish last footnote
 - Need to look at the SVG height of the final decision component (the-great-divide). Also do not need to make many points. Just one point.
+
 - grammar checker
 - PerceptronSimulator.vue point log not working.
 

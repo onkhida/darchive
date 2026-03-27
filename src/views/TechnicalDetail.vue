@@ -5,14 +5,12 @@ import { useTechnical, type TechnicalPost } from '../composables/useTechnical'
 import { loadComponent } from '../composables/useComponentRegistry'
 import { useTheme } from '../composables/useTheme'
 import { useMetaTags } from '../composables/useMetaTags'
-import { useKaTeX } from '../composables/useKaTeX'
 import { createApp } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
 const { getPostBySlug, renderMarkdown } = useTechnical()
 const { isDark, toggleTheme, initializeTheme } = useTheme()
-const { renderDOM } = useKaTeX()
 
 // Real-time Lagos time
 const currentTime = ref('')
@@ -397,9 +395,6 @@ const loadPost = async () => {
     // Generate TOC after content is fully rendered
     await nextTick()
     generateTableOfContents()
-
-    // Render KaTeX after content is loaded and injected into DOM
-    await renderDOM()
   } else {
     // Post not found
     document.title = 'Technical Not Found - onkhida'

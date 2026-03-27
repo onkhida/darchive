@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import matter from 'gray-matter'
 import { marked } from 'marked'
 import { isValidComponent } from './useComponentRegistry'
+import { useKaTeX } from './useKaTeX'
 
 export interface TechnicalPost {
     title: string
@@ -209,14 +210,23 @@ Content coming soon...`
     }
 
     const renderMarkdown = (content: string): string => {
+        const { renderInline, renderDisplay } = useKaTeX()
+
         // Protect LaTeX math (display and inline) so marked doesn't mangle it.
         const mathPlaceholders: Record<string, string> = {}
         let mathCounter = 0
 
-        // Replace display math $$...$$ first
+        // Replace display math $$...$$ first and render it synchronously
         content = content.replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
             const key = `MATH_BLOCK_${mathCounter++}`
-            mathPlaceholders[key] = `$$${expr}$$`
+            try {
+                // Render the math directly using KaTeX package
+                mathPlaceholders[key] = renderDisplay(expr)
+            } catch (error) {
+                console.error('KaTeX render error for display math:', error)
+                // Fallback to raw math if rendering fails
+                mathPlaceholders[key] = `$$${expr}$$`
+            }
             return `<span data-math-key="${key}"></span>`
         })
 
@@ -224,13 +234,20 @@ Content coming soon...`
         // This regex is conservative: it avoids matching across newlines.
         content = content.replace(/(^|[^\\$])\$([^\n\$]+?)\$/g, (_m, prefix, expr) => {
             const key = `MATH_INLINE_${mathCounter++}`
-            mathPlaceholders[key] = `$${expr}$`
+            try {
+                // Render the math directly using KaTeX package
+                mathPlaceholders[key] = renderInline(expr)
+            } catch (error) {
+                console.error('KaTeX render error for inline math:', error)
+                // Fallback to raw math if rendering fails
+                mathPlaceholders[key] = `$${expr}$`
+            }
             return prefix + `<span data-math-key="${key}"></span>`
         })
 
         let html = marked.parse(content) as string
 
-        // Restore math placeholders into the generated HTML exactly as originally written
+        // Restore math placeholders into the generated HTML (now with rendered math)
         Object.keys(mathPlaceholders).forEach((key) => {
             const placeholder = `<span data-math-key="${key}"></span>`
             html = html.split(placeholder).join(mathPlaceholders[key])

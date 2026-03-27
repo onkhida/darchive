@@ -123,11 +123,11 @@ onUnmounted(() => {
             </p>
             <p>I try to spin <a href="http://onkhida.me/technical" class="underline">narratives around technology</a>, <a href="http://onkhida.me/consumables" class="underline">the entities I consume</a>, and <a href="http://onkhida.me/commentary" class="underline">the thoughts that stay with me</a> as I continue existing. In the same vein, I also spend time logging my <a href="http://notebooks.onkhida.me/" class="underline">process of learning</a> and what is commonly the output of this learning process—in an <a href="http://papers.onkhida.me/" class="underline">academic</a> or <a href="http://demos.onkhida.me/" class="underline">practical</a> sense.
             </p>
-            <p>The best way to reach is me is (by far) through my <a href="mailto:daniel.eta@outlook.com" class="underline">email</a>. I love reading/writing to/from people, and it is my most active channel of communication. Though I do have accounts on <a href="https://www.reddit.com/user/onkhida/" class="underline">Reddit</a>, <a href="https://www.linkedin.com/in/daniel-eta/" class="underline">LinkedIn</a> and <a href="https://x.com/onkhida" class="underline">x.com</a> to allow me to share some of my work and provide me with some sort of digital footprint. 
+            <p>The best way to reach is me is (by far) through my <a href="mailto:daniel.eta@outlook.com" class="underline">email</a>. I love reading/writing to/from people, and it is my most active channel of communication. Though I do have accounts on <a href="https://www.reddit.com/user/onkhida/" class="underline">Reddit</a>, <a href="https://www.linkedin.com/in/daniel-eta/" class="underline">LinkedIn</a> and <a href="https://github.com/onkhida" class="underline">GitHub</a> to allow me to share some of my work and provide me with some sort of digital footprint. 
             </p>            
             
             <div class="mt-8">
-              <a href="#" class="fancy text-sm" :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'">
+              <a href="https://linktr.ee/onkhida" class="fancy text-sm" :class="isDark ? 'text-primary-400 hover:text-primary-100' : 'text-primary-600 hover:text-primary-900'">
                 web links 
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M7 17L17 7"/>

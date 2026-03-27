@@ -90,9 +90,7 @@ onUnmounted(() => {
           <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">readings.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-            I go through a sizeable amount of text everyday. These entries here are essentially reviews and public notes 
-            that I keep on articles, books, and posts that I find interesting. No entry is ever really complete; by the way, 
-            and I keep iterating through each one across time.
+            This section exists to extend the limits of my Letterboxd, Goodreads, and StoryGraph accounts. This was to be titled, "readings" to give me a space to log thoughts about the texts that I am most engaged with, but I've (of recent) taken a liking to film, and I now want to log my interactions with moving pictures as well. A lot of this is recreational. Away from what is formally positioned as work, I've just thought to centralise my engagements with the things I find myself consuming.
           </p>
         </section>
 

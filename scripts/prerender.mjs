@@ -9,7 +9,7 @@ const technicalDir = path.join(__dirname, '../public/technical')
 const readingsDir = path.join(__dirname, '../public/readings')
 
 const SITE_URL = 'https://onkhida.me'
-const IMAGE_URL = 'https://hidden-onk.netlify.app/assets/images/og_image.png'
+const IMAGE_URL = 'https://onkhida.me/assets/images/og_image.png'
 
 function extractMetadata(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8')

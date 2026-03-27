@@ -7,8 +7,8 @@ import matter from 'gray-matter'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const SITE_URL = 'https://hidden-onk.netlify.app'
-const IMAGE_URL = 'https://hidden-onk.netlify.app/assets/images/og_image.png'
+const SITE_URL = 'https://onkhida.me'
+const IMAGE_URL = 'https://onkhida.me/assets/images/og_image.png'
 
 /**
  * Extract metadata from markdown frontmatter

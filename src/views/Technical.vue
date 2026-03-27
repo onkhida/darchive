@@ -111,7 +111,7 @@ onUnmounted(() => {
           <h1 class="text-6xl font-serif font-normal mb-6" :class="isDark ? 'text-primary-50' : 'text-primary-900'">technical.</h1>
           
           <p class="leading-relaxed mb-8" :class="isDark ? 'text-primary-300' : 'text-primary-700'">
-            Here's a log of technical concepts that I've tried to break down in simple ways. A lot of the code written might be heavily opinionated—as the patterns, ideas and solutions are derived from cases and scenarios that I have personally encountered. Nevertheless, I hope you find these blobs of text useful in whatever capacity you see fit.
+            Here's a collection of technical concepts that I've tried to break down in simple ways. Much of the prose written here might be heavily opinionated—as the patterns, ideas and solutions are (in part) derived from cases and scenarios that I have personally encountered. Nevertheless, I hope you find these blobs of text useful in whatever capacity you see fit.
           </p>
         </section>
 

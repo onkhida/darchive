@@ -3,6 +3,7 @@ title: The Great Divide
 date: 2026-3-12
 desc: An example-based exploration of the algorithm behind Frank Rosenblatt's "Mark I Perceptron", anchored through the lens of an important daily decision of mine.
 coverImage: /assets/images/technical/the-great-divide.jpg
+ogImage: /assets/images/og-images/thegreatdivide-ogimage.jpg
 ---
 
 # Solid Foundations

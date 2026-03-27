@@ -122,7 +122,7 @@ function collectRoutes() {
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
                     meta.desc || `${meta.title || file.replace('.md', '')}`,
-                image: meta.image || IMAGE_URL,
+                image: meta.ogImage || meta.image || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',
             })
@@ -142,7 +142,7 @@ function collectRoutes() {
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
                     meta.desc || `${meta.title || file.replace('.md', '')}`,
-                image: meta.coverImage || IMAGE_URL,
+                image: meta.ogImage || meta.coverImage || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',
             })
@@ -160,7 +160,7 @@ function collectRoutes() {
                 title: `${meta.title || file.replace('.md', '')} - onkhida`,
                 description:
                     meta.desc || `${meta.title || file.replace('.md', '')}`,
-                image: meta.image || IMAGE_URL,
+                image: meta.ogImage || meta.image || IMAGE_URL,
                 type: 'article',
                 author: 'Onkhida',
             })

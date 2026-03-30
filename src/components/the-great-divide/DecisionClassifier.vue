@@ -118,7 +118,7 @@
                   <div class="font-semibold text-slate-700 mb-1">Decision</div>
                   <div class="flex justify-between items-center">
                     <span :class="currentPoint.label === 1 ? 'text-red-500 font-semibold' : 'text-teal-600 font-semibold'">
-                      {{ currentPoint.label === 1 ? 'BRT (Take it)' : 'No BRT (Skip it)' }}
+                      {{ currentPoint.label === 1 ? 'BRT (Take it)' : 'No BRT (Danfo)' }}
                     </span>
                   </div>
                   <div class="text-slate-600 text-xs mt-1">z = {{ currentPoint.z.toFixed(3) }}</div>

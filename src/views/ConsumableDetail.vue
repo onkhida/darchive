@@ -368,6 +368,27 @@ onUnmounted(() => {
   padding-left: 1rem !important; /* nested indent */
 }
 
+/* Ensure headings have proper color in dark mode */
+.prose :deep(h1),
+.prose :deep(h2),
+.prose :deep(h3),
+.prose :deep(h4),
+.prose :deep(h5),
+.prose :deep(h6) {
+  color: inherit;
+}
+
+.dark .prose :deep(h1),
+.dark .prose :deep(h2),
+.dark .prose :deep(h3),
+.dark .prose :deep(h4),
+.dark .prose :deep(h5),
+.dark .prose :deep(h6),
+.dark .prose :deep(blockquote) {
+  color: rgb(226 232 240);
+  /* slate-200 for better contrast in dark mode */
+}
+
 /* Dark theme footnotes - slightly lighter */
 .dark :deep(.footnote-ref) {
   opacity: 0.9;

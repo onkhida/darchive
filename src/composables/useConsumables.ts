@@ -20,6 +20,7 @@ export interface ConsumablePost {
 // List of all markdown files in the consumables folder
 const markdownFiles = [
     '2026-01-31 lives-of-great-men.md',
+    '2026-03-31 development-as-modernity.md'
 ]
 
 const posts = ref<ConsumablePost[]>([])

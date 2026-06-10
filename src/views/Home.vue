@@ -21,7 +21,7 @@ const showPreview = ref(false)
 const previewX = ref(0)
 const previewY = ref(0)
 // Use the same public asset used elsewhere
-const previewSrc = '/assets/images/me.png'
+const previewSrc = '/assets/images/me.jpg'
 
 const updatePreviewPos = (e: MouseEvent) => {
   const offset = 16
